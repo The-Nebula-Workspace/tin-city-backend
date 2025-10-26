@@ -16,8 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $this->call(AdminUserSeeder::class);
+
         // User::factory(10)->create();
 
+
+        User::factory()->create([
+            'name' => 'Test User',
+                'password' => Hash::make('password'),
+            'email' => 'test1@example.com',
+        ]);
 
         // To test for admin and regular users Gate::define('is_admin', fn(User $user) => $user->role === 'admin');
         User::updateOrCreate(
