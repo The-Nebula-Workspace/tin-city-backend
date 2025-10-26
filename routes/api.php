@@ -10,7 +10,7 @@ use App\Http\Controllers\RouteController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AuthController;
+// use App\Http\Controllers\AuthController;
 
 
 
