@@ -95,14 +95,17 @@ jobs:
             sudo git config --global user.name "Victor Ogunshola"
             sudo git config --global user.email "vogunshola@yahoo.com"
             sudo git config --global --add safe.directory $APP_DIR
+            
+            #setup repo for merge conflicts
+            sudo git config pull.rebase false
           fi
 
           echo "Repository already cloned. Pulling latest changes..."
           cd $APP_DIR
           #sudo git fetch origin
           sudo git checkout $BRANCH
-          git add .
-          git commit -m "Save local changes"
+          sudo git add .
+          sudo git commit -m "Save local changes"
           sudo git pull origin $BRANCH
           sudo chown -R www-data:www-data ${APP_DIR}/bootstrap/cache ${APP_DIR}/storage/logs/laravel.log
           sudo chmod -R 775 ${APP_DIR}/storage/logs/laravel.log
