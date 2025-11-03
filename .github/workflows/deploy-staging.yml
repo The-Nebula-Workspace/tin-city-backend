@@ -105,7 +105,7 @@ jobs:
           #sudo git fetch origin
           sudo git checkout $BRANCH
           sudo git add .
-          sudo git commit -m "Save local changes"
+          sudo git commit -m "Save local changes" 
           sudo git pull origin $BRANCH
           sudo chown -R www-data:www-data ${APP_DIR}/bootstrap/cache ${APP_DIR}/storage/logs/laravel.log
           sudo chmod -R 775 ${APP_DIR}/storage/logs/laravel.log
