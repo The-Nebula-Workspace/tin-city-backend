@@ -27,7 +27,7 @@ composer.lock
 
 # Ignore everything in storage except the firebase folder
 /storage/*
-!/storage/app/
+/storage/app/
 /storage/app/*
-!/storage/app/firebase/
+/storage/app/firebase/
 tincitymetro-key.pem
