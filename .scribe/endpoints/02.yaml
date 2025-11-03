@@ -1,0 +1,209 @@
+name: 'Profile Management'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/v1/profile
+    metadata:
+      groupName: 'Profile Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Display the authenticated user's profile."
+      description: ''
+      authenticated: false
+      deprecated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "Profile retrieved successfully",
+            "data": {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john@example.com",
+              "phone": "+1234567890",
+              "role": "user",
+              "dob": "1990-01-01",
+              "gender": "male",
+              "location": "New York, USA",
+              "points": 100,
+              "avatar": "https://bucket.s3.region.amazonaws.com/avatars/avatar.jpg",
+              "email_verified_at": "2024-01-01T00:00:00.000000Z",
+              "created_at": "2024-01-01T00:00:00.000000Z",
+              "updated_at": "2024-01-01T00:00:00.000000Z"
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/v1/profile
+    metadata:
+      groupName: 'Profile Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Update the authenticated user's profile."
+      description: ''
+      authenticated: false
+      deprecated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: "The user's full name. Must not be greater than 255 characters."
+        required: true
+        example: 'John Doe Updated'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      dob:
+        name: dob
+        description: 'Date of birth in YYYY-MM-DD format. Must be a valid date. Must be a date before <code>today</code>.'
+        required: true
+        example: '1990-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      gender:
+        name: gender
+        description: "User's gender."
+        required: true
+        example: male
+        type: string
+        enumValues:
+          - male
+          - female
+          - other
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      phone:
+        name: phone
+        description: "User's phone number. Must not be greater than 20 characters."
+        required: true
+        example: '+1234567890'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      location:
+        name: location
+        description: "User's location. Must not be greater than 255 characters."
+        required: true
+        example: 'New York, USA'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      avatar:
+        name: avatar
+        description: 'Must be an image. Must not be greater than 2048 kilobytes.'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: 'John Doe Updated'
+      dob: '1990-01-01'
+      gender: male
+      phone: '+1234567890'
+      location: 'New York, USA'
+    fileParameters:
+      avatar: null
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "Profile updated successfully",
+            "data": {
+              "id": 1,
+              "name": "John Doe Updated",
+              "email": "john@example.com",
+              "phone": "+1234567890",
+              "role": "user",
+              "dob": "1990-01-01",
+              "gender": "male",
+              "location": "New York, USA",
+              "points": 100,
+              "avatar": "https://bucket.s3.region.amazonaws.com/avatars/new-avatar.jpg",
+              "email_verified_at": "2024-01-01T00:00:00.000000Z",
+              "created_at": "2024-01-01T00:00:00.000000Z",
+              "updated_at": "2024-01-01T00:00:00.000000Z"
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+            "success": false,
+            "message": "Validation failed",
+            "errors": {
+              "name": ["The name field is required."],
+              "avatar": ["The avatar must be an image."]
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "success": false,
+            "message": "Failed to update profile",
+            "error": "Server error message"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

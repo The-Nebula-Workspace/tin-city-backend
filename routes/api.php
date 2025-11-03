@@ -5,10 +5,12 @@ use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use  App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AdminController;
+
 
 Route::prefix('v1')->group(function () {
     Route::prefix('routes')->group(function () {
@@ -17,6 +19,13 @@ Route::prefix('v1')->group(function () {
         Route::get('', action: [RouteController::class, 'index']);
         Route::get('{id}', [RouteController::class, 'show']);
 
+<<<<<<< HEAD
+    Route::prefix('/profile')->middleware('auth:sanctum')->group(function () {
+        Route::get('/', [ProfileController::class, 'show']);
+        Route::put('/', [ProfileController::class, 'update']);
+    });
+    // Admin-only endpoints
+=======
         // Admin-only endpoints
         Route::middleware(['auth:sanctum', 'can:is_admin'])->group(function () {
             Route::post('', [RouteController::class, 'store']);
@@ -36,6 +45,7 @@ Route::prefix('v1')->group(function () {
     });
 
     // Admin dashboard and management endpoints
+>>>>>>> 4909630da791fe0bc6fe51e52e93f09824143416
     Route::middleware(['auth:sanctum', 'can:is_admin'])->group(function () {
         Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
         Route::get('admin/contributions', [AdminController::class, 'contributions']);
