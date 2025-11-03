@@ -96,7 +96,7 @@ jobs:
             sudo git config --global user.email "vogunshola@yahoo.com"
             sudo git config --global --add safe.directory $APP_DIR
           fi
-          
+
           echo "Repository already cloned. Pulling latest changes..."
           cd $APP_DIR
           sudo git fetch origin
@@ -104,7 +104,7 @@ jobs:
           sudo git pull origin $BRANCH
           sudo chown -R www-data:www-data ${APP_DIR}/bootstrap/cache ${APP_DIR}/storage/logs/laravel.log
           sudo chmod -R 775 ${APP_DIR}/storage/logs/laravel.log
-          
+
 
           # configure nginx domain for ${DOMAIN}
           if [ ! -f /etc/nginx/sites-available/${DOMAIN} ]; then
@@ -117,7 +117,7 @@ jobs:
 
           echo "copying .env.example to .env"
           sudo cp .env.example .env
-          echo "copied .env.example to .env" 
+          echo "copied .env.example to .env"
 
           # add database credentials to .env
           sudo chmod 777 .env
@@ -127,7 +127,8 @@ jobs:
           sudo echo 'DB_PASSWORD="${{secrets.STAGING_DB_PASSWORD}}"' >> .env
           sudo echo "DB_CONNECTION=pgsql" >> .env
           sudo echo "DB_PORT=5432" >> .env
-          
+          sudo echo "DEVOPS_TOKEN=${{secrets.DEVOPS_TOKEN}}" >> .env
+
           # add AWS credentials to .env
           sudo echo 'AWS_ACCESS_KEY_ID="${{secrets.AWS_ACCESS_KEY_ID}}"' >> .env
           sudo echo 'AWS_SECRET_ACCESS_KEY="${{secrets.AWS_SECRET_ACCESS_KEY}}"' >> .env
@@ -135,10 +136,10 @@ jobs:
           # Firebase
           #sudo echo 'FIREBASE_CREDENTIALS="${{secrets.FIREBASE_CREDENTIALS}}"' >> .env
           sudo chmod 775 .env
-          
+
           sudo composer install #--no-dev --optimize-autoloader
           sudo php artisan key:generate
 
           sudo php artisan migrate --force
 
-          echo "Deployment to staging completed successfully." 
+          echo "Deployment to staging completed successfully."

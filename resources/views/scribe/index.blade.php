@@ -135,13 +135,13 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-endpoints" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="endpoints">
-                    <a href="#endpoints">Endpoints</a>
+                    <ul id="tocify-header-devops" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="devops">
+                    <a href="#devops">DevOps</a>
                 </li>
-                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-user">
-                                <a href="#endpoints-GETapi-user">GET api/user</a>
+                                    <ul id="tocify-subheader-devops" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="devops-POSTapi-v1-devops-clear-cache">
+                                <a href="#devops-POSTapi-v1-devops-clear-cache">Clear application caches</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -202,7 +202,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: October 29, 2025</li>
+        <li>Last updated: November 3, 2025</li>
     </ul>
 </div>
 
@@ -2621,116 +2621,133 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                <h1 id="endpoints">Endpoints</h1>
+                <h1 id="devops">DevOps</h1>
 
     
 
-                                <h2 id="endpoints-GETapi-user">GET api/user</h2>
+                                <h2 id="devops-POSTapi-v1-devops-clear-cache">Clear application caches</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
+<p>Secure DevOps endpoint to run <code>optimize:clear</code>.</p>
 
-
-<span id="example-requests-GETapi-user">
+<span id="example-requests-POSTapi-v1-devops-clear-cache">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/user" \
+    <pre><code class="language-bash">curl --request POST \
+    "https://tin-city-metro.test/api/v1/devops/clear-cache" \
+    --header "X-DevOps-Token: required The DevOps token used to authorize the request." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/user"
+    "https://tin-city-metro.test/api/v1/devops/clear-cache"
 );
 
 const headers = {
+    "X-DevOps-Token": "required The DevOps token used to authorize the request.",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 fetch(url, {
-    method: "GET",
+    method: "POST",
     headers,
 }).then(response =&gt; response.json());</code></pre></div>
 
 </span>
 
-<span id="example-responses-GETapi-user">
+<span id="example-responses-POSTapi-v1-devops-clear-cache">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Cache cleared&quot;,
+    &quot;output&quot;: &quot;...artisan output...&quot;
+}</code>
+ </pre>
             <blockquote>
             <p>Example response (401):</p>
         </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre></details>         <pre>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
+    &quot;message&quot;: &quot;Unauthorized&quot;
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-user" hidden>
+<span id="execution-results-POSTapi-v1-devops-clear-cache" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-user"></span>:
+                id="execution-response-status-POSTapi-v1-devops-clear-cache"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-user"
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-devops-clear-cache"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi-user" hidden>
+<span id="execution-error-POSTapi-v1-devops-clear-cache" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-user">
+    <pre><code id="execution-error-message-POSTapi-v1-devops-clear-cache">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi-user" data-method="GET"
-      data-path="api/user"
-      data-authed="0"
+<form id="form-POSTapi-v1-devops-clear-cache" data-method="POST"
+      data-path="api/v1/devops/clear-cache"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-user', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-devops-clear-cache', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-user"
-                    onclick="tryItOut('GETapi-user');">Try it out ⚡
+                    id="btn-tryout-POSTapi-v1-devops-clear-cache"
+                    onclick="tryItOut('POSTapi-v1-devops-clear-cache');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-user"
-                    onclick="cancelTryOut('GETapi-user');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-v1-devops-clear-cache"
+                    onclick="cancelTryOut('POSTapi-v1-devops-clear-cache');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-user"
+                    id="btn-executetryout-POSTapi-v1-devops-clear-cache"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
             </button>
             </h3>
             <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/user</code></b>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/devops/clear-cache</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>X-DevOps-Token</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="X-DevOps-Token"                data-endpoint="POSTapi-v1-devops-clear-cache"
+               value="required The DevOps token used to authorize the request."
+               data-component="header">
+    <br>
+<p>Example: <code>required The DevOps token used to authorize the request.</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-user"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-devops-clear-cache"
                value="application/json"
                data-component="header">
     <br>
@@ -2741,7 +2758,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-user"
+                              name="Accept"                data-endpoint="POSTapi-v1-devops-clear-cache"
                value="application/json"
                data-component="header">
     <br>
@@ -2809,7 +2826,7 @@ fetch(url, {
 location: https://accounts.google.com/o/oauth2/auth?client_id=583283672277-gqr010gkltbcddlnb71ptfhprksc02bn.apps.googleusercontent.com&amp;redirect_uri=https%3A%2F%2Faccounts.google.com%2Fo%2Foauth2%2Fauth&amp;scope=openid+profile+email&amp;response_type=code
 content-type: text/html; charset=utf-8
 access-control-allow-origin: *
-set-cookie: XSRF-TOKEN=eyJpdiI6IitDYkRQdGVSajFHNWNNSHp6MGxHZlE9PSIsInZhbHVlIjoiVTRnSFMzcFNYM3NYQ2pzK01EU3pkbGo0anZuRVpYYzIrT2FlSTVvMmNIOEszTlZJekpPeUcxdGV0YStxUUpic09ZaW5FSVZNWnphMk85N0FLc2ZiTTlPUE5ORDR2NDJSWlU2b2dGZTV4QWxSR01HRGV6YVhSS25zMnlhSW5KMisiLCJtYWMiOiIyOTMyYzY3NTEyNDJmNjVjNzI5MTYwNTdiMjMwMjY2MmYyNTIwMDBlYmQ3ZTI1MTcwM2M4ODA2ZTcwOTY5MzRmIiwidGFnIjoiIn0%3D; expires=Wed, 29 Oct 2025 17:40:17 GMT; Max-Age=7200; path=/; secure; samesite=lax; tin-city-metro-session=eyJpdiI6ImpJS0FpRk1icjBTN1ZJUU1HcThqZHc9PSIsInZhbHVlIjoicDZPaU5qNjM1NDVIRldIeUFCdzR5a0JFVjkzMWdrYk1jd0laTnh1QzArNmx1aUxqdHFrMHpGRS9GK1VXZFpjMGhLSlNXRkJMdkFlTGxtbEF4eVg2R0owcEl3aHZiWloxSVRqVUUzN0R6VDhub0MvUWFEYjZWRlAwNVVYR1N0cTAiLCJtYWMiOiI4NmJmZWQzZjViZmJlZGMwMzMyZjVlZTE0ZDliNTMyYmMyYjRlNDc2MDczY2NjOWY4Y2FmNWU4YjQxMjJjMDk4IiwidGFnIjoiIn0%3D; expires=Wed, 29 Oct 2025 17:40:17 GMT; Max-Age=7200; path=/; secure; httponly; samesite=lax
+set-cookie: XSRF-TOKEN=eyJpdiI6IkxSUFNZNnBQV2ZhY0pkL3B4MmJiS0E9PSIsInZhbHVlIjoiSGc4c2ZrNnhBejZGbXE5aW9hTnZKZVFOQWcrMWQ2MG9GdFdtckFFNmg3TUd6K3dPV2ZxMlF2MEVTcWI1UUVUZ3pjV3dmdmppeWdQR1crSkdZRDhoRElITFY3aVJRY05zNVJ3L1NJNVVmczhFeVV1Umo3K2o0VUlNMlRmUUp1Q2giLCJtYWMiOiI1OTU2Nzg1NmY3ZTUxNWM2Mjg2OWE0YjUyZTMwZjFlMDY4NTVmMzJhZTg5YWU3Mzg1Y2VmMjhkOTVhYTA3ZmQ5IiwidGFnIjoiIn0%3D; expires=Mon, 03 Nov 2025 14:47:30 GMT; Max-Age=7200; path=/; secure; samesite=lax; tin-city-metro-session=eyJpdiI6ImtvSXMrOEJMYkY1NkNZOTFZTTdNSlE9PSIsInZhbHVlIjoidUlYbGtZdXdPb1Z1elpBczhuQ0Y3STR5Q0hqSTJrZTQxNWp6bGVxc3VOMlZLa3RsZ0RqT2VES0FFS0tsVXpmL1ZLT0RLeFNhNnJ5R2taalpNNXU3WWhtZjFHY25TZjNkR3FnYkprQkRNQWR4dmdsb0lkWm84amFpYkpoRnBNb1AiLCJtYWMiOiJlNDk5OTQ4NzM0YWFlYTM1M2M3NWVhZmM2YWNmZTk4OTBhM2U1MzhjNWRkYzgxZjk1MmI0ZDhhNjUxNjcwY2EwIiwidGFnIjoiIn0%3D; expires=Mon, 03 Nov 2025 14:47:30 GMT; Max-Age=7200; path=/; secure; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">&lt;!DOCTYPE html&gt;
