@@ -134,7 +134,7 @@ jobs:
           sudo echo 'AWS_SECRET_ACCESS_KEY="${{secrets.AWS_SECRET_ACCESS_KEY}}"' >> .env
 
           # Firebase
-          #sudo echo 'FIREBASE_CREDENTIALS="${{secrets.FIREBASE_CREDENTIALS}}"' >> .env
+          sudo echo 'FIREBASE_CREDENTIALS="${{secrets.FIREBASE_CREDENTIALS}}"' >> .env
           sudo chmod 775 .env
 
           sudo composer install #--no-dev --optimize-autoloader
