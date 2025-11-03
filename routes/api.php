@@ -9,6 +9,7 @@ use App\Http\Controllers\RouteController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DevOpsController;
 
 Route::prefix('v1')->group(function () {
     Route::prefix('routes')->group(function () {
@@ -74,4 +75,7 @@ Route::prefix('v1')->group(function () {
             Route::get('verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
         });
     });
+
+    // DevOps endpoints (token-protected)
+    Route::post('devops/clear-cache', [DevOpsController::class, 'clearCache']);
 });
