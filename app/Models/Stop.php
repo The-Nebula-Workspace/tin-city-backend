@@ -9,6 +9,7 @@ class Stop extends Model
 {
     protected $fillable = [
         'route_id',
+        'name',
         'longitude',
         'latitude',
         'order_index',

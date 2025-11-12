@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('stops', function (Blueprint $table) {
             $table->id();
             $table->foreignId('route_id')->constrained()->onDelete('cascade');
+            $table->string('name');
             $table->decimal('longitude', 11, 8);
             $table->decimal('latitude', 10, 8);
-            $table->integer('order_index');
+            $table->unsignedInteger('order_index')->default(0);
             $table->timestamps();
         });
     }

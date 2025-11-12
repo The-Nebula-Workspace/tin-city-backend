@@ -1,0 +1,150 @@
+name: Deploy Staging Without Docker
+
+on:
+  push:
+    branches: [ "staging" ]
+  pull_request:
+    branches: [ "staging" ]
+
+jobs:
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy with SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.STAGING_EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          # Install PHP if not available
+          #sudo apt-get remove php* -y
+          #sudo apt install libapache2-mod-php
+
+          # Uninstall apache if exist
+          if command -v apache2 &> /dev/null
+          then
+              echo "Apache is installed, removing it..."
+              sudo dpkg --configure -a
+              sudo apt-get remove apache2 -y
+          fi
+
+          # Install Nginx if not available
+          if ! command -v nginx &> /dev/null
+          then
+              echo "Nginx could not be found, installing it..."
+              sudo apt-get update
+              sudo apt-get install -y nginx
+          fi
+
+          # Install PHP if not available
+          if ! command -v php &> /dev/null
+          then
+              echo "PHP could not be found, installing it..."
+              sudo apt-get update
+              sudo apt-get install -y php8.3 php8.3-xml php8.3-zip php8.3-curl php8.3-mbstring php8.3-mysql php8.3-pgsql php8.3-gd php8.3-fpm
+              sudo service nginx restart
+          fi
+
+          # install certbot if not available
+          if ! command -v certbot &> /dev/null
+          then
+              echo "Certbot could not be found, installing it..."
+              sudo apt-get update
+              sudo apt-get install -y certbot python3-certbot-nginx
+          fi
+
+          # # Install Composer if not available
+          if ! command -v composer &> /dev/null
+          then
+              echo "Composer could not be found, installing it..."
+              curl -sS https://getcomposer.org/installer | php
+              sudo mv composer.phar /usr/local/bin/composer
+          fi
+
+          # Define variables
+          REPO_URL="https://${{secrets.PAT}}@github.com/The-Nebula-Workspace/tin-city-backend.git"
+          BRANCH="staging"
+          DEPLOY_DIR="/var/www"
+          TEMP_DIR="/var/www/deploy-temp"
+          APP_DIR="/var/www/tin-city-backend"
+          DOMAIN="api-staging.tincitymetroapp.ng"
+
+          cd $DEPLOY_DIR
+
+          # Check if repository has already been cloned
+          if ! [ -d "$APP_DIR" ]; then
+            echo "Cloning repository for the first time..."
+            sudo git clone $REPO_URL $APP_DIR
+            cd $APP_DIR
+            sudo git checkout $BRANCH
+            sudo chown -R www-data:www-data ${APP_DIR}/storage
+            sudo chown -R www-data:www-data ${APP_DIR}/bootstrap/cache ${APP_DIR}/storage/logs/laravel.log
+            sudo chown -R www-data:www-data ${APP_DIR}
+            sudo chmod -R 775 ${APP_DIR}
+            sudo chmod -R 775 ${APP_DIR}/storage
+            sudo chmod -R 775 ${APP_DIR}/storage/logs/laravel.log
+            sudo chmod -R 775 ${APP_DIR}/bootstrap/
+
+            sudo git config --global user.name "Victor Ogunshola"
+            sudo git config --global user.email "vogunshola@yahoo.com"
+            sudo git config --global --add safe.directory $APP_DIR
+            
+            #setup repo for merge conflicts
+            sudo git config pull.rebase false
+          fi
+
+          echo "Repository already cloned. Pulling latest changes..."
+          cd $APP_DIR
+          #sudo git fetch origin
+          sudo git checkout $BRANCH
+          sudo git add .
+          sudo git commit -m "Save local changes"
+          sudo git pull origin $BRANCH
+          sudo chown -R www-data:www-data ${APP_DIR}/bootstrap/cache ${APP_DIR}/storage/logs/laravel.log
+          sudo chmod -R 775 ${APP_DIR}/storage/logs/laravel.log
+
+
+          # configure nginx domain for ${DOMAIN}
+          if [ ! -f /etc/nginx/sites-available/${DOMAIN} ]; then
+            #sudo rm /etc/nginx/sites-enabled/${DOMAIN}
+            sudo cp nginx/nginx.conf /etc/nginx/sites-available/${DOMAIN}
+            sudo ln -s /etc/nginx/sites-available/${DOMAIN} /etc/nginx/sites-enabled/${DOMAIN}
+            sudo certbot --nginx -d api-staging.tincitymetroapp.ng --non-interactive --agree-tos -m vogunshola@yahoo.com
+            sudo service nginx restart
+          fi
+
+          echo "copying .env.example to .env"
+          sudo cp .env.example .env
+          echo "copied .env.example to .env"
+
+          # add database credentials to .env
+          sudo chmod 777 .env
+          sudo echo 'DB_HOST="${{secrets.DB_HOST}}"' >> .env
+          sudo echo "DB_DATABASE=${{vars.STAGING_DB_NAME}}" >> .env
+          sudo echo "DB_USERNAME=${{secrets.STAGING_DB_USERNAME}}" >> .env
+          sudo echo 'DB_PASSWORD="${{secrets.STAGING_DB_PASSWORD}}"' >> .env
+          sudo echo "DB_CONNECTION=pgsql" >> .env
+          sudo echo "DB_PORT=5432" >> .env
+          sudo echo "DEVOPS_TOKEN=${{secrets.DEVOPS_TOKEN}}" >> .env
+
+          # add AWS credentials to .env
+          sudo echo 'AWS_ACCESS_KEY_ID="${{secrets.AWS_ACCESS_KEY_ID}}"' >> .env
+          sudo echo 'AWS_SECRET_ACCESS_KEY="${{secrets.AWS_SECRET_ACCESS_KEY}}"' >> .env
+
+          # Firebase
+          sudo echo 'FIREBASE_CREDENTIALS="${{secrets.FIREBASE_CREDENTIALS}}"' >> .env
+          sudo chmod 775 .env
+
+          sudo composer install #--no-dev --optimize-autoloader
+          sudo php artisan key:generate
+
+          sudo php artisan migrate --force
+
+          echo "Deployment to staging completed successfully." 

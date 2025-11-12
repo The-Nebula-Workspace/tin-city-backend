@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('start_point');
             $table->string('end_point');
             $table->text('encoded_polyline');
-            $table->float('distance_km');
+            $table->decimal('distance_km', 8, 2);
             $table->timestamps();
         });
     }

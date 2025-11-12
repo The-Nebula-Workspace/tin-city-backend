@@ -22,5 +22,12 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
-tincitymetro-key.pem
+composer.lock
 .github/copilot-instructions.md
+
+# Ignore everything in storage except the firebase folder
+/storage/*
+/storage/app/
+/storage/app/*
+/storage/app/firebase/
+tincitymetro-key.pem
