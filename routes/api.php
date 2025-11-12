@@ -3,7 +3,6 @@
 
 use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\NotificationController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\Auth\AuthController;
@@ -78,4 +77,11 @@ Route::prefix('v1')->group(function () {
 
     // DevOps endpoints (token-protected)
     Route::post('devops/clear-cache', [DevOpsController::class, 'clearCache']);
+
+    // Contributions endpoints (authenticated)
+    Route::prefix('contributions')->middleware('auth:sanctum')->group(function () {
+        Route::post('location', [\App\Http\Controllers\ContributionController::class, 'submitLocation']);
+        Route::post('crowding', [\App\Http\Controllers\ContributionController::class, 'submitCrowding']);
+        Route::get('latest', [\App\Http\Controllers\ContributionController::class, 'getLatest']);
+    });
 });

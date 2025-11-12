@@ -1,0 +1,232 @@
+{
+  "info": {
+    "name": "Jos Metro BOSS - Real-time Bus Tracking",
+    "description": "API endpoints for real-time bus location tracking and crowding reports",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('token', jsonData.data.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contributions",
+      "item": [
+        {
+          "name": "Submit Location",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"route_id\": 1,\n  \"latitude\": 9.8965,\n  \"longitude\": 8.8583,\n  \"speed\": 45.5,\n  \"heading\": 180,\n  \"accuracy\": 10.5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/contributions/location",
+              "host": ["{{base_url}}"],
+              "path": ["contributions", "location"]
+            },
+            "description": "Submit current GPS location when on a bus. System validates if user is on route and broadcasts via WebSocket."
+          }
+        },
+        {
+          "name": "Submit Crowding Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"route_id\": 1,\n  \"status\": \"standing\",\n  \"crowding_level\": 3,\n  \"latitude\": 9.8965,\n  \"longitude\": 8.8583\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/contributions/crowding",
+              "host": ["{{base_url}}"],
+              "path": ["contributions", "crowding"]
+            },
+            "description": "Report bus crowding status. Status can be: full, standing, or seats_available. Crowding level is 1-5."
+          }
+        },
+        {
+          "name": "Get Latest Contributions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contributions/latest?route_id=1&type=location&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["contributions", "latest"],
+              "query": [
+                {
+                  "key": "route_id",
+                  "value": "1",
+                  "description": "Route ID (required)"
+                },
+                {
+                  "key": "type",
+                  "value": "location",
+                  "description": "Filter by type: location, crowding, or activity (optional)"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of results (1-100, default: 20)"
+                }
+              ]
+            },
+            "description": "Get recent contributions and active buses for a route. Returns both database records and Redis active buses."
+          }
+        },
+        {
+          "name": "Get Latest - Crowding Only",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contributions/latest?route_id=1&type=crowding",
+              "host": ["{{base_url}}"],
+              "path": ["contributions", "latest"],
+              "query": [
+                {
+                  "key": "route_id",
+                  "value": "1"
+                },
+                {
+                  "key": "type",
+                  "value": "crowding"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Latest - All Types",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contributions/latest?route_id=1",
+              "host": ["{{base_url}}"],
+              "path": ["contributions", "latest"],
+              "query": [
+                {
+                  "key": "route_id",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Routes",
+      "item": [
+        {
+          "name": "Get All Routes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/routes",
+              "host": ["{{base_url}}"],
+              "path": ["routes"]
+            }
+          }
+        },
+        {
+          "name": "Get Route by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/routes/1",
+              "host": ["{{base_url}}"],
+              "path": ["routes", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
