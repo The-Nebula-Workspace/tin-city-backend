@@ -31,3 +31,9 @@ composer.lock
 /storage/app/*
 /storage/app/firebase/
 tincitymetro-key.pem
+
+# Troubleshooting and temporary documentation files
+/WEBSOCKET_TROUBLESHOOTING.md
+/ISSUE_RESOLVED.md
+/ACTIVE_BUSES_GUIDE.md
+/COMPLETE_SETUP_SUMMARY.md
