@@ -226,6 +226,68 @@
           }
         }
       ]
+    },
+    {
+      "name": "Buses",
+      "item": [
+        {
+          "name": "Get All Buses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/buses",
+              "host": ["{{base_url}}"],
+              "path": ["buses"]
+            },
+            "description": "Get all buses. Optionally filter by route_id."
+          }
+        },
+        {
+          "name": "Get All Buses - Filter by Route",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/buses?route_id=1",
+              "host": ["{{base_url}}"],
+              "path": ["buses"],
+              "query": [
+                {
+                  "key": "route_id",
+                  "value": "1",
+                  "description": "Filter buses by route ID"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Bus by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/buses/1",
+              "host": ["{{base_url}}"],
+              "path": ["buses", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Buses for Route",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/buses/route/1",
+              "host": ["{{base_url}}"],
+              "path": ["buses", "route", "1"]
+            },
+            "description": "Get all buses assigned to a specific route with route details."
+          }
+        }
+      ]
     }
   ]
 }

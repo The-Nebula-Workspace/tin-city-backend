@@ -32,7 +32,7 @@ redis-server
 
 **Terminal 2 - Laravel Reverb (WebSocket Server):**
 ```bash
-php artisan reverb:start
+
 ```
 
 **Terminal 3 - Laravel Application:**

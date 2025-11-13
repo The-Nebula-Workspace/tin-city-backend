@@ -169,6 +169,10 @@
             <div class="card">
                 <h2>📍 Subscribe to Route</h2>
                 <div class="input-group">
+                    <label>Auth Token (Optional - for Active Buses)</label>
+                    <input type="text" id="authToken" placeholder="Paste your Bearer token here">
+                </div>
+                <div class="input-group">
                     <label>Route ID</label>
                     <input type="number" id="routeId" value="1" min="1">
                 </div>
@@ -179,6 +183,9 @@
                 <h2>📊 Active Buses</h2>
                 <p id="busCount">0 buses active</p>
                 <div class="buses-list" id="busesList"></div>
+                <small style="color: #6b7280; margin-top: 10px; display: block;">
+                    💡 Add auth token above to see active buses
+                </small>
             </div>
         </div>
 
@@ -270,28 +277,51 @@
 
         async function updateActiveBuses() {
             const routeId = document.getElementById('routeId').value;
+            const authToken = document.getElementById('authToken').value.trim();
+
+            if (!authToken) {
+                busCountElement.textContent = '0 buses active (no auth token)';
+                busesListElement.innerHTML = '<p style="color: #6b7280; font-size: 12px;">Add your auth token above to see active buses</p>';
+                return;
+            }
+
             try {
                 const response = await fetch(`/api/v1/contributions/latest?route_id=${routeId}`, {
                     headers: {
-                        'Authorization': 'Bearer YOUR_TOKEN_HERE'
+                        'Authorization': `Bearer ${authToken}`,
+                        'Accept': 'application/json'
                     }
                 });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
                 const result = await response.json();
 
                 if (result.success) {
                     const buses = result.data.active_buses || [];
                     busCountElement.textContent = `${buses.length} buses active`;
 
-                    busesListElement.innerHTML = buses.map(bus => `
-                        <div class="bus-item">
-                            <strong>User ${bus.user_id}</strong><br>
-                            Lat: ${bus.latitude}, Lng: ${bus.longitude}<br>
-                            Speed: ${bus.speed || 'N/A'} km/h
-                        </div>
-                    `).join('');
+                    if (buses.length === 0) {
+                        busesListElement.innerHTML = '<p style="color: #6b7280; font-size: 12px;">No active buses on this route (locations expire after 5 minutes)</p>';
+                    } else {
+                        busesListElement.innerHTML = buses.map(bus => `
+                            <div class="bus-item">
+                                <strong>User ${bus.user_id}</strong><br>
+                                Lat: ${bus.latitude}, Lng: ${bus.longitude}<br>
+                                Speed: ${bus.speed || 'N/A'} km/h<br>
+                                <small style="color: #6b7280;">Updated: ${new Date(bus.timestamp).toLocaleTimeString()}</small>
+                            </div>
+                        `).join('');
+                    }
+                } else {
+                    busesListElement.innerHTML = '<p style="color: #ef4444; font-size: 12px;">Error: ' + (result.message || 'Unknown error') + '</p>';
                 }
             } catch (error) {
                 console.error('Failed to fetch active buses:', error);
+                busCountElement.textContent = '0 buses active (error)';
+                busesListElement.innerHTML = `<p style="color: #ef4444; font-size: 12px;">Error: ${error.message}</p>`;
             }
         }
 

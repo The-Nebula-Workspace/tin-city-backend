@@ -188,6 +188,134 @@ GET /api/v1/contributions/latest?route_id=1&type=location&limit=10
 
 ---
 
+## 4. Get All Buses
+
+**Endpoint:** `GET /api/v1/buses`
+
+**Description:** Retrieve all buses in the system, optionally filtered by route.
+
+**Headers:** None required (public endpoint)
+
+**Query Parameters:**
+- `route_id` (optional): Filter buses by route ID
+
+**Example Request:**
+```
+GET /api/v1/buses
+GET /api/v1/buses?route_id=1
+```
+
+**Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "TB-001",
+      "route_id": 1,
+      "created_at": "2025-11-13T10:00:00Z",
+      "updated_at": "2025-11-13T10:00:00Z",
+      "route": {
+        "id": 1,
+        "name": "Terminus to Bukuru",
+        "start_point": "Terminus",
+        "end_point": "Bukuru"
+      }
+    }
+  ],
+  "total": 37
+}
+```
+
+---
+
+## 5. Get Bus by ID
+
+**Endpoint:** `GET /api/v1/buses/{id}`
+
+**Description:** Get details of a specific bus including its route and stops.
+
+**Headers:** None required (public endpoint)
+
+**Example Request:**
+```
+GET /api/v1/buses/1
+```
+
+**Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "TB-001",
+    "route_id": 1,
+    "route": {
+      "id": 1,
+      "name": "Terminus to Bukuru",
+      "start_point": "Terminus",
+      "end_point": "Bukuru",
+      "distance_km": 8.5,
+      "stops": [
+        {
+          "id": 1,
+          "name": "Terminus",
+          "latitude": 9.8965,
+          "longitude": 8.8583,
+          "order_index": 1
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+## 6. Get Buses for Route
+
+**Endpoint:** `GET /api/v1/buses/route/{routeId}`
+
+**Description:** Get all buses assigned to a specific route.
+
+**Headers:** None required (public endpoint)
+
+**Example Request:**
+```
+GET /api/v1/buses/route/1
+```
+
+**Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "route": {
+      "id": 1,
+      "name": "Terminus to Bukuru",
+      "start_point": "Terminus",
+      "end_point": "Bukuru"
+    },
+    "buses": [
+      {
+        "id": 1,
+        "name": "TB-001",
+        "route_id": 1
+      },
+      {
+        "id": 2,
+        "name": "TB-002",
+        "route_id": 1
+      }
+    ],
+    "total_buses": 8
+  }
+}
+```
+
+---
+
 ## WebSocket Events
 
 ### Channel: `route.{routeId}`

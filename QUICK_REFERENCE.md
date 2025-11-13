@@ -1,9 +1,11 @@
 # Quick Reference - Real-time Bus Tracking API
 
-## 🌱 Seed Routes (First Time Setup)
+## 🌱 Seed Database (First Time Setup)
 ```bash
-php artisan db:seed --class=RouteSeeder
-# Creates 8 Jos Metro routes with 43 stops
+php artisan db:seed --class=RouteSeeder  # 8 routes, 43 stops
+php artisan db:seed --class=BusSeeder    # 37 buses
+# Or seed everything:
+php artisan migrate:fresh --seed
 ```
 
 ## 🚀 Start Services
@@ -60,6 +62,14 @@ Authorization: Bearer YOUR_TOKEN
 ```bash
 GET http://localhost:8000/api/v1/contributions/latest?route_id=1&type=location&limit=20
 Authorization: Bearer YOUR_TOKEN
+```
+
+## 🚌 Get Buses
+```bash
+GET http://localhost:8000/api/v1/buses              # All buses (37)
+GET http://localhost:8000/api/v1/buses?route_id=1   # Route 1 buses (8)
+GET http://localhost:8000/api/v1/buses/route/1      # Route 1 buses with details
+GET http://localhost:8000/api/v1/buses/1            # Specific bus (TB-001)
 ```
 
 ## 🌐 WebSocket Test

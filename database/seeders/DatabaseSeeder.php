@@ -47,5 +47,8 @@ class DatabaseSeeder extends Seeder
 
         // Seed routes and stops
         $this->call(RouteSeeder::class);
+
+        // Seed buses for each route
+        $this->call(BusSeeder::class);
     }
 }

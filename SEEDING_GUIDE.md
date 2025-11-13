@@ -1,8 +1,8 @@
-# Route Seeding Guide
+# Route & Bus Seeding Guide
 
-## Quick Seed Routes
+## Quick Seed Everything
 
-### Option 1: Seed Everything (Users + Routes)
+### Option 1: Seed Everything (Users + Routes + Buses)
 ```bash
 php artisan migrate:fresh --seed
 ```
@@ -12,9 +12,15 @@ php artisan migrate:fresh --seed
 php artisan db:seed --class=RouteSeeder
 ```
 
-### Option 3: Seed Routes Without Dropping Database
+### Option 3: Seed Only Buses
+```bash
+php artisan db:seed --class=BusSeeder
+```
+
+### Option 4: Seed Routes and Buses Together
 ```bash
 php artisan db:seed --class=RouteSeeder
+php artisan db:seed --class=BusSeeder
 ```
 
 ---
@@ -47,6 +53,28 @@ php artisan db:seed --class=RouteSeeder
 8. **Bukuru to JUTH** (9.1 km)
    - 5 stops: Bukuru Motor Park, Gyel Junction, Lamingo Junction, Secretariat, JUTH
 
+### 37 Buses Across All Routes
+
+**Bus Distribution:**
+- Terminus to Bukuru: 8 buses (TB-001 to TB-008)
+- Terminus to Vom: 6 buses (TV-001 to TV-006)
+- Terminus to Barkin Ladi: 5 buses (TBL-001 to TBL-005)
+- Bukuru to Rayfield: 4 buses (BR-001 to BR-004)
+- Terminus to Angwan Rogo: 4 buses (TAR-001 to TAR-004)
+- Terminus to Dadin Kowa: 4 buses (TDK-001 to TDK-004)
+- Terminus to Rikkos: 3 buses (TR-001 to TR-003)
+- Bukuru to JUTH: 3 buses (BJ-001 to BJ-003)
+
+**Bus Naming Convention:**
+- TB = Terminus-Bukuru
+- TV = Terminus-Vom
+- TBL = Terminus-Barkin Ladi
+- BR = Bukuru-Rayfield
+- TAR = Terminus-Angwan Rogo
+- TDK = Terminus-Dadin Kowa
+- TR = Terminus-Rikkos
+- BJ = Bukuru-JUTH
+
 ---
 
 ## Verify Seeded Data
@@ -66,9 +94,20 @@ Stop::count(); // Should return 43 total stops
 Route::find(1)->stops; // Get stops for route 1
 ```
 
+### Check Buses
+```php
+Bus::count(); // Should return 37 total buses
+Route::find(1)->buses; // Get buses for route 1
+Bus::where('route_id', 1)->get(); // All buses on route 1
+```
+
 ### Via API
 ```bash
+# Get all routes
 GET http://localhost:8000/api/v1/routes
+
+# Get route with stops
+GET http://localhost:8000/api/v1/routes/1
 ```
 
 ---

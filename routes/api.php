@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\BadgeController;
+use App\Http\Controllers\BusController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RouteController;
@@ -78,10 +79,22 @@ Route::prefix('v1')->group(function () {
     // DevOps endpoints (token-protected)
     Route::post('devops/clear-cache', [DevOpsController::class, 'clearCache']);
 
-    // Contributions endpoints (authenticated)
-    Route::prefix('contributions')->middleware('auth:sanctum')->group(function () {
-        Route::post('location', [\App\Http\Controllers\ContributionController::class, 'submitLocation']);
-        Route::post('crowding', [\App\Http\Controllers\ContributionController::class, 'submitCrowding']);
+    // Contributions endpoints
+    Route::prefix('contributions')->group(function () {
+        // Public endpoint - anyone can view latest contributions
         Route::get('latest', [\App\Http\Controllers\ContributionController::class, 'getLatest']);
+
+        // Authenticated endpoints - require login to submit
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('location', [\App\Http\Controllers\ContributionController::class, 'submitLocation']);
+            Route::post('crowding', [\App\Http\Controllers\ContributionController::class, 'submitCrowding']);
+        });
+    });
+
+    // Buses endpoints (public)
+    Route::prefix('buses')->group(function () {
+        Route::get('', [BusController::class, 'index']);
+        Route::get('{id}', [BusController::class, 'show']);
+        Route::get('route/{routeId}', [BusController::class, 'getByRoute']);
     });
 });
