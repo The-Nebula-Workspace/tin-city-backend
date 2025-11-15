@@ -34,7 +34,7 @@ Route::prefix('v1')->group(function () {
             Route::put('{badge}', [BadgeController::class, 'update']);
             Route::delete('{badge}', [BadgeController::class, 'destroy']);
         });
-    });
+    }); 
 
     // Admin dashboard and management endpoints
     Route::middleware(['auth:sanctum', 'can:is_admin'])->group(function () {
