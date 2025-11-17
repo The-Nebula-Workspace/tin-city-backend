@@ -7,10 +7,11 @@ use App\Models\Route;
 use App\Services\BusTrackingService;
 use App\Events\BusLocationUpdated;
 use App\Events\BusCrowdingUpdated;
-use Illuminate\Http\Request;
+use App\Http\Requests\SubmitLocationRequest;
+use App\Http\Requests\SubmitCrowdingRequest;
+use App\Http\Requests\GetLatestContributionsRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 /**
  * @group Contributions
@@ -48,25 +49,8 @@ class ContributionController extends Controller
      *   }
      * }
      */
-    public function submitLocation(Request $request): JsonResponse
+    public function submitLocation(SubmitLocationRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'route_id' => 'required|exists:routes,id',
-            'latitude' => 'required|numeric|between:-90,90',
-            'longitude' => 'required|numeric|between:-180,180',
-            'speed' => 'nullable|numeric|min:0',
-            'heading' => 'nullable|numeric|between:0,360',
-            'accuracy' => 'nullable|numeric|min:0',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
         $user = Auth::user();
         $routeId = $request->route_id;
 
@@ -145,24 +129,8 @@ class ContributionController extends Controller
      *   }
      * }
      */
-    public function submitCrowding(Request $request): JsonResponse
+    public function submitCrowding(SubmitCrowdingRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'route_id' => 'required|exists:routes,id',
-            'status' => 'required|in:full,standing,seats_available',
-            'crowding_level' => 'required|integer|between:1,5',
-            'latitude' => 'required|numeric|between:-90,90',
-            'longitude' => 'required|numeric|between:-180,180',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
         $user = Auth::user();
 
         $crowdingData = [
@@ -215,22 +183,8 @@ class ContributionController extends Controller
      *   }
      * }
      */
-    public function getLatest(Request $request): JsonResponse
+    public function getLatest(GetLatestContributionsRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'route_id' => 'required|exists:routes,id',
-            'type' => 'nullable|in:location,crowding,activity',
-            'limit' => 'nullable|integer|min:1|max:100',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
         $routeId = $request->route_id;
         $type = $request->type;
         $limit = $request->limit ?? 20;

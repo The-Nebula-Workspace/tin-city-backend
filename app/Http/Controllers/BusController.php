@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Bus;
 use App\Models\Route;
+use App\Http\Resources\BusResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * @group Buses
@@ -34,7 +36,7 @@ class BusController extends Controller
      *   ]
      * }
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request): AnonymousResourceCollection
     {
         $query = Bus::with('route:id,name,start_point,end_point');
 
@@ -44,11 +46,7 @@ class BusController extends Controller
 
         $buses = $query->orderBy('route_id')->orderBy('name')->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => $buses,
-            'total' => $buses->count(),
-        ]);
+        return BusResource::collection($buses);
     }
 
     /**
@@ -70,20 +68,17 @@ class BusController extends Controller
      *   }
      * }
      */
-    public function show(int $id): JsonResponse
+    public function show(Bus $bus): BusResource
     {
-        $bus = Bus::with('route.stops')->findOrFail($id);
+        $bus->load('route.stops');
 
-        return response()->json([
-            'success' => true,
-            'data' => $bus,
-        ]);
+        return new BusResource($bus);
     }
 
     /**
      * Get buses for a specific route
      *
-     * @urlParam routeId integer required The route ID. Example: 1
+     * @urlParam route integer required The route ID. Example: 1
      *
      * @response 200 {
      *   "success": true,
@@ -102,12 +97,9 @@ class BusController extends Controller
      *   }
      * }
      */
-    public function getByRoute(int $routeId): JsonResponse
+    public function getByRoute(Route $route): JsonResponse
     {
-        $route = Route::findOrFail($routeId);
-        $buses = Bus::where('route_id', $routeId)
-            ->orderBy('name')
-            ->get();
+        $buses = $route->buses()->orderBy('name')->get();
 
         return response()->json([
             'success' => true,
@@ -118,7 +110,7 @@ class BusController extends Controller
                     'start_point' => $route->start_point,
                     'end_point' => $route->end_point,
                 ],
-                'buses' => $buses,
+                'buses' => BusResource::collection($buses),
                 'total_buses' => $buses->count(),
             ],
         ]);

@@ -94,7 +94,7 @@ Route::prefix('v1')->group(function () {
     // Buses endpoints (public)
     Route::prefix('buses')->group(function () {
         Route::get('', [BusController::class, 'index']);
-        Route::get('{id}', [BusController::class, 'show']);
-        Route::get('route/{routeId}', [BusController::class, 'getByRoute']);
+        Route::get('{bus}', [BusController::class, 'show']);
+        Route::get('route/{route}', [BusController::class, 'getByRoute']);
     });
 });
