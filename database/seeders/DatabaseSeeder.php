@@ -16,15 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         $this->call(AdminUserSeeder::class);
 
         // User::factory(10)->create();
 
-
         User::factory()->create([
             'name' => 'Test User',
-                'password' => Hash::make('password'),
+            'password' => Hash::make('password'),
             'email' => 'test1@example.com',
         ]);
 
@@ -46,5 +44,11 @@ class DatabaseSeeder extends Seeder
                 'role' => 'user',
             ]
         );
+
+        // Seed routes and stops
+        $this->call(RouteSeeder::class);
+
+        // Seed buses for each route
+        $this->call(BusSeeder::class);
     }
 }

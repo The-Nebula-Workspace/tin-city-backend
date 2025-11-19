@@ -135,6 +135,38 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-buses" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="buses">
+                    <a href="#buses">Buses</a>
+                </li>
+                                    <ul id="tocify-subheader-buses" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="buses-GETapi-v1-buses">
+                                <a href="#buses-GETapi-v1-buses">Get all buses</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="buses-GETapi-v1-buses--bus_id-">
+                                <a href="#buses-GETapi-v1-buses--bus_id-">Get a specific bus</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="buses-GETapi-v1-buses-route--route_id-">
+                                <a href="#buses-GETapi-v1-buses-route--route_id-">Get buses for a specific route</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-contributions" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="contributions">
+                    <a href="#contributions">Contributions</a>
+                </li>
+                                    <ul id="tocify-subheader-contributions" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="contributions-GETapi-v1-contributions-latest">
+                                <a href="#contributions-GETapi-v1-contributions-latest">Get latest contributions for a route</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="contributions-POSTapi-v1-contributions-location">
+                                <a href="#contributions-POSTapi-v1-contributions-location">Submit bus location contribution</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="contributions-POSTapi-v1-contributions-crowding">
+                                <a href="#contributions-POSTapi-v1-contributions-crowding">Submit bus crowding report</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-devops" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="devops">
                     <a href="#devops">DevOps</a>
@@ -202,7 +234,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: November 3, 2025</li>
+        <li>Last updated: November 19, 2025</li>
     </ul>
 </div>
 
@@ -2621,6 +2653,1081 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                <h1 id="buses">Buses</h1>
+
+    <p>APIs for managing and retrieving buses</p>
+
+                                <h2 id="buses-GETapi-v1-buses">Get all buses</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-buses">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://tin-city-metro.test/api/v1/buses?route_id=1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://tin-city-metro.test/api/v1/buses"
+);
+
+const params = {
+    "route_id": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-buses">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;TB-001&quot;,
+            &quot;route_id&quot;: 1,
+            &quot;route&quot;: {
+                &quot;id&quot;: 1,
+                &quot;name&quot;: &quot;Terminus to Bukuru&quot;
+            }
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-buses" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-buses"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-buses"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-buses" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-buses">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-buses" data-method="GET"
+      data-path="api/v1/buses"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-buses', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-buses"
+                    onclick="tryItOut('GETapi-v1-buses');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-buses"
+                    onclick="cancelTryOut('GETapi-v1-buses');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-buses"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/buses</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-buses"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-buses"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>route_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="route_id"                data-endpoint="GETapi-v1-buses"
+               value="1"
+               data-component="query">
+    <br>
+<p>optional Filter by route ID. Example: <code>1</code></p>
+            </div>
+                </form>
+
+                    <h2 id="buses-GETapi-v1-buses--bus_id-">Get a specific bus</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-buses--bus_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://tin-city-metro.test/api/v1/buses/16" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://tin-city-metro.test/api/v1/buses/16"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-buses--bus_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;TB-001&quot;,
+        &quot;route_id&quot;: 1,
+        &quot;route&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Terminus to Bukuru&quot;,
+            &quot;stops&quot;: []
+        }
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-buses--bus_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-buses--bus_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-buses--bus_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-buses--bus_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-buses--bus_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-buses--bus_id-" data-method="GET"
+      data-path="api/v1/buses/{bus_id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-buses--bus_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-buses--bus_id-"
+                    onclick="tryItOut('GETapi-v1-buses--bus_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-buses--bus_id-"
+                    onclick="cancelTryOut('GETapi-v1-buses--bus_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-buses--bus_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/buses/{bus_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-buses--bus_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-buses--bus_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bus_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bus_id"                data-endpoint="GETapi-v1-buses--bus_id-"
+               value="16"
+               data-component="url">
+    <br>
+<p>The ID of the bus. Example: <code>16</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bus</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bus"                data-endpoint="GETapi-v1-buses--bus_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The bus ID. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="buses-GETapi-v1-buses-route--route_id-">Get buses for a specific route</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-buses-route--route_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://tin-city-metro.test/api/v1/buses/route/16" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://tin-city-metro.test/api/v1/buses/route/16"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-buses-route--route_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;route&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Terminus to Bukuru&quot;
+        },
+        &quot;buses&quot;: [
+            {
+                &quot;id&quot;: 1,
+                &quot;name&quot;: &quot;TB-001&quot;
+            }
+        ],
+        &quot;total_buses&quot;: 8
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-buses-route--route_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-buses-route--route_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-buses-route--route_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-buses-route--route_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-buses-route--route_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-buses-route--route_id-" data-method="GET"
+      data-path="api/v1/buses/route/{route_id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-buses-route--route_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-buses-route--route_id-"
+                    onclick="tryItOut('GETapi-v1-buses-route--route_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-buses-route--route_id-"
+                    onclick="cancelTryOut('GETapi-v1-buses-route--route_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-buses-route--route_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/buses/route/{route_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-buses-route--route_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-buses-route--route_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>route_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="route_id"                data-endpoint="GETapi-v1-buses-route--route_id-"
+               value="16"
+               data-component="url">
+    <br>
+<p>The ID of the route. Example: <code>16</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>route</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="route"                data-endpoint="GETapi-v1-buses-route--route_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The route ID. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                <h1 id="contributions">Contributions</h1>
+
+    <p>APIs for users to contribute real-time bus data</p>
+
+                                <h2 id="contributions-GETapi-v1-contributions-latest">Get latest contributions for a route</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-contributions-latest">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://tin-city-metro.test/api/v1/contributions/latest?route_id=1&amp;type=location&amp;limit=20" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"route_id\": \"architecto\",
+    \"type\": \"location\",
+    \"limit\": 22
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://tin-city-metro.test/api/v1/contributions/latest"
+);
+
+const params = {
+    "route_id": "1",
+    "type": "location",
+    "limit": "20",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "route_id": "architecto",
+    "type": "location",
+    "limit": 22
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-contributions-latest">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;contributions&quot;: [],
+        &quot;active_buses&quot;: [],
+        &quot;active_buses_count&quot;: 3
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-contributions-latest" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-contributions-latest"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-contributions-latest"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-contributions-latest" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-contributions-latest">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-contributions-latest" data-method="GET"
+      data-path="api/v1/contributions/latest"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-contributions-latest', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-contributions-latest"
+                    onclick="tryItOut('GETapi-v1-contributions-latest');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-contributions-latest"
+                    onclick="cancelTryOut('GETapi-v1-contributions-latest');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-contributions-latest"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/contributions/latest</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-contributions-latest"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-contributions-latest"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>route_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="route_id"                data-endpoint="GETapi-v1-contributions-latest"
+               value="1"
+               data-component="query">
+    <br>
+<p>The route ID. Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="type"                data-endpoint="GETapi-v1-contributions-latest"
+               value="location"
+               data-component="query">
+    <br>
+<p>optional Filter by type (location, crowding). Example: <code>location</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-contributions-latest"
+               value="20"
+               data-component="query">
+    <br>
+<p>optional Number of results. Example: <code>20</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>route_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="route_id"                data-endpoint="GETapi-v1-contributions-latest"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>The <code>id</code> of an existing record in the routes table. Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="type"                data-endpoint="GETapi-v1-contributions-latest"
+               value="location"
+               data-component="body">
+    <br>
+<p>Example: <code>location</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>location</code></li> <li><code>crowding</code></li> <li><code>activity</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-contributions-latest"
+               value="22"
+               data-component="body">
+    <br>
+<p>Must be at least 1. Must not be greater than 100. Example: <code>22</code></p>
+        </div>
+        </form>
+
+                    <h2 id="contributions-POSTapi-v1-contributions-location">Submit bus location contribution</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-contributions-location">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://tin-city-metro.test/api/v1/contributions/location" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"route_id\": 1,
+    \"latitude\": 9.8965,
+    \"longitude\": 8.8583,
+    \"speed\": 45.5,
+    \"heading\": 180,
+    \"accuracy\": 10.5
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://tin-city-metro.test/api/v1/contributions/location"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "route_id": 1,
+    "latitude": 9.8965,
+    "longitude": 8.8583,
+    "speed": 45.5,
+    "heading": 180,
+    "accuracy": 10.5
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-contributions-location">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Location contribution recorded&quot;,
+    &quot;data&quot;: {
+        &quot;contribution_id&quot;: 1,
+        &quot;is_on_route&quot;: true,
+        &quot;active_buses_count&quot;: 3
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-contributions-location" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-contributions-location"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-contributions-location"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-contributions-location" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-contributions-location">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-contributions-location" data-method="POST"
+      data-path="api/v1/contributions/location"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-contributions-location', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-contributions-location"
+                    onclick="tryItOut('POSTapi-v1-contributions-location');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-contributions-location"
+                    onclick="cancelTryOut('POSTapi-v1-contributions-location');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-contributions-location"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/contributions/location</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-contributions-location"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-contributions-location"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>route_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="route_id"                data-endpoint="POSTapi-v1-contributions-location"
+               value="1"
+               data-component="body">
+    <br>
+<p>The route ID. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>latitude</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="latitude"                data-endpoint="POSTapi-v1-contributions-location"
+               value="9.8965"
+               data-component="body">
+    <br>
+<p>Current latitude. Example: <code>9.8965</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>longitude</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="longitude"                data-endpoint="POSTapi-v1-contributions-location"
+               value="8.8583"
+               data-component="body">
+    <br>
+<p>Current longitude. Example: <code>8.8583</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>speed</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="speed"                data-endpoint="POSTapi-v1-contributions-location"
+               value="45.5"
+               data-component="body">
+    <br>
+<p>optional Speed in km/h. Example: <code>45.5</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>heading</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="heading"                data-endpoint="POSTapi-v1-contributions-location"
+               value="180"
+               data-component="body">
+    <br>
+<p>optional Direction in degrees. Example: <code>180</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>accuracy</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="accuracy"                data-endpoint="POSTapi-v1-contributions-location"
+               value="10.5"
+               data-component="body">
+    <br>
+<p>optional GPS accuracy in meters. Example: <code>10.5</code></p>
+        </div>
+        </form>
+
+                    <h2 id="contributions-POSTapi-v1-contributions-crowding">Submit bus crowding report</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-contributions-crowding">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "https://tin-city-metro.test/api/v1/contributions/crowding" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"route_id\": 1,
+    \"status\": \"standing\",
+    \"crowding_level\": 3,
+    \"latitude\": 9.8965,
+    \"longitude\": 8.8583
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://tin-city-metro.test/api/v1/contributions/crowding"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "route_id": 1,
+    "status": "standing",
+    "crowding_level": 3,
+    "latitude": 9.8965,
+    "longitude": 8.8583
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-contributions-crowding">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;Crowding report submitted&quot;,
+    &quot;data&quot;: {
+        &quot;contribution_id&quot;: 2
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-contributions-crowding" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-contributions-crowding"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-contributions-crowding"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-contributions-crowding" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-contributions-crowding">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-contributions-crowding" data-method="POST"
+      data-path="api/v1/contributions/crowding"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-contributions-crowding', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-contributions-crowding"
+                    onclick="tryItOut('POSTapi-v1-contributions-crowding');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-contributions-crowding"
+                    onclick="cancelTryOut('POSTapi-v1-contributions-crowding');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-contributions-crowding"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/contributions/crowding</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-contributions-crowding"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-contributions-crowding"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>route_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="route_id"                data-endpoint="POSTapi-v1-contributions-crowding"
+               value="1"
+               data-component="body">
+    <br>
+<p>The route ID. Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="POSTapi-v1-contributions-crowding"
+               value="standing"
+               data-component="body">
+    <br>
+<p>Bus status. Example: <code>standing</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>crowding_level</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="crowding_level"                data-endpoint="POSTapi-v1-contributions-crowding"
+               value="3"
+               data-component="body">
+    <br>
+<p>Crowding level 1-5. Example: <code>3</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>latitude</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="latitude"                data-endpoint="POSTapi-v1-contributions-crowding"
+               value="9.8965"
+               data-component="body">
+    <br>
+<p>Current latitude. Example: <code>9.8965</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>longitude</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="longitude"                data-endpoint="POSTapi-v1-contributions-crowding"
+               value="8.8583"
+               data-component="body">
+    <br>
+<p>Current longitude. Example: <code>8.8583</code></p>
+        </div>
+        </form>
+
                 <h1 id="devops">DevOps</h1>
 
     
@@ -2826,7 +3933,7 @@ fetch(url, {
 location: https://accounts.google.com/o/oauth2/auth?client_id=583283672277-gqr010gkltbcddlnb71ptfhprksc02bn.apps.googleusercontent.com&amp;redirect_uri=https%3A%2F%2Faccounts.google.com%2Fo%2Foauth2%2Fauth&amp;scope=openid+profile+email&amp;response_type=code
 content-type: text/html; charset=utf-8
 access-control-allow-origin: *
-set-cookie: XSRF-TOKEN=eyJpdiI6IkxSUFNZNnBQV2ZhY0pkL3B4MmJiS0E9PSIsInZhbHVlIjoiSGc4c2ZrNnhBejZGbXE5aW9hTnZKZVFOQWcrMWQ2MG9GdFdtckFFNmg3TUd6K3dPV2ZxMlF2MEVTcWI1UUVUZ3pjV3dmdmppeWdQR1crSkdZRDhoRElITFY3aVJRY05zNVJ3L1NJNVVmczhFeVV1Umo3K2o0VUlNMlRmUUp1Q2giLCJtYWMiOiI1OTU2Nzg1NmY3ZTUxNWM2Mjg2OWE0YjUyZTMwZjFlMDY4NTVmMzJhZTg5YWU3Mzg1Y2VmMjhkOTVhYTA3ZmQ5IiwidGFnIjoiIn0%3D; expires=Mon, 03 Nov 2025 14:47:30 GMT; Max-Age=7200; path=/; secure; samesite=lax; tin-city-metro-session=eyJpdiI6ImtvSXMrOEJMYkY1NkNZOTFZTTdNSlE9PSIsInZhbHVlIjoidUlYbGtZdXdPb1Z1elpBczhuQ0Y3STR5Q0hqSTJrZTQxNWp6bGVxc3VOMlZLa3RsZ0RqT2VES0FFS0tsVXpmL1ZLT0RLeFNhNnJ5R2taalpNNXU3WWhtZjFHY25TZjNkR3FnYkprQkRNQWR4dmdsb0lkWm84amFpYkpoRnBNb1AiLCJtYWMiOiJlNDk5OTQ4NzM0YWFlYTM1M2M3NWVhZmM2YWNmZTk4OTBhM2U1MzhjNWRkYzgxZjk1MmI0ZDhhNjUxNjcwY2EwIiwidGFnIjoiIn0%3D; expires=Mon, 03 Nov 2025 14:47:30 GMT; Max-Age=7200; path=/; secure; httponly; samesite=lax
+set-cookie: XSRF-TOKEN=eyJpdiI6IldZdGdiNnR5ZVNRU2VTME52allQR2c9PSIsInZhbHVlIjoiTU5ESXdHcEc1ZkFVQk5QNFJtNmczdGlocWdFT1MrQ1FiVnE1alFsdU5SSlA3dlFOenpkMEg1MHdDNDdhV0Zzd3dxM2F5bWQ4dVZwSHhuMHB1dGZ3OERkS2s4UytUMUluOVVveUs5OFo2dU9yRHhYZDRQVGpLaGdjbVh5azhHN20iLCJtYWMiOiI0OWE3Yzg4NzQwNmVhZjdkMzcxMjg0OTIyNmE4ZTA2Zjc3MDVhYjQ5ODY5YzM1NGFhODQzZTdmYzBhZWI3NmQ2IiwidGFnIjoiIn0%3D; expires=Wed, 19 Nov 2025 16:18:58 GMT; Max-Age=7200; path=/; secure; samesite=lax; tin-city-metro-session=eyJpdiI6IkN0b0xPTitCVEs0eW9KbU9DOEQrbHc9PSIsInZhbHVlIjoiUFgyeUtreUN5bUhsb0RXNS9UNXprQmduazVLaFg3dVdJWGlzWTM4OEdaVW1vMVVsQkhKUGdSOXpXMkZDejNkZGdBM3cvMm4wRm1tNFRydzRUbWpNZzEvMGx1VytKOGp3ZURpYnFORG50andtMURMYXhlMU9MUDhCdGJWOElIS2ciLCJtYWMiOiJlMmZjZWUxZjVmNjY0ZDVhYzg0OTE1Zjk5Y2I4NDAyYzYxMWE0ZDA2ZTRkZWRlMjE5YWJkODViZTg4ZTNmMTQyIiwidGFnIjoiIn0%3D; expires=Wed, 19 Nov 2025 16:18:58 GMT; Max-Age=7200; path=/; secure; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">&lt;!DOCTYPE html&gt;

@@ -19,18 +19,41 @@ class FcmService
 
     private function getAccessToken()
     {
-        $client = new Client();
-        $credentialsJson = base64_decode(config('services.fcm.credentials'));
-        $credentials = json_decode($credentialsJson, true);
-        $client->setAuthConfig($credentials);
-        $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
-        $token = $client->fetchAccessTokenWithAssertion();
+        $credentialsBase64 = config('services.fcm.credentials');
 
-        return $token['access_token'];
+        if (empty($credentialsBase64)) {
+            Log::warning('FCM credentials not configured');
+            return null;
+        }
+
+        try {
+            $client = new Client();
+            $credentialsJson = base64_decode($credentialsBase64);
+            $credentials = json_decode($credentialsJson, true);
+
+            if (!$credentials) {
+                Log::warning('Invalid FCM credentials format');
+                return null;
+            }
+
+            $client->setAuthConfig($credentials);
+            $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
+            $token = $client->fetchAccessTokenWithAssertion();
+
+            return $token['access_token'] ?? null;
+        } catch (\Exception $e) {
+            Log::error('Failed to get FCM access token: ' . $e->getMessage());
+            return null;
+        }
     }
 
     public function sendNotification($deviceToken, $title, $body, $data = [])
     {
+        if (!$this->accessToken) {
+            Log::warning('Cannot send FCM notification: Access token not available');
+            return ['error' => 'FCM not configured'];
+        }
+
         $url = "https://fcm.googleapis.com/v1/projects/{$this->projectId}/messages:send";
 
         $message = [
@@ -44,11 +67,16 @@ class FcmService
             ],
         ];
 
-        $response = Http::withToken($this->accessToken)
-            ->post($url, $message);
+        try {
+            $response = Http::withToken($this->accessToken)
+                ->post($url, $message);
 
-        Log::info('FCM Response: ' . $response->body());
+            Log::info('FCM Response: ' . $response->body());
 
-        return $response->json();
+            return $response->json();
+        } catch (\Exception $e) {
+            Log::error('FCM notification failed: ' . $e->getMessage());
+            return ['error' => $e->getMessage()];
+        }
     }
 }
