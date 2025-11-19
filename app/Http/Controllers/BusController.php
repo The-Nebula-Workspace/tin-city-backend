@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Bus;
 use App\Models\Route;
 use App\Http\Resources\BusResource;
+use App\Http\Resources\RouteResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * @group Buses
@@ -36,7 +36,7 @@ class BusController extends Controller
      *   ]
      * }
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): JsonResponse
     {
         $query = Bus::with('route:id,name,start_point,end_point');
 
@@ -46,13 +46,16 @@ class BusController extends Controller
 
         $buses = $query->orderBy('route_id')->orderBy('name')->get();
 
-        return BusResource::collection($buses);
+        return response()->json([
+            'success' => true,
+            'data' => BusResource::collection($buses),
+        ]);
     }
 
     /**
      * Get a specific bus
      *
-     * @urlParam id integer required The bus ID. Example: 1
+     * @urlParam bus integer required The bus ID. Example: 1
      *
      * @response 200 {
      *   "success": true,
@@ -68,11 +71,14 @@ class BusController extends Controller
      *   }
      * }
      */
-    public function show(Bus $bus): BusResource
+    public function show(Bus $bus): JsonResponse
     {
         $bus->load('route.stops');
 
-        return new BusResource($bus);
+        return response()->json([
+            'success' => true,
+            'data' => new BusResource($bus),
+        ]);
     }
 
     /**
@@ -104,12 +110,7 @@ class BusController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'route' => [
-                    'id' => $route->id,
-                    'name' => $route->name,
-                    'start_point' => $route->start_point,
-                    'end_point' => $route->end_point,
-                ],
+                'route' => new RouteResource($route),
                 'buses' => BusResource::collection($buses),
                 'total_buses' => $buses->count(),
             ],

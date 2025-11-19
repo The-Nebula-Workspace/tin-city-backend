@@ -26,6 +26,9 @@ class RouteResource extends JsonResource
             'stops' => $this->whenLoaded('stops', function () {
                 return StopResource::collection($this->stops);
             }),
+            'buses' => $this->whenLoaded('buses', function () {
+                return BusResource::collection($this->buses);
+            }),
             'contributions' => $this->whenLoaded('contributions', function () {
                 return ContributionResource::collection($this->contributions);
             }),

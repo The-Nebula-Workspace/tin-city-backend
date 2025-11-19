@@ -12,6 +12,8 @@ use App\Http\Requests\SubmitCrowdingRequest;
 use App\Http\Requests\GetLatestContributionsRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use App\Services\BadgeService;
+use App\Http\Resources\ContributionResource;
 
 /**
  * @group Contributions
@@ -21,10 +23,12 @@ use Illuminate\Support\Facades\Auth;
 class ContributionController extends Controller
 {
     private BusTrackingService $busTrackingService;
+    private BadgeService $badgeService;
 
-    public function __construct(BusTrackingService $busTrackingService)
+    public function __construct(BusTrackingService $busTrackingService, BadgeService $badgeService)
     {
         $this->busTrackingService = $busTrackingService;
+        $this->badgeService = $badgeService;
     }
 
     /**
@@ -95,6 +99,8 @@ class ContributionController extends Controller
 
             // Award points for contribution
             $user->addPoints(5);
+
+            $this->badgeService->checkAndAwardBadges($user);
         }
 
         $activeBuses = $this->busTrackingService->getActiveBusesForRoute($routeId);
@@ -158,6 +164,8 @@ class ContributionController extends Controller
 
         // Award points for contribution
         $user->addPoints(3);
+        $this->badgeService->checkAndAwardBadges($user);
+
 
         return response()->json([
             'success' => true,
@@ -179,7 +187,8 @@ class ContributionController extends Controller
      *   "success": true,
      *   "data": {
      *     "contributions": [],
-     *     "active_buses": []
+     *     "active_buses": [],
+     *     "active_buses_count": 3
      *   }
      * }
      */
@@ -207,7 +216,7 @@ class ContributionController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'contributions' => $contributions,
+                'contributions' => ContributionResource::collection($contributions),
                 'active_buses' => $activeBuses,
                 'active_buses_count' => count($activeBuses),
             ]
