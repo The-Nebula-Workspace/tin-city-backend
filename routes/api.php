@@ -1,15 +1,16 @@
 <?php
 
 
-use App\Http\Controllers\BadgeController;
-use App\Http\Controllers\NotificationController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RouteController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BadgeController;
+use App\Http\Controllers\BusController;
+use App\Http\Controllers\ContributionController;
 use App\Http\Controllers\DevOpsController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\RouteController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::prefix('routes')->group(function () {
@@ -34,7 +35,7 @@ Route::prefix('v1')->group(function () {
             Route::put('{badge}', [BadgeController::class, 'update']);
             Route::delete('{badge}', [BadgeController::class, 'destroy']);
         });
-    }); 
+    });
 
     // Admin dashboard and management endpoints
     Route::middleware(['auth:sanctum', 'can:is_admin'])->group(function () {
@@ -78,4 +79,23 @@ Route::prefix('v1')->group(function () {
 
     // DevOps endpoints (token-protected)
     Route::post('devops/clear-cache', [DevOpsController::class, 'clearCache']);
+
+    // Contributions endpoints
+    Route::prefix('contributions')->group(function () {
+        // Public endpoint - anyone can view latest contributions
+        Route::get('latest', [ContributionController::class, 'getLatest']);
+
+        // Authenticated endpoints - require login to submit
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('location', [ContributionController::class, 'submitLocation']);
+            Route::post('crowding', [ContributionController::class, 'submitCrowding']);
+        });
+    });
+
+    // Buses endpoints (public)
+    Route::prefix('buses')->group(function () {
+        Route::get('', [BusController::class, 'index']);
+        Route::get('{bus}', [BusController::class, 'show']);
+        Route::get('route/{route}', [BusController::class, 'getByRoute']);
+    });
 });

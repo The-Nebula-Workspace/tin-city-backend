@@ -37,4 +37,9 @@ class Route extends Model
     {
         return $this->hasMany(Contribution::class);
     }
+
+    public function buses(): HasMany
+    {
+        return $this->hasMany(Bus::class);
+    }
 }
