@@ -62,11 +62,15 @@ class NotificationController extends Controller
                 ['type' => $validated['type'] ?? 'reward']
             );
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Notification sent successfully!',
-                'response' => $response,
-            ], 200);
+            if (! is_array($response) || ! array_key_exists('error', $response)) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Notification sent successfully!',
+                    'response' => $response,
+                ], 200);
+            }
+
+            return $this->buildErrorResponse($response['error']);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -74,5 +78,32 @@ class NotificationController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    private function buildErrorResponse(array|string $error): JsonResponse
+    {
+        $statusCode = $this->resolveErrorStatusCode($error);
+        $message = is_array($error)
+            ? ($error['message'] ?? 'Failed to send notification.')
+            : (string) $error;
+
+        return response()->json([
+            'success' => false,
+            'message' => $message ?: 'Failed to send notification.',
+            'error' => $error,
+        ], $statusCode);
+    }
+
+    private function resolveErrorStatusCode(array|string $error): int
+    {
+        if (is_array($error) && isset($error['code']) && is_numeric($error['code'])) {
+            $code = (int) $error['code'];
+
+            if ($code >= 400 && $code <= 599) {
+                return $code;
+            }
+        }
+
+        return 500;
     }
 }

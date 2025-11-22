@@ -22,7 +22,7 @@ class SubmitLocationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'route_id' => 'required|exists:routes,id',
+            'route_id' => 'required|integer|exists:routes,id',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
             'speed' => 'nullable|numeric|min:0',
@@ -40,6 +40,7 @@ class SubmitLocationRequest extends FormRequest
     {
         return [
             'route_id.required' => 'The route ID is required.',
+            'route_id.integer' => 'The route ID must be an integer.',
             'route_id.exists' => 'The selected route does not exist.',
             'latitude.required' => 'The latitude is required.',
             'latitude.between' => 'The latitude must be between -90 and 90.',

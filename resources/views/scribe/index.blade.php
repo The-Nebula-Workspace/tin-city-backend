@@ -234,7 +234,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: November 19, 2025</li>
+        <li>Last updated: November 20, 2025</li>
     </ul>
 </div>
 
@@ -3128,7 +3128,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"route_id\": \"architecto\",
-    \"type\": \"location\",
+    \"type\": \"crowding\",
     \"limit\": 22
 }"
 </code></pre></div>
@@ -3154,7 +3154,7 @@ const headers = {
 
 let body = {
     "route_id": "architecto",
-    "type": "location",
+    "type": "crowding",
     "limit": 22
 };
 
@@ -3303,10 +3303,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="GETapi-v1-contributions-latest"
-               value="location"
+               value="crowding"
                data-component="body">
     <br>
-<p>Example: <code>location</code></p>
+<p>Example: <code>crowding</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>location</code></li> <li><code>crowding</code></li> <li><code>activity</code></li></ul>
         </div>
@@ -3933,7 +3933,7 @@ fetch(url, {
 location: https://accounts.google.com/o/oauth2/auth?client_id=583283672277-gqr010gkltbcddlnb71ptfhprksc02bn.apps.googleusercontent.com&amp;redirect_uri=https%3A%2F%2Faccounts.google.com%2Fo%2Foauth2%2Fauth&amp;scope=openid+profile+email&amp;response_type=code
 content-type: text/html; charset=utf-8
 access-control-allow-origin: *
-set-cookie: XSRF-TOKEN=eyJpdiI6IldZdGdiNnR5ZVNRU2VTME52allQR2c9PSIsInZhbHVlIjoiTU5ESXdHcEc1ZkFVQk5QNFJtNmczdGlocWdFT1MrQ1FiVnE1alFsdU5SSlA3dlFOenpkMEg1MHdDNDdhV0Zzd3dxM2F5bWQ4dVZwSHhuMHB1dGZ3OERkS2s4UytUMUluOVVveUs5OFo2dU9yRHhYZDRQVGpLaGdjbVh5azhHN20iLCJtYWMiOiI0OWE3Yzg4NzQwNmVhZjdkMzcxMjg0OTIyNmE4ZTA2Zjc3MDVhYjQ5ODY5YzM1NGFhODQzZTdmYzBhZWI3NmQ2IiwidGFnIjoiIn0%3D; expires=Wed, 19 Nov 2025 16:18:58 GMT; Max-Age=7200; path=/; secure; samesite=lax; tin-city-metro-session=eyJpdiI6IkN0b0xPTitCVEs0eW9KbU9DOEQrbHc9PSIsInZhbHVlIjoiUFgyeUtreUN5bUhsb0RXNS9UNXprQmduazVLaFg3dVdJWGlzWTM4OEdaVW1vMVVsQkhKUGdSOXpXMkZDejNkZGdBM3cvMm4wRm1tNFRydzRUbWpNZzEvMGx1VytKOGp3ZURpYnFORG50andtMURMYXhlMU9MUDhCdGJWOElIS2ciLCJtYWMiOiJlMmZjZWUxZjVmNjY0ZDVhYzg0OTE1Zjk5Y2I4NDAyYzYxMWE0ZDA2ZTRkZWRlMjE5YWJkODViZTg4ZTNmMTQyIiwidGFnIjoiIn0%3D; expires=Wed, 19 Nov 2025 16:18:58 GMT; Max-Age=7200; path=/; secure; httponly; samesite=lax
+set-cookie: XSRF-TOKEN=eyJpdiI6Ik9MdnR6Y3pZUlZvYTRIczRHaUVlbGc9PSIsInZhbHVlIjoieUZTUmNqa0p1aDU5MjFvbG92d0ZIWnpEdUZKYVcyQTZPZWdyN1h6SVVVVEYzQmVmc3N2WlRLSkFuRlJ3dDhnalRHT1orZHZDb0VPOGo4cEQzZzFBcjVHRGtJdUtxNWJkT2Z2NnZmS2o5ejFWa3JKR2FhOEtqUkRTZmpsZkF1VUEiLCJtYWMiOiJiNTNiYzNmZmFlM2Y1NjMwMTY5NTdlYzdjMTI2ODRlN2IyNTYwNmExYTZmNmYyMTgwMWRkNzJiODU4ODBiMDdhIiwidGFnIjoiIn0%3D; expires=Thu, 20 Nov 2025 12:07:22 GMT; Max-Age=7200; path=/; secure; samesite=lax; tin-city-metro-session=eyJpdiI6IkVTNDlzOGo0ZUF0cnp5N2N2REhHUnc9PSIsInZhbHVlIjoiZGxaVnlUVnFGam1URUwxVzd6RzRQVUtDM3FhdEJmTnYwMW9FWjRFZ0duUkoxTGo4cDBSdUg1d2JyQ08zNVBiempBRFpuQnVVSUtRa3o2eExTQzZyRDVadERkRUVWdHhnU1ZiNTliYWF2UmljVWtrV0ZhL1JGM21SN1ZEVXlVQ0QiLCJtYWMiOiI1NWY5YjM5ODA5MWNkOTE2OGE5NDgwY2RiOTYwMzI5ZmVkZGY5NWY2YzRiNGU1ZDNhYTAwMTgzMmU5MjAxNWFjIiwidGFnIjoiIn0%3D; expires=Thu, 20 Nov 2025 12:07:22 GMT; Max-Age=7200; path=/; secure; httponly; samesite=lax
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">&lt;!DOCTYPE html&gt;

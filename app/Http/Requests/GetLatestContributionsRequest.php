@@ -22,7 +22,7 @@ class GetLatestContributionsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'route_id' => 'required|exists:routes,id',
+            'route_id' => 'required|integer|exists:routes,id',
             'type' => 'nullable|in:location,crowding,activity',
             'limit' => 'nullable|integer|min:1|max:100',
         ];
@@ -37,6 +37,7 @@ class GetLatestContributionsRequest extends FormRequest
     {
         return [
             'route_id.required' => 'The route ID is required.',
+            'route_id.integer' => 'The route ID must be an integer.',
             'route_id.exists' => 'The selected route does not exist.',
             'type.in' => 'The type must be one of: location, crowding, or activity.',
             'limit.min' => 'The limit must be at least 1.',
@@ -44,4 +45,3 @@ class GetLatestContributionsRequest extends FormRequest
         ];
     }
 }
-

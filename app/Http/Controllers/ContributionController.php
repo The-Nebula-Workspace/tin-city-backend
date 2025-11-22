@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BusCrowdingUpdated;
+use App\Events\BusLocationUpdated;
+use App\Http\Requests\GetLatestContributionsRequest;
+use App\Http\Requests\SubmitCrowdingRequest;
+use App\Http\Requests\SubmitLocationRequest;
+use App\Http\Resources\ContributionResource;
 use App\Models\Contribution;
 use App\Models\Route;
+use App\Services\BadgeService;
 use App\Services\BusTrackingService;
-use App\Events\BusLocationUpdated;
-use App\Events\BusCrowdingUpdated;
-use App\Http\Requests\SubmitLocationRequest;
-use App\Http\Requests\SubmitCrowdingRequest;
-use App\Http\Requests\GetLatestContributionsRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use App\Services\BadgeService;
-use App\Http\Resources\ContributionResource;
 
 /**
  * @group Contributions
@@ -23,6 +23,7 @@ use App\Http\Resources\ContributionResource;
 class ContributionController extends Controller
 {
     private BusTrackingService $busTrackingService;
+
     private BadgeService $badgeService;
 
     public function __construct(BusTrackingService $busTrackingService, BadgeService $badgeService)
@@ -70,7 +71,7 @@ class ContributionController extends Controller
         ];
 
         // Validate user is on route (using stops as reference points)
-        $routeCoordinates = $route->stops->map(fn($stop) => [
+        $routeCoordinates = $route->stops->map(fn ($stop) => [
             'latitude' => (float) $stop->latitude,
             'longitude' => (float) $stop->longitude,
         ])->toArray();
@@ -112,7 +113,7 @@ class ContributionController extends Controller
                 'contribution_id' => $contribution->id,
                 'is_on_route' => $isOnRoute,
                 'active_buses_count' => count($activeBuses),
-            ]
+            ],
         ], 201);
     }
 
@@ -166,13 +167,12 @@ class ContributionController extends Controller
         $user->addPoints(3);
         $this->badgeService->checkAndAwardBadges($user);
 
-
         return response()->json([
             'success' => true,
             'message' => 'Crowding report submitted',
             'data' => [
                 'contribution_id' => $contribution->id,
-            ]
+            ],
         ], 201);
     }
 
@@ -194,9 +194,9 @@ class ContributionController extends Controller
      */
     public function getLatest(GetLatestContributionsRequest $request): JsonResponse
     {
-        $routeId = $request->route_id;
-        $type = $request->type;
-        $limit = $request->limit ?? 20;
+        $routeId = $request->validated('route_id');
+        $type = $request->validated('type');
+        $limit = $request->validated('limit') ?? 20;
 
         // Get contributions from database
         $query = Contribution::where('route_id', $routeId)
@@ -219,7 +219,7 @@ class ContributionController extends Controller
                 'contributions' => ContributionResource::collection($contributions),
                 'active_buses' => $activeBuses,
                 'active_buses_count' => count($activeBuses),
-            ]
+            ],
         ]);
     }
 }

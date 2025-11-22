@@ -11,6 +11,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse;
 
 /**
  * Controller for handling Google OAuth authentication
@@ -36,11 +37,10 @@ class GoogleAuthController extends Controller
      *   "error": "Error message"
      * }
      */
-    public function redirectToGoogle(): JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function redirectToGoogle(): JsonResponse|RedirectResponse
     {
         try {
-            $redirect = Socialite::driver('google')->stateless()->redirect();
-            return $redirect;
+            return Socialite::driver('google')->stateless()->redirect();
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

@@ -1,9 +1,7 @@
 <?php
 
-
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\ContributionController;
@@ -60,13 +58,6 @@ Route::prefix('v1')->group(function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login', [AuthController::class, 'login']);
         Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
-
-        // Google OAuth routes with web middleware for session support
-        Route::middleware('web')->group(function () {
-            Route::get('redirect', [GoogleAuthController::class, 'redirectToGoogle']);
-            Route::get('callback', [GoogleAuthController::class, 'handleGoogleCallback']);
-        });
-
 
         // Protected routes
         Route::middleware('auth:sanctum')->group(function () {

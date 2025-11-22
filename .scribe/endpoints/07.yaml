@@ -80,7 +80,7 @@ endpoints:
         name: type
         description: ''
         required: false
-        example: location
+        example: crowding
         type: string
         enumValues:
           - location
@@ -102,7 +102,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       route_id: architecto
-      type: location
+      type: crowding
       limit: 22
     fileParameters: []
     responses:
