@@ -3,7 +3,7 @@
 
 
 <aside>
-    <strong>Base URL</strong>: <code>https://tin-city-metro.test</code>
+    <strong>Base URL</strong>: <code>http://tin-city-metro.lvh.me</code>
 </aside>
 
     This documentation aims to provide all the information you need to work with our API.

@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "https://tin-city-metro.test";
+        var tryItOutBaseUrl = "http://tin-city-metro.lvh.me";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -127,9 +127,6 @@
                                                                                 <li class="tocify-item level-2" data-unique="badge-management-GETapi-v1-badges--id-">
                                 <a href="#badge-management-GETapi-v1-badges--id-">Display the specified badge.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="badge-management-PUTapi-v1-badges--badge_id-">
-                                <a href="#badge-management-PUTapi-v1-badges--badge_id-">PUT api/v1/badges/{badge_id}</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="badge-management-DELETEapi-v1-badges--badge_id-">
                                 <a href="#badge-management-DELETEapi-v1-badges--badge_id-">Remove the specified badge from storage.</a>
                             </li>
@@ -177,19 +174,6 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-google-authentication" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="google-authentication">
-                    <a href="#google-authentication">Google Authentication</a>
-                </li>
-                                    <ul id="tocify-subheader-google-authentication" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="google-authentication-GETapi-v1-auth-redirect">
-                                <a href="#google-authentication-GETapi-v1-auth-redirect">Redirect to Google for authentication</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="google-authentication-GETapi-v1-auth-callback">
-                                <a href="#google-authentication-GETapi-v1-auth-callback">Handle Google authentication callback and create or update user</a>
-                            </li>
-                                                                        </ul>
-                            </ul>
                     <ul id="tocify-header-notifications" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="notifications">
                     <a href="#notifications">Notifications</a>
@@ -217,9 +201,6 @@
                                                                                 <li class="tocify-item level-2" data-unique="routes-management-POSTapi-v1-routes">
                                 <a href="#routes-management-POSTapi-v1-routes">Store a newly created route (Admin only).</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="routes-management-PUTapi-v1-routes--route_id-">
-                                <a href="#routes-management-PUTapi-v1-routes--route_id-">Update an existing route (Admin only).</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="routes-management-DELETEapi-v1-routes--route_id-">
                                 <a href="#routes-management-DELETEapi-v1-routes--route_id-">Delete a route (Admin only).</a>
                             </li>
@@ -234,7 +215,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: November 20, 2025</li>
+        <li>Last updated: November 22, 2025</li>
     </ul>
 </div>
 
@@ -243,7 +224,7 @@
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>https://tin-city-metro.test</code>
+    <strong>Base URL</strong>: <code>http://tin-city-metro.lvh.me</code>
 </aside>
 <pre><code>This documentation aims to provide all the information you need to work with our API.
 
@@ -271,14 +252,14 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/admin/dashboard" \
+    --get "http://tin-city-metro.lvh.me/api/v1/admin/dashboard" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/admin/dashboard"
+    "http://tin-city-metro.lvh.me/api/v1/admin/dashboard"
 );
 
 const headers = {
@@ -391,14 +372,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/admin/contributions" \
+    --get "http://tin-city-metro.lvh.me/api/v1/admin/contributions" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/admin/contributions"
+    "http://tin-city-metro.lvh.me/api/v1/admin/contributions"
 );
 
 const headers = {
@@ -516,14 +497,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/admin/routes" \
+    --get "http://tin-city-metro.lvh.me/api/v1/admin/routes" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/admin/routes"
+    "http://tin-city-metro.lvh.me/api/v1/admin/routes"
 );
 
 const headers = {
@@ -641,14 +622,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/admin/users" \
+    --get "http://tin-city-metro.lvh.me/api/v1/admin/users" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/admin/users"
+    "http://tin-city-metro.lvh.me/api/v1/admin/users"
 );
 
 const headers = {
@@ -769,7 +750,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/auth/register" \
+    "http://tin-city-metro.lvh.me/api/v1/auth/register" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -784,7 +765,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/auth/register"
+    "http://tin-city-metro.lvh.me/api/v1/auth/register"
 );
 
 const headers = {
@@ -974,7 +955,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/auth/login" \
+    "http://tin-city-metro.lvh.me/api/v1/auth/login" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -986,7 +967,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/auth/login"
+    "http://tin-city-metro.lvh.me/api/v1/auth/login"
 );
 
 const headers = {
@@ -1145,7 +1126,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/auth/forgot-password" \
+    "http://tin-city-metro.lvh.me/api/v1/auth/forgot-password" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1156,7 +1137,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/auth/forgot-password"
+    "http://tin-city-metro.lvh.me/api/v1/auth/forgot-password"
 );
 
 const headers = {
@@ -1295,14 +1276,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/auth/logout" \
+    "http://tin-city-metro.lvh.me/api/v1/auth/logout" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/auth/logout"
+    "http://tin-city-metro.lvh.me/api/v1/auth/logout"
 );
 
 const headers = {
@@ -1423,14 +1404,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/auth/user" \
+    --get "http://tin-city-metro.lvh.me/api/v1/auth/user" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/auth/user"
+    "http://tin-city-metro.lvh.me/api/v1/auth/user"
 );
 
 const headers = {
@@ -1553,14 +1534,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/auth/resend-verification" \
+    "http://tin-city-metro.lvh.me/api/v1/auth/resend-verification" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/auth/resend-verification"
+    "http://tin-city-metro.lvh.me/api/v1/auth/resend-verification"
 );
 
 const headers = {
@@ -1681,14 +1662,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/auth/verify-email/architecto/architecto" \
+    --get "http://tin-city-metro.lvh.me/api/v1/auth/verify-email/architecto/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/auth/verify-email/architecto/architecto"
+    "http://tin-city-metro.lvh.me/api/v1/auth/verify-email/architecto/architecto"
 );
 
 const headers = {
@@ -1848,14 +1829,14 @@ Base URL: <code>/api/v1/badges</code></p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/badges" \
+    --get "http://tin-city-metro.lvh.me/api/v1/badges" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/badges"
+    "http://tin-city-metro.lvh.me/api/v1/badges"
 );
 
 const headers = {
@@ -1973,7 +1954,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/badges" \
+    "http://tin-city-metro.lvh.me/api/v1/badges" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1987,7 +1968,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/badges"
+    "http://tin-city-metro.lvh.me/api/v1/badges"
 );
 
 const headers = {
@@ -2156,14 +2137,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/badges/1" \
+    --get "http://tin-city-metro.lvh.me/api/v1/badges/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/badges/1"
+    "http://tin-city-metro.lvh.me/api/v1/badges/1"
 );
 
 const headers = {
@@ -2288,221 +2269,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="badge-management-PUTapi-v1-badges--badge_id-">PUT api/v1/badges/{badge_id}</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-PUTapi-v1-badges--badge_id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request PUT \
-    "https://tin-city-metro.test/api/v1/badges/16" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"name\": \"architecto\",
-    \"description\": \"Eius et animi quos velit et.\",
-    \"points_required\": 60,
-    \"icon\": \"architecto\"
-}"
-</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/badges/16"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "name": "architecto",
-    "description": "Eius et animi quos velit et.",
-    "points_required": 60,
-    "icon": "architecto"
-};
-
-fetch(url, {
-    method: "PUT",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-PUTapi-v1-badges--badge_id-">
-            <blockquote>
-            <p>Example response (200, Updated):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-  &quot;data&quot;: {
-    &quot;id&quot;: 1,
-    &quot;name&quot;: &quot;John Doe (Updated)&quot;,
-    &quot;description&quot;: &quot;lorem ipsum&quot;,
-    
-  }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (403, Forbidden):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;error&quot;: &quot;You are not authorized to perform this action&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-PUTapi-v1-badges--badge_id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-PUTapi-v1-badges--badge_id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-PUTapi-v1-badges--badge_id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-PUTapi-v1-badges--badge_id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-PUTapi-v1-badges--badge_id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-PUTapi-v1-badges--badge_id-" data-method="PUT"
-      data-path="api/v1/badges/{badge_id}"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('PUTapi-v1-badges--badge_id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-PUTapi-v1-badges--badge_id-"
-                    onclick="tryItOut('PUTapi-v1-badges--badge_id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-PUTapi-v1-badges--badge_id-"
-                    onclick="cancelTryOut('PUTapi-v1-badges--badge_id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-PUTapi-v1-badges--badge_id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-darkblue">PUT</small>
-            <b><code>api/v1/badges/{badge_id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="PUTapi-v1-badges--badge_id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="PUTapi-v1-badges--badge_id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>badge_id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="badge_id"                data-endpoint="PUTapi-v1-badges--badge_id-"
-               value="16"
-               data-component="url">
-    <br>
-<p>The ID of the badge. Example: <code>16</code></p>
-            </div>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>route</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="route"                data-endpoint="PUTapi-v1-badges--badge_id-"
-               value="1"
-               data-component="url">
-    <br>
-<p>The ID of the badge to update. Example: <code>1</code></p>
-            </div>
-                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="name"                data-endpoint="PUTapi-v1-badges--badge_id-"
-               value="architecto"
-               data-component="body">
-    <br>
-<p>optional The updated name of the badge. Example: <code>architecto</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
-<small>optional</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="description"                data-endpoint="PUTapi-v1-badges--badge_id-"
-               value="Eius et animi quos velit et."
-               data-component="body">
-    <br>
-<p>The description updated Example: <code>Eius et animi quos velit et.</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>points_required</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="points_required"                data-endpoint="PUTapi-v1-badges--badge_id-"
-               value="60"
-               data-component="body">
-    <br>
-<p>Must be at least 0. Example: <code>60</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>icon</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="icon"                data-endpoint="PUTapi-v1-badges--badge_id-"
-               value="architecto"
-               data-component="body">
-    <br>
-<p>Example: <code>architecto</code></p>
-        </div>
-        </form>
-
                     <h2 id="badge-management-DELETEapi-v1-badges--badge_id-">Remove the specified badge from storage.</h2>
 
 <p>
@@ -2517,14 +2283,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://tin-city-metro.test/api/v1/badges/16" \
+    "http://tin-city-metro.lvh.me/api/v1/badges/16" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/badges/16"
+    "http://tin-city-metro.lvh.me/api/v1/badges/16"
 );
 
 const headers = {
@@ -2670,14 +2436,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/buses?route_id=1" \
+    --get "http://tin-city-metro.lvh.me/api/v1/buses?route_id=1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/buses"
+    "http://tin-city-metro.lvh.me/api/v1/buses"
 );
 
 const params = {
@@ -2816,14 +2582,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/buses/16" \
+    --get "http://tin-city-metro.lvh.me/api/v1/buses/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/buses/16"
+    "http://tin-city-metro.lvh.me/api/v1/buses/1"
 );
 
 const headers = {
@@ -2935,10 +2701,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="bus_id"                data-endpoint="GETapi-v1-buses--bus_id-"
-               value="16"
+               value="1"
                data-component="url">
     <br>
-<p>The ID of the bus. Example: <code>16</code></p>
+<p>The ID of the bus. Example: <code>1</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>bus</code></b>&nbsp;&nbsp;
@@ -2966,14 +2732,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/buses/route/16" \
+    --get "http://tin-city-metro.lvh.me/api/v1/buses/route/2" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/buses/route/16"
+    "http://tin-city-metro.lvh.me/api/v1/buses/route/2"
 );
 
 const headers = {
@@ -3088,10 +2854,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="route_id"                data-endpoint="GETapi-v1-buses-route--route_id-"
-               value="16"
+               value="2"
                data-component="url">
     <br>
-<p>The ID of the route. Example: <code>16</code></p>
+<p>The ID of the route. Example: <code>2</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>route</code></b>&nbsp;&nbsp;
@@ -3123,12 +2889,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/contributions/latest?route_id=1&amp;type=location&amp;limit=20" \
+    --get "http://tin-city-metro.lvh.me/api/v1/contributions/latest?route_id=1&amp;type=location&amp;limit=20" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"route_id\": \"architecto\",
-    \"type\": \"crowding\",
+    \"route_id\": 16,
+    \"type\": \"location\",
     \"limit\": 22
 }"
 </code></pre></div>
@@ -3136,7 +2902,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/contributions/latest"
+    "http://tin-city-metro.lvh.me/api/v1/contributions/latest"
 );
 
 const params = {
@@ -3153,8 +2919,8 @@ const headers = {
 };
 
 let body = {
-    "route_id": "architecto",
-    "type": "crowding",
+    "route_id": 16,
+    "type": "location",
     "limit": 22
 };
 
@@ -3288,14 +3054,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
                         <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>route_id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+<small>integer</small>&nbsp;
  &nbsp;
-                <input type="text" style="display: none"
-                              name="route_id"                data-endpoint="GETapi-v1-contributions-latest"
-               value="architecto"
+                <input type="number" style="display: none"
+               step="any"               name="route_id"                data-endpoint="GETapi-v1-contributions-latest"
+               value="16"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the routes table. Example: <code>architecto</code></p>
+<p>The <code>id</code> of an existing record in the routes table. Example: <code>16</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
@@ -3303,10 +3069,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="GETapi-v1-contributions-latest"
-               value="crowding"
+               value="location"
                data-component="body">
     <br>
-<p>Example: <code>crowding</code></p>
+<p>Example: <code>location</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>location</code></li> <li><code>crowding</code></li> <li><code>activity</code></li></ul>
         </div>
@@ -3337,7 +3103,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/contributions/location" \
+    "http://tin-city-metro.lvh.me/api/v1/contributions/location" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -3353,7 +3119,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/contributions/location"
+    "http://tin-city-metro.lvh.me/api/v1/contributions/location"
 );
 
 const headers = {
@@ -3547,7 +3313,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/contributions/crowding" \
+    "http://tin-city-metro.lvh.me/api/v1/contributions/crowding" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -3562,7 +3328,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/contributions/crowding"
+    "http://tin-city-metro.lvh.me/api/v1/contributions/crowding"
 );
 
 const headers = {
@@ -3746,7 +3512,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/devops/clear-cache" \
+    "http://tin-city-metro.lvh.me/api/v1/devops/clear-cache" \
     --header "X-DevOps-Token: required The DevOps token used to authorize the request." \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3754,7 +3520,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/devops/clear-cache"
+    "http://tin-city-metro.lvh.me/api/v1/devops/clear-cache"
 );
 
 const headers = {
@@ -3873,302 +3639,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                <h1 id="google-authentication">Google Authentication</h1>
-
-    
-
-                                <h2 id="google-authentication-GETapi-v1-auth-redirect">Redirect to Google for authentication</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-v1-auth-redirect">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/auth/redirect" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/auth/redirect"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-v1-auth-redirect">
-            <blockquote>
-            <p>Example response (302):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-  &quot;Redirects to Google OAuth page&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (302):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-location: https://accounts.google.com/o/oauth2/auth?client_id=583283672277-gqr010gkltbcddlnb71ptfhprksc02bn.apps.googleusercontent.com&amp;redirect_uri=https%3A%2F%2Faccounts.google.com%2Fo%2Foauth2%2Fauth&amp;scope=openid+profile+email&amp;response_type=code
-content-type: text/html; charset=utf-8
-access-control-allow-origin: *
-set-cookie: XSRF-TOKEN=eyJpdiI6Ik9MdnR6Y3pZUlZvYTRIczRHaUVlbGc9PSIsInZhbHVlIjoieUZTUmNqa0p1aDU5MjFvbG92d0ZIWnpEdUZKYVcyQTZPZWdyN1h6SVVVVEYzQmVmc3N2WlRLSkFuRlJ3dDhnalRHT1orZHZDb0VPOGo4cEQzZzFBcjVHRGtJdUtxNWJkT2Z2NnZmS2o5ejFWa3JKR2FhOEtqUkRTZmpsZkF1VUEiLCJtYWMiOiJiNTNiYzNmZmFlM2Y1NjMwMTY5NTdlYzdjMTI2ODRlN2IyNTYwNmExYTZmNmYyMTgwMWRkNzJiODU4ODBiMDdhIiwidGFnIjoiIn0%3D; expires=Thu, 20 Nov 2025 12:07:22 GMT; Max-Age=7200; path=/; secure; samesite=lax; tin-city-metro-session=eyJpdiI6IkVTNDlzOGo0ZUF0cnp5N2N2REhHUnc9PSIsInZhbHVlIjoiZGxaVnlUVnFGam1URUwxVzd6RzRQVUtDM3FhdEJmTnYwMW9FWjRFZ0duUkoxTGo4cDBSdUg1d2JyQ08zNVBiempBRFpuQnVVSUtRa3o2eExTQzZyRDVadERkRUVWdHhnU1ZiNTliYWF2UmljVWtrV0ZhL1JGM21SN1ZEVXlVQ0QiLCJtYWMiOiI1NWY5YjM5ODA5MWNkOTE2OGE5NDgwY2RiOTYwMzI5ZmVkZGY5NWY2YzRiNGU1ZDNhYTAwMTgzMmU5MjAxNWFjIiwidGFnIjoiIn0%3D; expires=Thu, 20 Nov 2025 12:07:22 GMT; Max-Age=7200; path=/; secure; httponly; samesite=lax
- </code></pre></details>         <pre>
-
-<code class="language-json" style="max-height: 300px;">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;UTF-8&quot; /&gt;
-        &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;url=&#039;https://accounts.google.com/o/oauth2/auth?client_id=583283672277-gqr010gkltbcddlnb71ptfhprksc02bn.apps.googleusercontent.com&amp;amp;redirect_uri=https%3A%2F%2Faccounts.google.com%2Fo%2Foauth2%2Fauth&amp;amp;scope=openid+profile+email&amp;amp;response_type=code&#039;&quot; /&gt;
-
-        &lt;title&gt;Redirecting to https://accounts.google.com/o/oauth2/auth?client_id=583283672277-gqr010gkltbcddlnb71ptfhprksc02bn.apps.googleusercontent.com&amp;amp;redirect_uri=https%3A%2F%2Faccounts.google.com%2Fo%2Foauth2%2Fauth&amp;amp;scope=openid+profile+email&amp;amp;response_type=code&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        Redirecting to &lt;a href=&quot;https://accounts.google.com/o/oauth2/auth?client_id=583283672277-gqr010gkltbcddlnb71ptfhprksc02bn.apps.googleusercontent.com&amp;amp;redirect_uri=https%3A%2F%2Faccounts.google.com%2Fo%2Foauth2%2Fauth&amp;amp;scope=openid+profile+email&amp;amp;response_type=code&quot;&gt;https://accounts.google.com/o/oauth2/auth?client_id=583283672277-gqr010gkltbcddlnb71ptfhprksc02bn.apps.googleusercontent.com&amp;amp;redirect_uri=https%3A%2F%2Faccounts.google.com%2Fo%2Foauth2%2Fauth&amp;amp;scope=openid+profile+email&amp;amp;response_type=code&lt;/a&gt;.
-    &lt;/body&gt;
-&lt;/html&gt;</code>
- </pre>
-            <blockquote>
-            <p>Example response (500):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: false,
-    &quot;message&quot;: &quot;Failed to redirect to Google&quot;,
-    &quot;error&quot;: &quot;Error message&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-v1-auth-redirect" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-auth-redirect"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-auth-redirect"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-v1-auth-redirect" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-auth-redirect">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-v1-auth-redirect" data-method="GET"
-      data-path="api/v1/auth/redirect"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-auth-redirect', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-auth-redirect"
-                    onclick="tryItOut('GETapi-v1-auth-redirect');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-auth-redirect"
-                    onclick="cancelTryOut('GETapi-v1-auth-redirect');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-auth-redirect"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/v1/auth/redirect</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-v1-auth-redirect"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-v1-auth-redirect"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="google-authentication-GETapi-v1-auth-callback">Handle Google authentication callback and create or update user</h2>
-
-<p>
-</p>
-
-<p>This method handles the callback from Google OAuth, either creating a new user
-or updating an existing user with their Google ID. It also creates an API token
-for authentication.</p>
-
-<span id="example-requests-GETapi-v1-auth-callback">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/auth/callback" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/auth/callback"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-v1-auth-callback">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: true,
-    &quot;message&quot;: &quot;Google authentication successful&quot;,
-    &quot;data&quot;: {
-        &quot;user&quot;: {},
-        &quot;token&quot;: &quot;1|abcdefghijklmnopqrstuvwxyz&quot;
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: false,
-    &quot;message&quot;: &quot;Google authentication failed&quot;,
-    &quot;error&quot;: &quot;Error message&quot;,
-    &quot;file&quot;: &quot;/path/to/file.php&quot;,
-    &quot;line&quot;: 123
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-v1-auth-callback" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-auth-callback"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-auth-callback"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-v1-auth-callback" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-auth-callback">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-GETapi-v1-auth-callback" data-method="GET"
-      data-path="api/v1/auth/callback"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-auth-callback', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-auth-callback"
-                    onclick="tryItOut('GETapi-v1-auth-callback');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-auth-callback"
-                    onclick="cancelTryOut('GETapi-v1-auth-callback');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-auth-callback"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/v1/auth/callback</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-v1-auth-callback"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-v1-auth-callback"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
                 <h1 id="notifications">Notifications</h1>
 
     <p>APIs for managing push notifications</p>
@@ -4186,7 +3656,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/notifications/test" \
+    "http://tin-city-metro.lvh.me/api/v1/notifications/test" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -4200,7 +3670,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/notifications/test"
+    "http://tin-city-metro.lvh.me/api/v1/notifications/test"
 );
 
 const headers = {
@@ -4399,14 +3869,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/routes/export" \
+    --get "http://tin-city-metro.lvh.me/api/v1/routes/export" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/routes/export"
+    "http://tin-city-metro.lvh.me/api/v1/routes/export"
 );
 
 const headers = {
@@ -4517,14 +3987,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/routes" \
+    --get "http://tin-city-metro.lvh.me/api/v1/routes" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/routes"
+    "http://tin-city-metro.lvh.me/api/v1/routes"
 );
 
 const headers = {
@@ -4642,14 +4112,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "https://tin-city-metro.test/api/v1/routes/1" \
+    --get "http://tin-city-metro.lvh.me/api/v1/routes/1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/routes/1"
+    "http://tin-city-metro.lvh.me/api/v1/routes/1"
 );
 
 const headers = {
@@ -4787,7 +4257,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "https://tin-city-metro.test/api/v1/routes" \
+    "http://tin-city-metro.lvh.me/api/v1/routes" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -4806,7 +4276,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/routes"
+    "http://tin-city-metro.lvh.me/api/v1/routes"
 );
 
 const headers = {
@@ -5002,10 +4472,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="stops.0.latitude"                data-endpoint="POSTapi-v1-routes"
-               value="4326.41688"
+               value="-89"
                data-component="body">
     <br>
-<p>This field is required when <code>stops</code> is present. Example: <code>4326.41688</code></p>
+<p>This field is required when <code>stops</code> is present. Must be between -90 and 90. Example: <code>-89</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>longitude</code></b>&nbsp;&nbsp;
@@ -5013,10 +4483,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="stops.0.longitude"                data-endpoint="POSTapi-v1-routes"
-               value="4326.41688"
+               value="-180"
                data-component="body">
     <br>
-<p>This field is required when <code>stops</code> is present. Example: <code>4326.41688</code></p>
+<p>This field is required when <code>stops</code> is present. Must be between -180 and 180. Example: <code>-180</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>order_index</code></b>&nbsp;&nbsp;
@@ -5044,318 +4514,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="routes-management-PUTapi-v1-routes--route_id-">Update an existing route (Admin only).</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-PUTapi-v1-routes--route_id-">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request PUT \
-    "https://tin-city-metro.test/api/v1/routes/16" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"name\": \"architecto\",
-    \"start_point\": \"n\",
-    \"end_point\": \"g\",
-    \"encoded_polyline\": \"architecto\",
-    \"distance_km\": 39,
-    \"stops\": [
-        {
-            \"name\": \"architecto\",
-            \"latitude\": 4326.41688,
-            \"longitude\": 4326.41688,
-            \"order_index\": 16
-        }
-    ],
-    \"distance\": 4326.41688
-}"
-</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/routes/16"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "name": "architecto",
-    "start_point": "n",
-    "end_point": "g",
-    "encoded_polyline": "architecto",
-    "distance_km": 39,
-    "stops": [
-        {
-            "name": "architecto",
-            "latitude": 4326.41688,
-            "longitude": 4326.41688,
-            "order_index": 16
-        }
-    ],
-    "distance": 4326.41688
-};
-
-fetch(url, {
-    method: "PUT",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-PUTapi-v1-routes--route_id-">
-            <blockquote>
-            <p>Example response (200, Updated):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;id&quot;: 1,
-        &quot;name&quot;: &quot;Terminus to Bukuru (Updated)&quot;,
-        &quot;encoded_polyline&quot;: &quot;xyz123...&quot;,
-        &quot;distance&quot;: 9.1
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (403, Forbidden):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;error&quot;: &quot;You are not authorized to perform this action&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-PUTapi-v1-routes--route_id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-PUTapi-v1-routes--route_id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-PUTapi-v1-routes--route_id-"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-PUTapi-v1-routes--route_id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-PUTapi-v1-routes--route_id-">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-PUTapi-v1-routes--route_id-" data-method="PUT"
-      data-path="api/v1/routes/{route_id}"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('PUTapi-v1-routes--route_id-', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-PUTapi-v1-routes--route_id-"
-                    onclick="tryItOut('PUTapi-v1-routes--route_id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-PUTapi-v1-routes--route_id-"
-                    onclick="cancelTryOut('PUTapi-v1-routes--route_id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-PUTapi-v1-routes--route_id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-darkblue">PUT</small>
-            <b><code>api/v1/routes/{route_id}</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>route_id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="route_id"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="16"
-               data-component="url">
-    <br>
-<p>The ID of the route. Example: <code>16</code></p>
-            </div>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>route</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="route"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="1"
-               data-component="url">
-    <br>
-<p>The ID of the route to update. Example: <code>1</code></p>
-            </div>
-                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="name"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="architecto"
-               data-component="body">
-    <br>
-<p>optional The updated name of the route. Example: <code>architecto</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>start_point</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="start_point"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="n"
-               data-component="body">
-    <br>
-<p>Must not be greater than 255 characters. Example: <code>n</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>end_point</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="end_point"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="g"
-               data-component="body">
-    <br>
-<p>Must not be greater than 255 characters. Example: <code>g</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>encoded_polyline</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="encoded_polyline"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="architecto"
-               data-component="body">
-    <br>
-<p>optional Updated Google Maps polyline. Example: <code>architecto</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>distance_km</code></b>&nbsp;&nbsp;
-<small>number</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="distance_km"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="39"
-               data-component="body">
-    <br>
-<p>Must be at least 0. Example: <code>39</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-        <details>
-            <summary style="padding-bottom: 10px;">
-                <b style="line-height: 2;"><code>stops</code></b>&nbsp;&nbsp;
-<small>object[]</small>&nbsp;
-<i>optional</i> &nbsp;
-<br>
-
-            </summary>
-                                                <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="text" style="display: none"
-                              name="stops.0.name"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="architecto"
-               data-component="body">
-    <br>
-<p>This field is required when <code>stops</code> is present. Example: <code>architecto</code></p>
-                    </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>latitude</code></b>&nbsp;&nbsp;
-<small>number</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="stops.0.latitude"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="4326.41688"
-               data-component="body">
-    <br>
-<p>This field is required when <code>stops</code> is present. Example: <code>4326.41688</code></p>
-                    </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>longitude</code></b>&nbsp;&nbsp;
-<small>number</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="stops.0.longitude"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="4326.41688"
-               data-component="body">
-    <br>
-<p>This field is required when <code>stops</code> is present. Example: <code>4326.41688</code></p>
-                    </div>
-                                                                <div style="margin-left: 14px; clear: unset;">
-                        <b style="line-height: 2;"><code>order_index</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="stops.0.order_index"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="16"
-               data-component="body">
-    <br>
-<p>This field is required when <code>stops</code> is present. Example: <code>16</code></p>
-                    </div>
-                                    </details>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>distance</code></b>&nbsp;&nbsp;
-<small>number</small>&nbsp;
-<i>optional</i> &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="distance"                data-endpoint="PUTapi-v1-routes--route_id-"
-               value="4326.41688"
-               data-component="body">
-    <br>
-<p>optional Updated distance (in km). Example: <code>4326.41688</code></p>
-        </div>
-        </form>
-
                     <h2 id="routes-management-DELETEapi-v1-routes--route_id-">Delete a route (Admin only).</h2>
 
 <p>
@@ -5370,14 +4528,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "https://tin-city-metro.test/api/v1/routes/16" \
+    "http://tin-city-metro.lvh.me/api/v1/routes/2" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "https://tin-city-metro.test/api/v1/routes/16"
+    "http://tin-city-metro.lvh.me/api/v1/routes/2"
 );
 
 const headers = {
@@ -5488,10 +4646,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="route_id"                data-endpoint="DELETEapi-v1-routes--route_id-"
-               value="16"
+               value="2"
                data-component="url">
     <br>
-<p>The ID of the route. Example: <code>16</code></p>
+<p>The ID of the route. Example: <code>2</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>route</code></b>&nbsp;&nbsp;
