@@ -1,0 +1,401 @@
+---
+alwaysApply: true
+---
+
+# Scribe API Documentation Annotations
+
+## Overview
+
+When creating or updating controller methods, automatically add comprehensive Scribe annotations to ensure consistent, high-quality API documentation. Infer annotations from existing code patterns, Form Requests, route definitions, and method signatures.
+
+## When to Apply
+
+-   Creating new controller methods
+-   Updating existing controller methods
+-   Adding new controllers
+
+## Annotation Rules
+
+### 1. Class-Level `@group` Annotation
+
+**Location**: Controller class PHPDoc block (immediately after `<?php` and namespace)
+
+**Format**:
+
+```php
+/**
+ * @group Group Name
+ *
+ * Brief description of the controller's purpose and endpoints.
+ */
+class ExampleController extends Controller
+```
+
+**Inference Rules**:
+
+-   Check existing controllers in the same domain for group names
+-   Use singular for resources (e.g., "Badge Management", not "Badges Management")
+-   Common patterns:
+    -   `Authentication` - for auth operations (login, register, etc.)
+    -   `[Resource] Management` - for CRUD operations (e.g., "Routes Management", "Badge Management")
+    -   `[Feature Name]` - for feature-specific endpoints (e.g., "Contributions", "Notifications")
+-   Include a brief description of what the controller does and mention the base URL if relevant
+
+**Examples from Codebase**:
+
+-   `@group Authentication` - AuthController
+-   `@group Routes Management` - RouteController
+-   `@group Contributions` - ContributionController
+-   `@group Badge Management` - BadgeController
+
+### 2. Method-Level `@authenticated` Annotation
+
+**Location**: Method PHPDoc block, immediately after the method description
+
+**Format**:
+
+```php
+/**
+ * Method description
+ *
+ * @authenticated
+ */
+```
+
+**Inference Rules**:
+
+-   Check the route definition in `routes/api.php` or `routes/web.php`
+-   Add `@authenticated` if the route uses ANY of these middleware:
+    -   `auth:sanctum`
+    -   `auth:api`
+    -   `auth`
+    -   `can:is_admin`
+    -   Any custom admin/permission middleware
+-   Check if the controller constructor applies auth middleware
+-   If a method is within a middleware group in routes, inherit that authentication requirement
+
+**Examples**:
+
+-   Route with `->middleware('auth:sanctum')` → Add `@authenticated`
+-   Route in `Route::middleware(['auth:sanctum', 'can:is_admin'])->group()` → Add `@authenticated`
+-   Public routes (no auth middleware) → Do NOT add `@authenticated`
+
+### 3. `@bodyParam` Annotations
+
+**Location**: Method PHPDoc block, after `@authenticated` (if present)
+
+**Format**:
+
+```php
+@bodyParam field_name type required|optional Description. Example: example_value
+```
+
+**Inference Rules**:
+
+#### From Form Request Validation Rules:
+
+-   **Required fields**: validation rules contain `required` or `required_with` → use `required`
+-   **Optional fields**: validation rules contain `nullable`, `sometimes`, or no `required` → use `optional`
+
+#### Type Mapping:
+
+| Validation Rule                          | Scribe Type          |
+| ---------------------------------------- | -------------------- |
+| `string`, `email`, `url`, `uuid`, `date` | `string`             |
+| `integer`, `int`                         | `integer`            |
+| `numeric`, `decimal`                     | `float` or `numeric` |
+| `boolean`, `bool`                        | `boolean`            |
+| `array`                                  | `array`              |
+| `file`, `image`, `mimes`                 | `file`               |
+
+#### Array/Nested Parameters:
+
+```php
+// For array validation like 'stops' => ['array']
+@bodyParam stops array optional List of stops.
+
+// For nested array fields like 'stops.*.name' => ['required', 'string']
+@bodyParam stops[].name string required The stop name. Example: Tudun Wada
+@bodyParam stops[].latitude float required The latitude. Example: 9.87345
+```
+
+#### Examples from Form Requests:
+
+-   `'name' => ['required', 'string', 'max:255']` → `@bodyParam name string required The name. Example: John Doe`
+-   `'email' => ['required', 'email']` → `@bodyParam email string required The email address. Example: john@example.com`
+-   `'route_id' => 'required|integer|exists:routes,id'` → `@bodyParam route_id integer required The route ID. Example: 1`
+-   `'speed' => 'nullable|numeric|min:0'` → `@bodyParam speed float optional Speed in km/h. Example: 45.5`
+-   `'stops' => ['sometimes', 'array']` → `@bodyParam stops array optional List of route stops.`
+
+#### Description Guidelines:
+
+-   Start with "The" for clarity: "The route ID", "The user's email"
+-   Be specific and concise
+-   Reference related models if using foreign keys
+-   Mention constraints from validation (min, max, between) if relevant
+
+### 4. `@queryParam` Annotations
+
+**Location**: Method PHPDoc block, after `@bodyParam` annotations
+
+**Format**:
+
+```php
+@queryParam param_name type required|optional Description. Example: example_value
+```
+
+**Inference Rules**:
+
+-   Check method parameters of type `Request $request`
+-   Look for `$request->query()`, `$request->get()`, or `$request->validated()` usage
+-   Check Form Request validation rules for query parameters
+-   Look for common query parameter patterns: `page`, `per_page`, `limit`, `sort`, `order`, `filter`, `search`, `type`
+
+**Examples**:
+
+```php
+@queryParam route_id integer required The route ID to filter by. Example: 1
+@queryParam type string optional Filter by contribution type (location, crowding). Example: location
+@queryParam limit integer optional Number of results to return. Example: 20
+@queryParam page integer optional Page number for pagination. Example: 1
+```
+
+### 5. `@urlParam` Annotations
+
+**Location**: Method PHPDoc block, after `@queryParam` annotations
+
+**Format**:
+
+```php
+@urlParam param_name type required Description. Example: example_value
+```
+
+**Inference Rules**:
+
+-   Check route definition for parameters: `Route::get('{id}', ...)` or `Route::put('{route}', ...)`
+-   Check method signature for model-bound parameters: `function show(Route $route)`
+-   URL params are almost always `required`
+-   Use `integer` for IDs, `string` for slugs/other identifiers
+
+**Examples**:
+
+```php
+// From Route::get('{id}', [Controller::class, 'show'])
+@urlParam id integer required The ID of the resource. Example: 1
+
+// From function update(Route $route)
+@urlParam route integer required The ID of the route to update. Example: 1
+
+// From Route::get('{slug}', ...)
+@urlParam slug string required The slug identifier. Example: my-blog-post
+```
+
+### 6. `@response` Annotations
+
+**Location**: Method PHPDoc block, after all parameter annotations
+
+**Format**:
+
+```php
+@response statusCode scenario="Scenario Name" {
+  "json": "response"
+}
+```
+
+**Inference Rules**:
+
+#### Status Codes from Return Statements:
+
+-   `response()->json(..., 200)` or `Response::HTTP_OK` → 200
+-   `response()->json(..., 201)` or `Response::HTTP_CREATED` → 201
+-   `response()->json(..., 400)` → 400
+-   `response()->json(..., 401)` or `Response::HTTP_UNAUTHORIZED` → 401
+-   `response()->json(..., 403)` or `Response::HTTP_FORBIDDEN` → 403
+-   `response()->json(..., 404)` or `Response::HTTP_NOT_FOUND` → 404
+-   `response()->json(..., 422)` → 422
+-   Default with no explicit code → 200
+
+#### Scenario Names:
+
+-   **200**: "Success" (for read operations)
+-   **201**: "Created" (for store operations)
+-   **200** (for updates): "Updated"
+-   **200** (for deletes): "Deleted"
+-   **401**: "Unauthorized" or "Unauthenticated"
+-   **403**: "Forbidden"
+-   **404**: "Not Found"
+-   **422**: "Validation Error" or "Invalid Input"
+-   **400**: "Bad Request"
+
+#### Response Structure Inference:
+
+1. Look at the actual `response()->json()` call in the method
+2. Identify the structure from Resource classes (`RouteResource::collection()`, `new UserResource()`)
+3. Include realistic example data with proper types
+4. Show both success and error responses
+
+**Examples**:
+
+```php
+// Success response (index)
+@response 200 scenario="Success" {
+  "data": [
+    {
+      "id": 1,
+      "name": "Terminus to Bukuru",
+      "distance": 8.3,
+      "created_at": "2025-10-18T12:00:00Z"
+    }
+  ]
+}
+
+// Created response (store)
+@response 201 scenario="Created" {
+  "success": true,
+  "message": "Route created successfully",
+  "data": {
+    "id": 1,
+    "name": "Terminus to Bukuru"
+  }
+}
+
+// Error response (validation)
+@response 422 scenario="Validation Error" {
+  "success": false,
+  "message": "The given data was invalid.",
+  "errors": {
+    "email": ["The email field is required."]
+  }
+}
+
+// Authenticated endpoint error
+@response 401 scenario="Unauthenticated" {
+  "message": "Unauthenticated."
+}
+
+// Forbidden response
+@response 403 scenario="Forbidden" {
+  "error": "You are not authorized to perform this action"
+}
+
+// Not found response
+@response 404 scenario="Not Found" {
+  "error": "Resource not found"
+}
+```
+
+#### Multiple Response Examples:
+
+-   Always include at least one success response
+-   For authenticated endpoints, add 401 response
+-   For admin-only endpoints, add 403 response
+-   For methods with route parameters, add 404 response
+-   For methods with Form Requests, add 422 validation error response
+
+## Complete Annotation Example
+
+```php
+/**
+ * Store a newly created route (Admin only).
+ *
+ * @authenticated
+ *
+ * @bodyParam name string required The name of the route. Example: Terminus to Bukuru
+ * @bodyParam encoded_polyline string required Google Maps encoded polyline. Example: mfp_Ijk~hEo}@yDa@e...
+ * @bodyParam distance float required The total distance (in km). Example: 8.3
+ * @bodyParam stops array optional List of stops related to the route.
+ * @bodyParam stops[].name string required The stop name. Example: Tudun Wada
+ * @bodyParam stops[].latitude float required The latitude. Example: 9.87345
+ * @bodyParam stops[].longitude float required The longitude. Example: 8.89123
+ *
+ * @response 201 scenario="Created" {
+ *   "data": {
+ *     "id": 1,
+ *     "name": "Terminus to Bukuru",
+ *     "encoded_polyline": "mfp_Ijk~hE...",
+ *     "distance": 8.3,
+ *     "created_at": "2025-10-18T12:00:00Z"
+ *   }
+ * }
+ * @response 422 scenario="Validation Error" {
+ *   "message": "The given data was invalid.",
+ *   "errors": {
+ *     "name": ["The name field is required."]
+ *   }
+ * }
+ * @response 401 scenario="Unauthenticated" {
+ *   "message": "Unauthenticated."
+ * }
+ */
+public function store(StoreRouteRequest $request): JsonResponse
+{
+    // Method implementation
+}
+```
+
+## Processing Steps
+
+When creating or updating a controller method, follow these steps:
+
+1. **Read the route definition** in `routes/api.php` or `routes/web.php` to identify:
+
+    - Middleware (for `@authenticated`)
+    - URL parameters (for `@urlParam`)
+    - Route groupings
+
+2. **Examine the Form Request class** (if present) to extract:
+
+    - Validation rules (for `@bodyParam` and `@queryParam`)
+    - Required vs optional fields
+    - Field types and constraints
+
+3. **Analyze the method signature** for:
+
+    - Model-bound parameters (for `@urlParam`)
+    - Request type hints
+
+4. **Review the method implementation** for:
+
+    - Response status codes (for `@response`)
+    - Response structure and data
+    - Error handling scenarios
+
+5. **Check sibling controller methods** for:
+
+    - Consistent group naming
+    - Annotation style and formatting
+    - Example values and descriptions
+
+6. **Generate comprehensive annotations** with:
+    - Clear, descriptive text
+    - Realistic example values
+    - All success and error scenarios
+    - Proper formatting and spacing
+
+## Formatting Guidelines
+
+-   Use blank lines to separate annotation sections for readability
+-   Align annotations consistently
+-   Use proper indentation (one space after the asterisk)
+-   Keep JSON responses properly formatted with correct indentation
+-   Use consistent capitalization in descriptions ("The route ID", not "the route id")
+-   End descriptions with periods, but examples without periods (unless part of the value)
+
+## Quality Checks
+
+Before finalizing annotations, verify:
+
+-   [ ] `@authenticated` matches route middleware
+-   [ ] All required body params from Form Request are documented
+-   [ ] Parameter types match validation rules
+-   [ ] Response examples match actual controller responses
+-   [ ] All error scenarios are covered (401, 403, 404, 422 where applicable)
+-   [ ] Examples are realistic and helpful
+-   [ ] Formatting is consistent with existing annotations in the project
+
+## Notes
+
+-   Scribe documentation is generated from these annotations
+-   Complete, accurate annotations improve developer experience
+-   Consistency across controllers is critical
+-   When in doubt, check existing well-documented controllers (`AuthController`, `RouteController`, `ContributionController`) for examples

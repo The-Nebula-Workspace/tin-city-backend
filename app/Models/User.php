@@ -31,6 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'avatar',
         'google_id',
         'email_verified_at',
+        'dob',
+        'gender',
     ];
 
     /**
@@ -57,6 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'role' => 'string',
             'password' => 'hashed',
             'phone' => RawPhoneNumberCast::class.':NG',
+            'dob' => 'date',
         ];
     }
 

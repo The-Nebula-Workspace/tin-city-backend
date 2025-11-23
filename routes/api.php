@@ -8,6 +8,7 @@ use App\Http\Controllers\ContributionController;
 use App\Http\Controllers\DevOpsController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -66,6 +67,12 @@ Route::prefix('v1')->group(function () {
             Route::post('resend-verification', [AuthController::class, 'resendVerificationEmail']);
             Route::get('verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
         });
+    });
+
+    // User profile routes
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('users/{user}', [UserController::class, 'show']);
+        Route::put('user/profile', [UserController::class, 'updateProfile']);
     });
 
     // DevOps endpoints (token-protected)
