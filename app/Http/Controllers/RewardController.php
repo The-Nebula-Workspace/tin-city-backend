@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Rewards\AwardPointsRequest;
 use App\Services\RewardService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -47,7 +49,7 @@ class RewardController extends Controller
      *   "message": "No rewards yet"
      * }
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $data = $this->rewardService->getUserRewards($request->user());
 
@@ -96,7 +98,7 @@ class RewardController extends Controller
      *   "message": "No reward history found"
      * }
      */
-    public function history(Request $request)
+    public function history(Request $request): JsonResponse
     {
         $history = $this->rewardService->getUserHistory($request->user());
 
@@ -132,22 +134,13 @@ class RewardController extends Controller
      *   "message": "The action field is required."
      * }
      */
-    public function awardPoints(Request $request)
+    public function awardPoints(AwardPointsRequest $request): JsonResponse
     {
-        $request->validate([
-            'action' => 'required|string',
-            'description' => 'nullable|string',
-            'prevent_duplicate' => 'boolean',
-        ]);
-
         $user = $request->user();
-        if (!$user) {
-            return response()->json(['message' => 'Authentication required'], 401);
-        }
 
         $action = $request->input('action');
         $description = $request->input('description');
-        $preventDuplicate = $request->input('prevent_duplicate', false);
+        $preventDuplicate = $request->boolean('prevent_duplicate');
 
         $success = $this->rewardService->addPoints($user, $action, $description, $preventDuplicate);
 
