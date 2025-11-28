@@ -32,15 +32,15 @@ class StoreRouteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:routes'],
             'start_point' => ['required', 'string', 'max:255'],
             'end_point' => ['required', 'string', 'max:255'],
-            'encoded_polyline' => ['required', 'string'],
+            'encoded_polyline' => ['required', 'string', 'unique:routes'],
             'distance_km' => ['required', 'numeric', 'min:0'],
             'stops' => ['sometimes', 'array'],
             'stops.*.name' => ['required_with:stops', 'string'],
-            'stops.*.latitude' => ['required_with:stops', 'numeric'],
-            'stops.*.longitude' => ['required_with:stops', 'numeric'],
+            'stops.*.latitude' => ['required_with:stops', 'numeric', 'between:-90,90'],
+            'stops.*.longitude' => ['required_with:stops', 'numeric', 'between:-180,180'],
             'stops.*.order_index' => ['required_with:stops', 'integer'],
         ];
     }

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jos Metro - Real-time Bus Tracking Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .status.connected {
+            background: #10b981;
+            color: white;
+        }
+        .status.disconnected {
+            background: #ef4444;
+            color: white;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        .events {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .event {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            border-left: 4px solid #667eea;
+        }
+        .event.location {
+            background: #dbeafe;
+            border-left-color: #3b82f6;
+        }
+        .event.crowding {
+            background: #fef3c7;
+            border-left-color: #f59e0b;
+        }
+        .event.error {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+        }
+        .event-time {
+            color: #6b7280;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+        .event-data {
+            color: #374151;
+        }
+        .buses-list {
+            margin-top: 15px;
+        }
+        .bus-item {
+            background: #f3f4f6;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+        .bus-item strong {
+            color: #667eea;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚌 Jos Metro - Real-time Bus Tracking Test</h1>
+            <p>WebSocket Connection: <span class="status disconnected" id="status">Disconnected</span></p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>📍 Subscribe to Route</h2>
+                <div class="input-group"> 
+                    <label>Auth Token (Optional - for Active Buses)</label>
+                    <input type="text" id="authToken" placeholder="Paste your Bearer token here">
+                </div>
+                <div class="input-group">
+                    <label>Route ID</label>
+                    <input type="number" id="routeId" value="1" min="1">
+                </div>
+                <button onclick="subscribeToRoute()">Subscribe</button>
+            </div>
+
+            <div class="card">
+                <h2>📊 Active Buses</h2>
+                <p id="busCount">0 buses active</p>
+                <div class="buses-list" id="busesList"></div>
+                <small style="color: #6b7280; margin-top: 10px; display: block;">
+                    💡 Add auth token above to see active buses
+                </small>
+            </div>
+        </div>
+
+        <div class="events">
+            <h2>📡 Real-time Events</h2>
+            <div id="events"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pusher-js@8.3.0/dist/web/pusher.min.js"></script>
+    <script>
+        let pusher;
+        let currentChannel;
+        const eventsContainer = document.getElementById('events');
+        const statusElement = document.getElementById('status');
+        const busCountElement = document.getElementById('busCount');
+        const busesListElement = document.getElementById('busesList');
+
+        // Initialize Pusher connection
+        function initializePusher() {
+            pusher = new Pusher('local-key', {
+                wsHost: 'localhost',
+                wsPort: 8080,
+                forceTLS: false,
+                encrypted: false,
+                disableStats: true,
+                enabledTransports: ['ws', 'wss'],
+                cluster: 'mt1'
+            });
+
+            pusher.connection.bind('connected', () => {
+                statusElement.textContent = 'Connected';
+                statusElement.className = 'status connected';
+                addEvent('System', 'WebSocket connected successfully', 'system');
+            });
+
+            pusher.connection.bind('disconnected', () => {
+                statusElement.textContent = 'Disconnected';
+                statusElement.className = 'status disconnected';
+                addEvent('System', 'WebSocket disconnected', 'error');
+            });
+
+            pusher.connection.bind('error', (err) => {
+                addEvent('Error', JSON.stringify(err), 'error');
+            });
+        }
+
+        function subscribeToRoute() {
+            const routeId = document.getElementById('routeId').value;
+
+            if (currentChannel) {
+                pusher.unsubscribe(currentChannel.name);
+            }
+
+            const channelName = `route.${routeId}`;
+            currentChannel = pusher.subscribe(channelName);
+
+            currentChannel.bind('pusher:subscription_succeeded', () => {
+                addEvent('System', `Subscribed to route ${routeId}`, 'system');
+            });
+
+            currentChannel.bind('bus.location.updated', (data) => {
+                addEvent('Location Update', JSON.stringify(data, null, 2), 'location');
+                updateActiveBuses();
+            });
+
+            currentChannel.bind('bus.crowding.updated', (data) => {
+                addEvent('Crowding Update', JSON.stringify(data, null, 2), 'crowding');
+            });
+        }
+
+        function addEvent(title, data, type = 'system') {
+            const event = document.createElement('div');
+            event.className = `event ${type}`;
+
+            const time = new Date().toLocaleTimeString();
+            event.innerHTML = `
+                <div class="event-time">${time}</div>
+                <div class="event-data"><strong>${title}:</strong><br>${data}</div>
+            `;
+
+            eventsContainer.insertBefore(event, eventsContainer.firstChild);
+
+            // Keep only last 50 events
+            while (eventsContainer.children.length > 50) {
+                eventsContainer.removeChild(eventsContainer.lastChild);
+            }
+        }
+
+        async function updateActiveBuses() {
+            const routeId = document.getElementById('routeId').value;
+            const authToken = document.getElementById('authToken').value.trim();
+
+            if (!authToken) {
+                busCountElement.textContent = '0 buses active (no auth token)';
+                busesListElement.innerHTML = '<p style="color: #6b7280; font-size: 12px;">Add your auth token above to see active buses</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/v1/contributions/latest?route_id=${routeId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const buses = result.data.active_buses || [];
+                    busCountElement.textContent = `${buses.length} buses active`;
+
+                    if (buses.length === 0) {
+                        busesListElement.innerHTML = '<p style="color: #6b7280; font-size: 12px;">No active buses on this route (locations expire after 5 minutes)</p>';
+                    } else {
+                        busesListElement.innerHTML = buses.map(bus => `
+                            <div class="bus-item">
+                                <strong>User ${bus.user_id}</strong><br>
+                                Lat: ${bus.latitude}, Lng: ${bus.longitude}<br>
+                                Speed: ${bus.speed || 'N/A'} km/h<br>
+                                <small style="color: #6b7280;">Updated: ${new Date(bus.timestamp).toLocaleTimeString()}</small>
+                            </div>
+                        `).join('');
+                    }
+                } else {
+                    busesListElement.innerHTML = '<p style="color: #ef4444; font-size: 12px;">Error: ' + (result.message || 'Unknown error') + '</p>';
+                }
+            } catch (error) {
+                console.error('Failed to fetch active buses:', error);
+                busCountElement.textContent = '0 buses active (error)';
+                busesListElement.innerHTML = `<p style="color: #ef4444; font-size: 12px;">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Initialize on page load
+        initializePusher();
+        addEvent('System', 'WebSocket test client loaded. Enter route ID and click Subscribe.', 'system');
+    </script>
+</body>
+</html>

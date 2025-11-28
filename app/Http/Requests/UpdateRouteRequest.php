@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRouteRequest extends FormRequest
 {
@@ -31,15 +32,15 @@ class UpdateRouteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:255'],
+            'name' => ['sometimes', 'string', 'max:255', Rule::unique('routes')->ignore($this->route->id)],
             'start_point' => ['sometimes', 'string', 'max:255'],
             'end_point' => ['sometimes', 'string', 'max:255'],
-            'encoded_polyline' => ['sometimes', 'string'],
+            'encoded_polyline' => ['sometimes', 'string', Rule::unique('routes')->ignore($this->route->id)],
             'distance_km' => ['sometimes', 'numeric', 'min:0'],
             'stops' => ['sometimes', 'array'],
             'stops.*.name' => ['required_with:stops', 'string'],
-            'stops.*.latitude' => ['required_with:stops', 'numeric'],
-            'stops.*.longitude' => ['required_with:stops', 'numeric'],
+            'stops.*.latitude' => ['required_with:stops', 'numeric', 'between:-90,90'],
+            'stops.*.longitude' => ['required_with:stops', 'numeric', 'between:-180,180'],
             'stops.*.order_index' => ['required_with:stops', 'integer'],
         ];
     }

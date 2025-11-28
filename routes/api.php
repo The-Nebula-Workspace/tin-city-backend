@@ -1,26 +1,22 @@
 <?php
 
-
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BadgeController;
+use App\Http\Controllers\BusController;
+use App\Http\Controllers\ContributionController;
+use App\Http\Controllers\DevOpsController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RewardController;
+use App\Http\Controllers\RouteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RouteController;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\GoogleAuthController;
-use App\Http\Controllers\AdminController;
-// use App\Http\Controllers\AuthController;
-
-
 
 // Get authenticated user
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-
 });
-
-
 
 Route::prefix('v1')->group(function () {
     Route::prefix('routes')->group(function () {
@@ -48,47 +44,62 @@ Route::prefix('v1')->group(function () {
     });
 
     // Admin dashboard and management endpoints
-    Route::middleware(['auth:sanctum', 'can:is_admin'])->group(function () {
-        Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
-        Route::get('admin/contributions', [AdminController::class, 'contributions']);
-        Route::get('admin/routes', [AdminController::class, 'routes']);
-        Route::get('admin/users', [AdminController::class, 'users']);
-    });
-
-    // To test for admin and regular users Gate::define('is_admin', fn(User $user) => $user->role === 'admin');
+    Route::prefix('admin')
+        ->middleware(['auth:sanctum', \App\Http\Middleware\AdminMiddleware::class])
+        ->group(function () {
+            Route::get('dashboard', [AdminController::class, 'dashboard']);
+            Route::get('contributions', [AdminController::class, 'contributions']);
+            Route::get('routes', [AdminController::class, 'routes']);
+            Route::get('users', [AdminController::class, 'users']);
+        });
     Route::prefix('notifications')->group(function () {
         Route::post('test', [NotificationController::class, 'testNotification']);
     });
 
-     Route::get('/rewards', [RewardController::class, 'index']);
-    Route::get('/rewards/history', [RewardController::class, 'history']);
-    Route::post('/rewards', [RewardController::class, 'awardPoints']);
-
-// Admin routes group (use admin prefix)
-Route::prefix('admin')->middleware(['auth:sanctum', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
-    Route::get('dashboard', [AdminController::class, 'dashboard']);
     // Public routes with session support for OAuth
     Route::prefix('auth')->group(function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login', [AuthController::class, 'login']);
         Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
 
-        // Google OAuth routes with web middleware for session support
-        Route::middleware('web')->group(function () {
-            Route::get('redirect', [GoogleAuthController::class, 'redirectToGoogle']);
-            Route::get('callback', [GoogleAuthController::class, 'handleGoogleCallback']);
+        // Protected routes
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('logout', [AuthController::class, 'logout']);
+            Route::get('user', [AuthController::class, 'user']);
+            Route::post('resend-verification', [AuthController::class, 'resendVerificationEmail']);
+            Route::get('verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
         });
     });
 
-    // Protected routes
+    // User profile routes
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('logout', [AuthController::class, 'logout']);
-        Route::get('user', [AuthController::class, 'user']);
-        Route::post('resend-verification', [AuthController::class, 'resendVerificationEmail']);
-        Route::get('verify-email/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+        Route::get('users/{user}', [UserController::class, 'show']);
+        Route::put('user/profile', [UserController::class, 'updateProfile']);
+
+        Route::get('rewards', [RewardController::class, 'index']);
+        Route::get('rewards/history', [RewardController::class, 'history']);
+        Route::post('rewards', [RewardController::class, 'awardPoints']);
+    });
+
+    // DevOps endpoints (token-protected)
+    Route::post('devops/clear-cache', [DevOpsController::class, 'clearCache']);
+
+    // Contributions endpoints
+    Route::prefix('contributions')->group(function () {
+        // Public endpoint - anyone can view latest contributions
+        Route::get('latest', [ContributionController::class, 'getLatest']);
+
+        // Authenticated endpoints - require login to submit
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('location', [ContributionController::class, 'submitLocation']);
+            Route::post('crowding', [ContributionController::class, 'submitCrowding']);
+        });
+    });
+
+    // Buses endpoints (public)
+    Route::prefix('buses')->group(function () {
+        Route::get('', [BusController::class, 'index']);
+        Route::get('{bus}', [BusController::class, 'show']);
+        Route::get('route/{route}', [BusController::class, 'getByRoute']);
     });
 });
-
-
-});
-

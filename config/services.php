@@ -38,9 +38,6 @@ return [
         'credentials' => env('FIREBASE_CREDENTIALS'),
         'project_id' => env('FIREBASE_PROJECT_ID'),
     ],
-
-
-
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),

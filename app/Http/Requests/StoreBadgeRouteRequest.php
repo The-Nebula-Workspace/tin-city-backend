@@ -11,11 +11,11 @@ class StoreBadgeRouteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-       
+
         return true;
     }
 
-     /**
+    /**
      * Define the validation rules for storing a route.
      *
      * @bodyParam name string required The name of the badge. Example: John Doe
@@ -23,15 +23,13 @@ class StoreBadgeRouteRequest extends FormRequest
      * @bodyParam points_required required integer required The Points_required of the badge to be assigned. Example: 100points
      *@bodyParam icons nullable string The icon should be assigned if the points_required condtion is met Example: Gold Avatar
      */
-
-  
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:badges'],
             'description' => ['required', 'string'],
             'points_required' => ['required', 'integer', 'min:0'],
-            'icon' => ['nullabe', 'string'],
+            'icon' => ['nullable', 'string', 'unique:badges'],
         ];
     }
 }

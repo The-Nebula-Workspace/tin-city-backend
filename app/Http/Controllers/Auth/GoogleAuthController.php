@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Http\Resources\UserResource;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+use Laravel\Socialite\Facades\Socialite;
 
 /**
  * Controller for handling Google OAuth authentication
  *
  * This controller provides methods for redirecting users to Google for authentication
  * and handling the callback to create or authenticate users in the system.
+ *
+ * @group Google Authentication
  */
 class GoogleAuthController extends Controller
 {
@@ -34,16 +34,15 @@ class GoogleAuthController extends Controller
      *   "error": "Error message"
      * }
      */
-    public function redirectToGoogle(): JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function redirectToGoogle(): JsonResponse|RedirectResponse
     {
         try {
-            $redirect = Socialite::driver('google')->stateless()->redirect();
-            return $redirect;
+            return Socialite::driver('google')->stateless()->redirect();
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to redirect to Google',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -55,7 +54,6 @@ class GoogleAuthController extends Controller
      * or updating an existing user with their Google ID. It also creates an API token
      * for authentication.
      *
-     * @return \Illuminate\Http\JsonResponse
      *
      * @response 200 {
      *   "success": true,
@@ -95,8 +93,8 @@ class GoogleAuthController extends Controller
                 'message' => 'Google authentication successful',
                 'data' => [
                     'user' => new UserResource($user),
-                    'token' => $token
-                ]
+                    'token' => $token,
+                ],
             ]);
 
         } catch (\Exception $e) {
@@ -105,7 +103,7 @@ class GoogleAuthController extends Controller
                 'message' => 'Google authentication failed',
                 'error' => $e->getMessage(),
                 'file' => $e->getFile(),
-                'line' => $e->getLine()
+                'line' => $e->getLine(),
             ], 400);
         }
     }

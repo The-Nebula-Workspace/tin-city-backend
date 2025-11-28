@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password as PasswordFacade;
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password as PasswordFacade;
 use Illuminate\Support\Facades\URL;
 
 /**
@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\URL;
  *
  * This controller provides methods for user registration, login, logout,
  * password reset, and email verification.
+ *
+ * @group Authentication
  */
 class AuthController extends Controller
 {
@@ -32,9 +34,6 @@ class AuthController extends Controller
      * @bodyParam password string required The password of the user. Example: password
      * @bodyParam password_confirmation string required The password confirmation. Example: password
      * @bodyParam phone string required The phone number of the user. Example: +1234567890
-     *
-     * @param  \App\Http\Requests\Auth\RegisterRequest  $request
-     * @return \Illuminate\Http\JsonResponse
      *
      * @response 201 {
      *   "success": true,
@@ -65,8 +64,8 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'Account registered successfully',
             'data' => [
-                'user' => new UserResource($user)
-            ]
+                'user' => new UserResource($user),
+            ],
         ], 201);
     }
 
@@ -75,9 +74,6 @@ class AuthController extends Controller
      *
      * @bodyParam email string required The email of the user. Example: john@example.com
      * @bodyParam password string required The password of the user. Example: password
-     *
-     * @param  \App\Http\Requests\Auth\LoginRequest  $request
-     * @return \Illuminate\Http\JsonResponse
      *
      * @response 200 {
      *   "success": true,
@@ -97,13 +93,13 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): JsonResponse
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid credentials',
                 'errors' => [
-                    'email' => ['The provided credentials are incorrect.']
-                ]
+                    'email' => ['The provided credentials are incorrect.'],
+                ],
             ], 422);
         }
 
@@ -115,16 +111,14 @@ class AuthController extends Controller
             'message' => 'Login successful',
             'data' => [
                 'user' => new UserResource($user),
-                'token' => $token
-            ]
+                'token' => $token,
+            ],
         ]);
     }
 
     /**
      * Logout user
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
      *
      * @response 200 {
      *   "success": true,
@@ -142,15 +136,13 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Logged out successfully'
+            'message' => 'Logged out successfully',
         ]);
     }
 
     /**
      * Get authenticated user
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
      *
      * @response 200 {
      *   "success": true,
@@ -168,8 +160,8 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'user' => new UserResource($request->user())
-            ]
+                'user' => new UserResource($request->user()),
+            ],
         ]);
     }
 
@@ -177,9 +169,6 @@ class AuthController extends Controller
      * Send password reset link
      *
      * @bodyParam email string required The email of the user. Example: john@example.com
-     *
-     * @param  \App\Http\Requests\Auth\ForgotPasswordRequest  $request
-     * @return \Illuminate\Http\JsonResponse
      *
      * @response 200 {
      *   "success": true,
@@ -200,7 +189,7 @@ class AuthController extends Controller
         if ($status === PasswordFacade::RESET_LINK_SENT) {
             return response()->json([
                 'success' => true,
-                'message' => 'Password reset link sent to your email'
+                'message' => 'Password reset link sent to your email',
             ]);
         }
 
@@ -208,18 +197,16 @@ class AuthController extends Controller
             'success' => false,
             'message' => 'Failed to send password reset link',
             'errors' => [
-                'email' => [__($status)]
-            ]
+                'email' => [__($status)],
+            ],
         ], 400);
     }
 
     /**
      * Verify email
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @param  string  $hash
-     * @return \Illuminate\Http\JsonResponse
      *
      * @response 200 {
      *   "success": true,
@@ -237,33 +224,33 @@ class AuthController extends Controller
     public function verifyEmail(Request $request, $id, $hash): JsonResponse
     {
         // Check if the URL is valid
-        if (!URL::hasValidSignature($request)) {
+        if (! URL::hasValidSignature($request)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid verification link'
+                'message' => 'Invalid verification link',
             ], 400);
         }
 
         $user = User::find($id);
 
-        if (!$user) {
+        if (! $user) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
+                'message' => 'User not found',
             ], 404);
         }
 
-        if (!hash_equals(sha1($user->getEmailForVerification()), $hash)) {
+        if (! hash_equals(sha1($user->getEmailForVerification()), $hash)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid verification link'
+                'message' => 'Invalid verification link',
             ], 400);
         }
 
         if ($user->hasVerifiedEmail()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Email already verified'
+                'message' => 'Email already verified',
             ], 400);
         }
 
@@ -271,15 +258,13 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Email verified successfully'
+            'message' => 'Email verified successfully',
         ]);
     }
 
     /**
      * Resend verification email
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
      *
      * @response 200 {
      *   "success": true,
@@ -295,7 +280,7 @@ class AuthController extends Controller
         if ($request->user()->hasVerifiedEmail()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Email already verified'
+                'message' => 'Email already verified',
             ], 400);
         }
 
@@ -303,7 +288,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Verification email resent successfully'
+            'message' => 'Verification email resent successfully',
         ]);
     }
 }

@@ -22,9 +22,6 @@ class ContributionResource extends JsonResource
             'data' => $this->data,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'user' => $this->whenLoaded('user', function () {
-                return new UserResource($this->user);
-            }),
             'route' => $this->whenLoaded('route', function () {
                 return new RouteResource($this->route);
             }),

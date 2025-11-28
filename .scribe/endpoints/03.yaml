@@ -1,32 +1,21 @@
-name: 'Rewards & Points System'
-description: |-
-
-  APIs for retrieving and managing user reward points and reward history.
-
-  These endpoints handle how users earn and view their Tin City Metro rewards.
-
-  Base URL: `/api/rewards`
+name: Admin
+description: ''
 endpoints:
   -
+    custom: []
     httpMethods:
       - GET
-    uri: api/v1/rewards
+    uri: api/v1/admin/dashboard
     metadata:
-      groupName: 'Rewards & Points System'
-      groupDescription: |-
-
-        APIs for retrieving and managing user reward points and reward history.
-
-        These endpoints handle how users earn and view their Tin City Metro rewards.
-
-        Base URL: `/api/rewards`
+      custom: []
+      groupName: Admin
+      groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get total reward points.'
-      description: 'Retrieve the user’s total accumulated reward points.'
+      title: 'Get dashboard metrics.'
+      description: ''
       authenticated: true
       deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
@@ -39,140 +28,36 @@ endpoints:
     fileParameters: []
     responses:
       -
+        custom: []
         status: 200
         content: |-
           {
-            "data": {
-              "user_id": 1,
-              "total_points": 15,
-              "description": "Total reward points"
-            },
-            "message": "Reward balance retrieved successfully"
+           "total_users": 10,
+           "total_routes": 5,
+           "active_buses": 3
           }
         headers: []
-        description: Success
-        custom: []
-      -
-        status: 200
-        content: |-
-          {
-            "data": null,
-            "message": "No rewards yet"
-          }
-        headers: []
-        description: 'No rewards'
-        custom: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
-    custom: []
   -
+    custom: []
     httpMethods:
       - GET
-    uri: api/v1/rewards/history
+    uri: api/v1/admin/contributions
     metadata:
-      groupName: 'Rewards & Points System'
-      groupDescription: |-
-
-        APIs for retrieving and managing user reward points and reward history.
-
-        These endpoints handle how users earn and view their Tin City Metro rewards.
-
-        Base URL: `/api/rewards`
+      custom: []
+      groupName: Admin
+      groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get reward transaction history.'
-      description: 'Retrieve a paginated list of all actions that earned the user points.'
+      title: 'List all contributions.'
+      description: ''
       authenticated: true
       deprecated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      page:
-        name: page
-        description: 'optional The page number for pagination.'
-        required: false
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-    cleanQueryParameters:
-      page: 1
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 200
-        content: |-
-          {
-            "data": [
-              {
-                "id": 1,
-                "user_id": 1,
-                "action": "crowd_report",
-                "points": 3,
-                "description": "Reported bus crowding",
-                "created_at": "2025-10-23T10:00:00Z"
-              },
-              {
-                "id": 2,
-                "user_id": 1,
-                "action": "share_location",
-                "points": 4,
-                "description": "Shared location data",
-                "created_at": "2025-10-23T11:00:00Z"
-              }
-            ],
-            "message": "Reward history retrieved successfully"
-          }
-        headers: []
-        description: Success
-        custom: []
-      -
-        status: 200
-        content: |-
-          {
-            "data": [],
-            "message": "No reward history found"
-          }
-        headers: []
-        description: 'No history'
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/v1/rewards
-    metadata:
-      groupName: 'Rewards & Points System'
-      groupDescription: |-
-
-        APIs for retrieving and managing user reward points and reward history.
-
-        These endpoints handle how users earn and view their Tin City Metro rewards.
-
-        Base URL: `/api/rewards`
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Award points for user actions.'
-      description: 'Award points to the authenticated user for performing specific actions like sharing location or reporting crowd.'
-      authenticated: true
-      deprecated: false
-      custom: []
     headers:
       Content-Type: application/json
       Accept: application/json
@@ -180,74 +65,101 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      action:
-        name: action
-        description: 'The action that earned points.'
-        required: true
-        example: location_share
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-      description:
-        name: description
-        description: 'optional Description of the action.'
-        required: false
-        example: 'Shared my bus location'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        custom: []
-      prevent_duplicate:
-        name: prevent_duplicate
-        description: 'optional Whether to prevent duplicate rewards. Default: false'
-        required: false
-        example: false
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-    cleanBodyParameters:
-      action: location_share
-      description: 'Shared my bus location'
-      prevent_duplicate: false
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
-        status: 200
-        content: |-
-          {
-            "message": "Points awarded successfully",
-            "points": 3
-          }
-        headers: []
-        description: Success
         custom: []
-      -
-        status: 400
-        content: |-
-          {
-            "message": "Invalid action or no points awarded"
-          }
-        headers: []
-        description: 'Invalid action'
-        custom: []
-      -
-        status: 422
-        content: |-
-          {
-            "message": "The action field is required."
-          }
-        headers: []
-        description: 'Validation error'
-        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
     responseFields: []
     auth: []
     controller: null
     method: null
     route: null
+  -
     custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/admin/routes
+    metadata:
+      custom: []
+      groupName: Admin
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List all routes.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/admin/users
+    metadata:
+      custom: []
+      groupName: Admin
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List all users.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
