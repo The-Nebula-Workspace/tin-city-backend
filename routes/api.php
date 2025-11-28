@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BadgeController;
 use App\Http\Controllers\BusController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContributionController;
 use App\Http\Controllers\DevOpsController;
 use App\Http\Controllers\NotificationController;
@@ -79,6 +80,12 @@ Route::prefix('v1')->group(function () {
         Route::get('rewards', [RewardController::class, 'index']);
         Route::get('rewards/history', [RewardController::class, 'history']);
         Route::post('rewards', [RewardController::class, 'awardPoints']);
+    });
+
+    // Chat endpoints
+    Route::middleware('auth:sanctum')->prefix('chat')->group(function () {
+        Route::get('{bus}', [ChatController::class, 'index']);
+        Route::post('{bus}', [ChatController::class, 'store']);
     });
 
     // DevOps endpoints (token-protected)

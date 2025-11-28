@@ -148,6 +148,19 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-chat-management" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="chat-management">
+                    <a href="#chat-management">Chat Management</a>
+                </li>
+                                    <ul id="tocify-subheader-chat-management" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="chat-management-GETapi-v1-chat--bus_id-">
+                                <a href="#chat-management-GETapi-v1-chat--bus_id-">Get messages for a bus.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="chat-management-POSTapi-v1-chat--bus_id-">
+                                <a href="#chat-management-POSTapi-v1-chat--bus_id-">Send a message to a bus chat.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-contributions" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="contributions">
                     <a href="#contributions">Contributions</a>
@@ -2908,6 +2921,352 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                <h1 id="chat-management">Chat Management</h1>
+
+    <p>APIs for managing bus chats.</p>
+
+                                <h2 id="chat-management-GETapi-v1-chat--bus_id-">Get messages for a bus.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-chat--bus_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://tin-city-metro.lvh.me/api/v1/chat/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://tin-city-metro.lvh.me/api/v1/chat/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-chat--bus_id-">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;bus_id&quot;: 1,
+            &quot;user_id&quot;: 1,
+            &quot;message&quot;: &quot;Hello everyone!&quot;,
+            &quot;created_at&quot;: &quot;2025-11-28T12:00:00Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-11-28T12:00:00Z&quot;,
+            &quot;user&quot;: {
+                &quot;id&quot;: 1,
+                &quot;name&quot;: &quot;John Doe&quot;,
+                &quot;avatar&quot;: &quot;https://example.com/avatar.jpg&quot;
+            }
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-chat--bus_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-chat--bus_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-chat--bus_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-chat--bus_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-chat--bus_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-chat--bus_id-" data-method="GET"
+      data-path="api/v1/chat/{bus_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-chat--bus_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-chat--bus_id-"
+                    onclick="tryItOut('GETapi-v1-chat--bus_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-chat--bus_id-"
+                    onclick="cancelTryOut('GETapi-v1-chat--bus_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-chat--bus_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/chat/{bus_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-chat--bus_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-chat--bus_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bus_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bus_id"                data-endpoint="GETapi-v1-chat--bus_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the bus. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bus</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bus"                data-endpoint="GETapi-v1-chat--bus_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the bus. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="chat-management-POSTapi-v1-chat--bus_id-">Send a message to a bus chat.</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-chat--bus_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://tin-city-metro.lvh.me/api/v1/chat/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"message\": \"Is the bus full?\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://tin-city-metro.lvh.me/api/v1/chat/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "message": "Is the bus full?"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-chat--bus_id-">
+            <blockquote>
+            <p>Example response (201, Created):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: {
+        &quot;id&quot;: 2,
+        &quot;bus_id&quot;: 1,
+        &quot;user_id&quot;: 1,
+        &quot;message&quot;: &quot;Is the bus full?&quot;,
+        &quot;created_at&quot;: &quot;2025-11-28T12:05:00Z&quot;,
+        &quot;updated_at&quot;: &quot;2025-11-28T12:05:00Z&quot;,
+        &quot;user&quot;: {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;John Doe&quot;
+        }
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Validation Error):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The given data was invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;message&quot;: [
+            &quot;The message field is required.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-v1-chat--bus_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-chat--bus_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-chat--bus_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-chat--bus_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-chat--bus_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-chat--bus_id-" data-method="POST"
+      data-path="api/v1/chat/{bus_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-chat--bus_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-chat--bus_id-"
+                    onclick="tryItOut('POSTapi-v1-chat--bus_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-chat--bus_id-"
+                    onclick="cancelTryOut('POSTapi-v1-chat--bus_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-chat--bus_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/chat/{bus_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-chat--bus_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-chat--bus_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bus_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bus_id"                data-endpoint="POSTapi-v1-chat--bus_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the bus. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bus</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bus"                data-endpoint="POSTapi-v1-chat--bus_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the bus. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="message"                data-endpoint="POSTapi-v1-chat--bus_id-"
+               value="Is the bus full?"
+               data-component="body">
+    <br>
+<p>The message content. Example: <code>Is the bus full?</code></p>
+        </div>
+        </form>
+
                 <h1 id="contributions">Contributions</h1>
 
     <p>APIs for users to contribute real-time bus data</p>
@@ -2930,7 +3289,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"route_id\": 16,
-    \"type\": \"activity\",
+    \"type\": \"location\",
     \"limit\": 22
 }"
 </code></pre></div>
@@ -2956,7 +3315,7 @@ const headers = {
 
 let body = {
     "route_id": 16,
-    "type": "activity",
+    "type": "location",
     "limit": 22
 };
 
@@ -3105,10 +3464,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="GETapi-v1-contributions-latest"
-               value="activity"
+               value="location"
                data-component="body">
     <br>
-<p>Example: <code>activity</code></p>
+<p>Example: <code>location</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>location</code></li> <li><code>crowding</code></li> <li><code>activity</code></li></ul>
         </div>
@@ -5219,25 +5578,6 @@ fetch(url, {
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Route deleted successfully&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (401, Unauthenticated):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
-access-control-allow-methods: GET, POST, PUT, PATCH, DELETE, OPTIONS
-access-control-allow-headers: Content-Type, Authorization, X-Requested-With
-access-control-allow-credentials: true
- </code></pre></details>         <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
 }</code>
  </pre>
             <blockquote>

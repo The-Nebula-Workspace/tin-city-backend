@@ -1,22 +1,22 @@
-name: Buses
+name: Contributions
 description: |-
 
-  APIs for managing and retrieving buses
+  APIs for users to contribute real-time bus data
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/buses
+    uri: api/v1/contributions/latest
     metadata:
       custom: []
-      groupName: Buses
+      groupName: Contributions
       groupDescription: |-
 
-        APIs for managing and retrieving buses
+        APIs for users to contribute real-time bus data
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get all buses'
+      title: 'Get latest contributions for a route'
       description: ''
       authenticated: false
       deprecated: false
@@ -29,9 +29,31 @@ endpoints:
       route_id:
         custom: []
         name: route_id
-        description: 'optional Filter by route ID.'
-        required: false
+        description: 'The route ID.'
+        required: true
         example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      type:
+        custom: []
+        name: type
+        description: 'optional Filter by type (location, crowding).'
+        required: false
+        example: location
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'optional Number of results.'
+        required: false
+        example: 20
         type: integer
         enumValues: []
         exampleWasSpecified: true
@@ -39,85 +61,49 @@ endpoints:
         deprecated: false
     cleanQueryParameters:
       route_id: 1
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
+      type: location
+      limit: 20
+    bodyParameters:
+      route_id:
         custom: []
-        status: 200
-        content: |-
-          {
-            "success": true,
-            "data": [
-              {
-                "id": 1,
-                "name": "TB-001",
-                "route_id": 1,
-                "route": {
-                  "id": 1,
-                  "name": "Terminus to Bukuru"
-                }
-              }
-            ]
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/v1/buses/{bus_id}'
-    metadata:
-      custom: []
-      groupName: Buses
-      groupDescription: |-
-
-        APIs for managing and retrieving buses
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Get a specific bus'
-      description: ''
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      bus_id:
-        custom: []
-        name: bus_id
-        description: 'The ID of the bus.'
+        name: route_id
+        description: 'The <code>id</code> of an existing record in the routes table.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      bus:
+      type:
         custom: []
-        name: bus
-        description: 'The bus ID.'
-        required: true
-        example: 1
+        name: type
+        description: ''
+        required: false
+        example: location
+        type: string
+        enumValues:
+          - location
+          - crowding
+          - activity
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 22
         type: integer
         enumValues: []
-        exampleWasSpecified: true
-        nullable: false
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
-    cleanUrlParameters:
-      bus_id: 1
-      bus: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    cleanBodyParameters:
+      route_id: 16
+      type: location
+      limit: 22
     fileParameters: []
     responses:
       -
@@ -127,14 +113,9 @@ endpoints:
           {
             "success": true,
             "data": {
-              "id": 1,
-              "name": "TB-001",
-              "route_id": 1,
-              "route": {
-                "id": 1,
-                "name": "Terminus to Bukuru",
-                "stops": []
-              }
+              "contributions": [],
+              "active_buses": [],
+              "active_buses_count": 3
             }
           }
         headers: []
@@ -147,38 +128,31 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/v1/buses/route/{route_id}'
+      - POST
+    uri: api/v1/contributions/location
     metadata:
       custom: []
-      groupName: Buses
+      groupName: Contributions
       groupDescription: |-
 
-        APIs for managing and retrieving buses
+        APIs for users to contribute real-time bus data
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get buses for a specific route'
+      title: 'Submit bus location contribution'
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
       route_id:
         custom: []
         name: route_id
-        description: 'The ID of the route.'
-        required: true
-        example: 2
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      route:
-        custom: []
-        name: route
         description: 'The route ID.'
         required: true
         example: 1
@@ -187,33 +161,187 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-    cleanUrlParameters:
-      route_id: 2
-      route: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+      latitude:
+        custom: []
+        name: latitude
+        description: 'Current latitude.'
+        required: true
+        example: 9.8965
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      longitude:
+        custom: []
+        name: longitude
+        description: 'Current longitude.'
+        required: true
+        example: 8.8583
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      speed:
+        custom: []
+        name: speed
+        description: 'optional Speed in km/h.'
+        required: false
+        example: 45.5
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      heading:
+        custom: []
+        name: heading
+        description: 'optional Direction in degrees.'
+        required: false
+        example: 180.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      accuracy:
+        custom: []
+        name: accuracy
+        description: 'optional GPS accuracy in meters.'
+        required: false
+        example: 10.5
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      route_id: 1
+      latitude: 9.8965
+      longitude: 8.8583
+      speed: 45.5
+      heading: 180.0
+      accuracy: 10.5
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
+        status: 201
         content: |-
           {
             "success": true,
+            "message": "Location contribution recorded",
             "data": {
-              "route": {
-                "id": 1,
-                "name": "Terminus to Bukuru"
-              },
-              "buses": [
-                {
-                  "id": 1,
-                  "name": "TB-001"
-                }
-              ],
-              "total_buses": 8
+              "contribution_id": 1,
+              "is_on_route": true,
+              "active_buses_count": 3
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/contributions/crowding
+    metadata:
+      custom: []
+      groupName: Contributions
+      groupDescription: |-
+
+        APIs for users to contribute real-time bus data
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Submit bus crowding report'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      route_id:
+        custom: []
+        name: route_id
+        description: 'The route ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'Bus status.'
+        required: true
+        example: standing
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      crowding_level:
+        custom: []
+        name: crowding_level
+        description: 'Crowding level 1-5.'
+        required: true
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      latitude:
+        custom: []
+        name: latitude
+        description: 'Current latitude.'
+        required: true
+        example: 9.8965
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      longitude:
+        custom: []
+        name: longitude
+        description: 'Current longitude.'
+        required: true
+        example: 8.8583
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      route_id: 1
+      status: standing
+      crowding_level: 3
+      latitude: 9.8965
+      longitude: 8.8583
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "success": true,
+            "message": "Crowding report submitted",
+            "data": {
+              "contribution_id": 2
             }
           }
         headers: []

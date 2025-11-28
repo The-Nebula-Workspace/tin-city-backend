@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Chat extends Model
 {
     protected $fillable = [
-        'bus_session_id',
+        'bus_id',
         'user_id',
         'message',
     ];
@@ -19,5 +19,13 @@ class Chat extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the bus that owns the chat.
+     */
+    public function bus(): BelongsTo
+    {
+        return $this->belongsTo(Bus::class);
     }
 }

@@ -10,3 +10,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('route.{routeId}', function () {
     return true; // Public channel - anyone can listen
 });
+
+Broadcast::channel('bus-chat.{busId}', function ($user, $busId) {
+    return true;
+});
