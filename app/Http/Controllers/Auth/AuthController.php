@@ -60,13 +60,9 @@ class AuthController extends Controller
 
         event(new Registered($user));
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Account registered successfully',
-            'data' => [
-                'user' => new UserResource($user),
-            ],
-        ], 201);
+        return $this->successResponse([
+            'user' => new UserResource($user),
+        ], 'Account registered successfully', 201);
     }
 
     /**
@@ -94,26 +90,18 @@ class AuthController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         if (! Auth::attempt($request->only('email', 'password'))) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid credentials',
-                'errors' => [
-                    'email' => ['The provided credentials are incorrect.'],
-                ],
-            ], 422);
+            return $this->errorResponse('Invalid credentials', 422, [
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
         }
 
         $user = Auth::user();
         $token = $user->createToken('auth-token')->plainTextToken;
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Login successful',
-            'data' => [
-                'user' => new UserResource($user),
-                'token' => $token,
-            ],
-        ]);
+        return $this->successResponse([
+            'user' => new UserResource($user),
+            'token' => $token,
+        ], 'Login successful');
     }
 
     /**
@@ -134,10 +122,7 @@ class AuthController extends Controller
         // Delete the current token for Sanctum authentication
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Logged out successfully',
-        ]);
+        return $this->successResponse(null, 'Logged out successfully');
     }
 
     /**
@@ -157,11 +142,8 @@ class AuthController extends Controller
      */
     public function user(Request $request): JsonResponse
     {
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'user' => new UserResource($request->user()),
-            ],
+        return $this->successResponse([
+            'user' => new UserResource($request->user()),
         ]);
     }
 
@@ -187,19 +169,12 @@ class AuthController extends Controller
         );
 
         if ($status === PasswordFacade::RESET_LINK_SENT) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Password reset link sent to your email',
-            ]);
+            return $this->successResponse(null, 'Password reset link sent to your email');
         }
 
-        return response()->json([
-            'success' => false,
-            'message' => 'Failed to send password reset link',
-            'errors' => [
-                'email' => [__($status)],
-            ],
-        ], 400);
+        return $this->errorResponse('Failed to send password reset link', 400, [
+            'email' => [__($status)],
+        ]);
     }
 
     /**
@@ -225,41 +200,26 @@ class AuthController extends Controller
     {
         // Check if the URL is valid
         if (! URL::hasValidSignature($request)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid verification link',
-            ], 400);
+            return $this->errorResponse('Invalid verification link', 400);
         }
 
         $user = User::find($id);
 
         if (! $user) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User not found',
-            ], 404);
+            return $this->errorResponse('User not found', 404);
         }
 
         if (! hash_equals(sha1($user->getEmailForVerification()), $hash)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid verification link',
-            ], 400);
+            return $this->errorResponse('Invalid verification link', 400);
         }
 
         if ($user->hasVerifiedEmail()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Email already verified',
-            ], 400);
+            return $this->errorResponse('Email already verified', 400);
         }
 
         $user->markEmailAsVerified();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Email verified successfully',
-        ]);
+        return $this->successResponse(null, 'Email verified successfully');
     }
 
     /**
@@ -278,17 +238,11 @@ class AuthController extends Controller
     public function resendVerificationEmail(Request $request): JsonResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Email already verified',
-            ], 400);
+            return $this->errorResponse('Email already verified', 400);
         }
 
         $request->user()->sendEmailVerificationNotification();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Verification email resent successfully',
-        ]);
+        return $this->successResponse(null, 'Verification email resent successfully');
     }
 }

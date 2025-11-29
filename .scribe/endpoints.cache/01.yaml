@@ -46,8 +46,21 @@ endpoints:
         status: 200
         content: |-
           {
+            "success": true,
+            "message": "Routes exported successfully",
             "exported_at": "2025-10-18T15:00:00Z",
-            "routes": [...]
+            "routes": [
+              {
+                "id": 1,
+                "name": "Terminus to Bukuru",
+                "start_point": "Terminus",
+                "end_point": "Bukuru",
+                "encoded_polyline": "mfp_Ijk~hEo}@yDa@e..",
+                "distance_km": 39,
+                "created_at": "2025-11-29T17:05:55.000000Z",
+                "updated_at": "2025-11-29T17:05:55.000000Z"
+              }
+            ]
           }
         headers: []
         description: Success
@@ -93,13 +106,61 @@ endpoints:
         status: 200
         content: |-
           {
+            "success": true,
+            "message": "Routes retrieved successfully",
             "data": [
               {
                 "id": 1,
-                "name": "Terminus to Bukuru",
-                "encoded_polyline": "mfp_Ijk~hE...",
-                "distance": 8.3,
-                "created_at": "2025-10-18T12:00:00Z"
+                "name": "Anguwa to Rayfield",
+                "start_point": "n",
+                "end_point": "g",
+                "encoded_polyline": "architecto",
+                "distance_km": 39,
+                "created_at": "2025-11-20T11:14:00.000000Z",
+                "updated_at": "2025-11-20T12:09:37.000000Z",
+                "stops": [
+                  {
+                    "id": 47,
+                    "name": "architecto",
+                    "route_id": 1,
+                    "longitude": "-3.41688000",
+                    "latitude": "2.41688000",
+                    "order_index": 16,
+                    "created_at": "2025-11-20T12:09:48.000000Z",
+                    "updated_at": "2025-11-20T12:09:48.000000Z"
+                  }
+                ],
+                "contributions": [
+                  {
+                    "id": 1,
+                    "user_id": 3,
+                    "route_id": 1,
+                    "type": "location",
+                    "data": {
+                      "latitude": 9.8965,
+                      "longitude": 8.8583,
+                      "speed": 45.5,
+                      "heading": 180,
+                      "accuracy": 10.5
+                    },
+                    "created_at": "2025-11-20T11:26:54.000000Z",
+                    "updated_at": "2025-11-20T11:26:54.000000Z"
+                  },
+                  {
+                    "id": 6,
+                    "user_id": 7,
+                    "route_id": 1,
+                    "type": "crowding",
+                    "data": {
+                      "status": "standing",
+                      "crowding_level": 3,
+                      "latitude": 9.8965,
+                      "longitude": 8.8583
+                    },
+                    "created_at": "2025-11-29T15:33:16.000000Z",
+                    "updated_at": "2025-11-29T15:33:16.000000Z"
+                  }
+                ]
               }
             ]
           }
@@ -114,7 +175,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/routes/{id}'
+    uri: 'api/v1/routes/{route_id}'
     metadata:
       custom: []
       groupName: 'Routes Management'
@@ -135,6 +196,17 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
+      route_id:
+        custom: []
+        name: route_id
+        description: 'The ID of the route.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
       id:
         custom: []
         name: id
@@ -147,6 +219,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
+      route_id: 2
       id: 1
     queryParameters: []
     cleanQueryParameters: []
@@ -159,12 +232,29 @@ endpoints:
         status: 200
         content: |-
           {
+            "success": true,
+            "message": "Route retrieved successfully",
             "data": {
-              "id": 1,
-              "name": "Terminus to Bukuru",
-              "encoded_polyline": "mfp_Ijk~hE...",
-              "distance": 8.3,
-              "created_at": "2025-10-18T12:00:00Z"
+              "id": 12,
+              "name": "Terminus to Anguwan Rimi",
+              "start_point": "Terminus",
+              "end_point": "Anguwan Rimi",
+              "encoded_polyline": "mfp_Ijk~hEo}@yDa@e..",
+              "distance_km": 39,
+              "created_at": "2025-11-29T17:05:55.000000Z",
+              "updated_at": "2025-11-29T17:05:55.000000Z",
+              "stops": [
+                {
+                  "id": 48,
+                  "name": "Terminus",
+                  "route_id": 12,
+                  "longitude": "12.50000000",
+                  "latitude": "10.00000000",
+                  "order_index": 1,
+                  "created_at": "2025-11-29T17:05:55.000000Z",
+                  "updated_at": "2025-11-29T17:05:55.000000Z"
+                }
+              ]
             }
           }
         headers: []
@@ -172,7 +262,12 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"error": "Route not found"}'
+        content: |-
+          {
+            "success": false,
+            "message": "Route not found",
+            "errors": []
+          }
         headers: []
         description: 'Not Found'
     responseFields: []
@@ -267,7 +362,7 @@ endpoints:
       stops:
         custom: []
         name: stops
-        description: 'Optional list of stops related to the route.'
+        description: 'optional List of stops related to the route.'
         required: false
         example:
           - architecto
@@ -347,16 +442,46 @@ endpoints:
         status: 201
         content: |-
           {
+            "success": true,
+            "message": "Route created successfully",
             "data": {
-              "id": 1,
-              "name": "Terminus to Bukuru",
-              "encoded_polyline": "mfp_Ijk~hE...",
-              "distance": 8.3,
-              "created_at": "2025-10-18T12:00:00Z"
+              "id": 12,
+              "name": "Terminus to Anguwan Rimi",
+              "start_point": "Terminus",
+              "end_point": "Anguwan Rimi",
+              "encoded_polyline": "mfp_Ijk~hEo}@yDa@e..",
+              "distance_km": 39,
+              "created_at": "2025-11-29T17:05:55.000000Z",
+              "updated_at": "2025-11-29T17:05:55.000000Z",
+              "stops": [
+                {
+                  "id": 48,
+                  "name": "Terminus",
+                  "route_id": 12,
+                  "longitude": "12.50000000",
+                  "latitude": "10.00000000",
+                  "order_index": 1,
+                  "created_at": "2025-11-29T17:05:55.000000Z",
+                  "updated_at": "2025-11-29T17:05:55.000000Z"
+                }
+              ]
             }
           }
         headers: []
         description: Created
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "success": false,
+            "message": "Validation error.",
+            "errors": {
+              "name": ["The name field is required."]
+            }
+          }
+        headers: []
+        description: 'Validation Error'
     responseFields: []
     auth: []
     controller: null
@@ -421,13 +546,22 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"message": "Route deleted successfully"}'
+        content: |-
+          {
+            "success": true,
+            "message": "Route deleted successfully",
+          }
         headers: []
         description: Deleted
       -
         custom: []
         status: 404
-        content: '{"error": "Route not found"}'
+        content: |-
+          {
+            "success": false,
+            "message": "Route not found",
+            "errors": []
+          }
         headers: []
         description: 'Not Found'
     responseFields: []

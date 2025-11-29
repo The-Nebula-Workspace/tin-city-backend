@@ -2,12 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
-use App\Models\Badge;
-use App\Services\BadgeService;
 use App\Events\BadgeAwarded;
-use Illuminate\Support\Facades\Event;
+use App\Models\Badge;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class BadgeServiceTest extends TestCase
@@ -23,7 +22,7 @@ class BadgeServiceTest extends TestCase
             'name' => 'Bronze Contributor',
             'description' => 'Earned 100 points',
             'points_required' => 100,
-            'icon' => 'bronze'
+            'icon' => 'bronze',
         ]);
 
         // Act
@@ -42,7 +41,7 @@ class BadgeServiceTest extends TestCase
             'name' => 'Silver Contributor',
             'description' => 'Earned 200 points',
             'points_required' => 200,
-            'icon' => 'silver'
+            'icon' => 'silver',
         ]);
 
         // Act
@@ -61,15 +60,15 @@ class BadgeServiceTest extends TestCase
             'name' => 'Bronze Contributor',
             'description' => 'Earned 100 points',
             'points_required' => 100,
-            'icon' => 'bronze'
+            'icon' => 'bronze',
         ]);
 
         // Act
         $user->addPoints(100); // First time
         Event::assertDispatched(BadgeAwarded::class, 1);
-        
+
         $user->addPoints(50); // Second time, should not award again
-        
+
         // Assert
         $this->assertEquals(1, $user->badges()->count());
         Event::assertDispatchedTimes(BadgeAwarded::class, 1);
@@ -83,13 +82,13 @@ class BadgeServiceTest extends TestCase
             'name' => 'Bronze Contributor',
             'description' => 'Earned 100 points',
             'points_required' => 100,
-            'icon' => 'bronze'
+            'icon' => 'bronze',
         ]);
         $silverBadge = Badge::create([
             'name' => 'Silver Contributor',
             'description' => 'Earned 200 points',
             'points_required' => 200,
-            'icon' => 'silver'
+            'icon' => 'silver',
         ]);
 
         // Act
@@ -110,20 +109,20 @@ class BadgeServiceTest extends TestCase
                 'name' => 'Gold Contributor',
                 'description' => 'Earned 300 points',
                 'points_required' => 300,
-                'icon' => 'gold'
+                'icon' => 'gold',
             ]),
             Badge::create([
                 'name' => 'Bronze Contributor',
                 'description' => 'Earned 100 points',
                 'points_required' => 100,
-                'icon' => 'bronze'
+                'icon' => 'bronze',
             ]),
             Badge::create([
                 'name' => 'Silver Contributor',
                 'description' => 'Earned 200 points',
                 'points_required' => 200,
-                'icon' => 'silver'
-            ])
+                'icon' => 'silver',
+            ]),
         ]);
 
         // Act

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
@@ -33,12 +33,12 @@ class AuthTest extends TestCase
                         'phone',
                         'created_at',
                         'updated_at',
-                    ]
-                ]
+                    ],
+                ],
             ]);
 
         $this->assertDatabaseHas('users', [
-            'email' => 'john@example.com'
+            'email' => 'john@example.com',
         ]);
     }
 
@@ -66,8 +66,8 @@ class AuthTest extends TestCase
                         'email',
                         'created_at',
                         'updated_at',
-                    ]
-                ]
+                    ],
+                ],
             ]);
     }
 
@@ -82,7 +82,7 @@ class AuthTest extends TestCase
         $response->assertStatus(401)
             ->assertJson([
                 'success' => false,
-                'message' => 'Invalid credentials'
+                'message' => 'Invalid credentials',
             ]);
     }
 }

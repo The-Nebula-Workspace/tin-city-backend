@@ -28,7 +28,7 @@ class RewardControllerTest extends TestCase
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
-        
+
         $response = $this->postJson('/api/v1/rewards', [
             'action' => 'location_share',
             'description' => 'Shared location',

@@ -1,22 +1,24 @@
-name: Contributions
+name: Buses
 description: |-
 
-  APIs for users to contribute real-time bus data
+  APIs for managing and retrieving buses.
+  Base URL: `/api/v1/buses`
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/contributions/latest
+    uri: api/v1/buses
     metadata:
       custom: []
-      groupName: Contributions
+      groupName: Buses
       groupDescription: |-
 
-        APIs for users to contribute real-time bus data
+        APIs for managing and retrieving buses.
+        Base URL: `/api/v1/buses`
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get latest contributions for a route'
+      title: 'Get all buses. Optionally filter by route ID.'
       description: ''
       authenticated: false
       deprecated: false
@@ -29,6 +31,247 @@ endpoints:
       route_id:
         custom: []
         name: route_id
+        description: 'optional Filter by route ID.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      route_id: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+               "success": true,
+               "message": "Buses retrieved successfully",
+               "data": [
+                   {
+                   "id": 1,
+                   "route_id": 1,
+                   "name": "TB-001",
+                   "created_at": "2025-11-20T11:14:00.000000Z",
+                   "updated_at": "2025-11-20T11:14:00.000000Z",
+                   "route": {
+                       "id": 1,
+                       "name": "Anguwa to Rayfield",
+                       "start_point": "n",
+                       "end_point": "g",
+                       "encoded_polyline": null,
+                       "distance_km": null,
+                       "created_at": null,
+                       "updated_at": null
+                       }
+                   },
+               }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/buses/{bus_id}'
+    metadata:
+      custom: []
+      groupName: Buses
+      groupDescription: |-
+
+        APIs for managing and retrieving buses.
+        Base URL: `/api/v1/buses`
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get a specific bus'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      bus_id:
+        custom: []
+        name: bus_id
+        description: 'The ID of the bus.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      bus:
+        custom: []
+        name: bus
+        description: 'The bus ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      bus_id: 1
+      bus: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+              "success": true,
+              "message": "Bus retrieved successfully",
+              "data": {
+                  "id": 16,
+                  "route_id": 3,
+                  "name": "TBL-002",
+                  "created_at": "2025-11-20T11:14:01.000000Z",
+                  "updated_at": "2025-11-20T11:14:01.000000Z",
+                  "route": {
+                      "id": 3,
+                      "name": "Terminus to Barkin Ladi",
+                      "start_point": "Terminus",
+                      "end_point": "Barkin Ladi",
+                      "encoded_polyline": "ohp_Ijk~hEq}@zDc@fBm@tCo@xCr@|Du@hD",
+                      "distance_km": 15.7,
+                      "created_at": "2025-11-20T11:14:00.000000Z",
+                      "updated_at": "2025-11-20T11:14:00.000000Z",
+                      "stops": [
+                          {
+                              "id": 14,
+                              "name": "Terminus",
+                              "route_id": 3,
+                              "longitude": "8.85830000",
+                              "latitude": "9.89650000",
+                              "order_index": 1,
+                              "created_at": "2025-11-20T11:14:00.000000Z",
+                              "updated_at": "2025-11-20T11:14:00.000000Z"
+                          },
+                          {
+                              "id": 15,
+                              "name": "Bauchi Road",
+                              "route_id": 3,
+                              "longitude": "8.87120000",
+                              "latitude": "9.91560000",
+                              "order_index": 2,
+                              "created_at": "2025-11-20T11:14:00.000000Z",
+                              "updated_at": "2025-11-20T11:14:00.000000Z"
+                          },
+                          {
+                              "id": 16,
+                              "name": "Hwolshe",
+                              "route_id": 3,
+                              "longitude": "8.92340000",
+                              "latitude": "9.98760000",
+                              "order_index": 3,
+                              "created_at": "2025-11-20T11:14:00.000000Z",
+                              "updated_at": "2025-11-20T11:14:00.000000Z"
+                          },
+                          {
+                              "id": 17,
+                              "name": "Kuru",
+                              "route_id": 3,
+                              "longitude": "8.95670000",
+                              "latitude": "10.02340000",
+                              "order_index": 4,
+                              "created_at": "2025-11-20T11:14:00.000000Z",
+                              "updated_at": "2025-11-20T11:14:00.000000Z"
+                          },
+                          {
+                              "id": 18,
+                              "name": "Barkin Ladi Junction",
+                              "route_id": 3,
+                              "longitude": "8.89120000",
+                              "latitude": "9.52340000",
+                              "order_index": 5,
+                              "created_at": "2025-11-20T11:14:00.000000Z",
+                              "updated_at": "2025-11-20T11:14:00.000000Z"
+                          },
+                          {
+                              "id": 19,
+                              "name": "Barkin Ladi Town",
+                              "route_id": 3,
+                              "longitude": "8.88340000",
+                              "latitude": "9.51230000",
+                              "order_index": 6,
+                              "created_at": "2025-11-20T11:14:00.000000Z",
+                              "updated_at": "2025-11-20T11:14:00.000000Z"
+                          }
+                      ]
+                  }
+              }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+              "success": false,
+              "message": "Bus not found",
+              "errors": null
+          }
+        headers: []
+        description: 'Not Found'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/buses/route/{route_id}'
+    metadata:
+      custom: []
+      groupName: Buses
+      groupDescription: |-
+
+        APIs for managing and retrieving buses.
+        Base URL: `/api/v1/buses`
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get buses for a specific route'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      route_id:
+        custom: []
+        name: route_id
+        description: 'The ID of the route.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      route:
+        custom: []
+        name: route
         description: 'The route ID.'
         required: true
         example: 1
@@ -37,73 +280,13 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      type:
-        custom: []
-        name: type
-        description: 'optional Filter by type (location, crowding).'
-        required: false
-        example: location
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      limit:
-        custom: []
-        name: limit
-        description: 'optional Number of results.'
-        required: false
-        example: 20
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      route_id: 1
-      type: location
-      limit: 20
-    bodyParameters:
-      route_id:
-        custom: []
-        name: route_id
-        description: 'The <code>id</code> of an existing record in the routes table.'
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      type:
-        custom: []
-        name: type
-        description: ''
-        required: false
-        example: location
-        type: string
-        enumValues:
-          - location
-          - crowding
-          - activity
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      limit:
-        custom: []
-        name: limit
-        description: 'Must be at least 1. Must not be greater than 100.'
-        required: false
-        example: 22
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      route_id: 16
-      type: location
-      limit: 22
+    cleanUrlParameters:
+      route_id: 2
+      route: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
@@ -112,10 +295,19 @@ endpoints:
         content: |-
           {
             "success": true,
+            "message": "Buses retrieved successfully",
             "data": {
-              "contributions": [],
-              "active_buses": [],
-              "active_buses_count": 3
+              "route": {
+                "id": 1,
+                "name": "Terminus to Bukuru"
+              },
+              "buses": [
+                {
+                  "id": 1,
+                  "name": "TB-001"
+                }
+              ],
+              "total_buses": 8
             }
           }
         headers: []
@@ -129,16 +321,17 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/v1/contributions/location
+    uri: api/v1/buses
     metadata:
       custom: []
-      groupName: Contributions
+      groupName: Buses
       groupDescription: |-
 
-        APIs for users to contribute real-time bus data
+        APIs for managing and retrieving buses.
+        Base URL: `/api/v1/buses`
       subgroup: ''
       subgroupDescription: ''
-      title: 'Submit bus location contribution'
+      title: 'Create a new bus'
       description: ''
       authenticated: true
       deprecated: false
@@ -161,191 +354,132 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      latitude:
+      name:
         custom: []
-        name: latitude
-        description: 'Current latitude.'
+        name: name
+        description: 'The name of the bus.'
         required: true
-        example: 9.8965
-        type: number
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      longitude:
-        custom: []
-        name: longitude
-        description: 'Current longitude.'
-        required: true
-        example: 8.8583
-        type: number
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      speed:
-        custom: []
-        name: speed
-        description: 'optional Speed in km/h.'
-        required: false
-        example: 45.5
-        type: number
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      heading:
-        custom: []
-        name: heading
-        description: 'optional Direction in degrees.'
-        required: false
-        example: 180.0
-        type: number
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-      accuracy:
-        custom: []
-        name: accuracy
-        description: 'optional GPS accuracy in meters.'
-        required: false
-        example: 10.5
-        type: number
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      route_id: 1
-      latitude: 9.8965
-      longitude: 8.8583
-      speed: 45.5
-      heading: 180.0
-      accuracy: 10.5
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-            "success": true,
-            "message": "Location contribution recorded",
-            "data": {
-              "contribution_id": 1,
-              "is_on_route": true,
-              "active_buses_count": 3
-            }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/v1/contributions/crowding
-    metadata:
-      custom: []
-      groupName: Contributions
-      groupDescription: |-
-
-        APIs for users to contribute real-time bus data
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Submit bus crowding report'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      route_id:
-        custom: []
-        name: route_id
-        description: 'The route ID.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Bus status.'
-        required: true
-        example: standing
+        example: TB-001
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      crowding_level:
+    cleanBodyParameters:
+      route_id: 1
+      name: TB-001
+    fileParameters: []
+    responses:
+      -
         custom: []
-        name: crowding_level
-        description: 'Crowding level 1-5.'
+        status: 200
+        content: |-
+          {
+              "success": true,
+              "message": "Bus created successfully",
+              "data": {
+                  "id": 1,
+                  "route_id": 1,
+                  "name": "TB-001",
+                  "created_at": "2025-11-20T11:14:00.000000Z",
+                  "updated_at": "2025-11-20T11:14:00.000000Z"
+              }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "success": false,
+              "message": "Validation error.",
+              "errors": {
+                  "name": ["The name field is required."]
+              }
+          }
+        headers: []
+        description: 'Validation Error'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/buses/{bus_id}'
+    metadata:
+      custom: []
+      groupName: Buses
+      groupDescription: |-
+
+        APIs for managing and retrieving buses.
+        Base URL: `/api/v1/buses`
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete a bus'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      bus_id:
+        custom: []
+        name: bus_id
+        description: 'The ID of the bus.'
         required: true
-        example: 3
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      bus:
+        custom: []
+        name: bus
+        description: 'The bus ID.'
+        required: true
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      latitude:
-        custom: []
-        name: latitude
-        description: 'Current latitude.'
-        required: true
-        example: 9.8965
-        type: number
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-      longitude:
-        custom: []
-        name: longitude
-        description: 'Current longitude.'
-        required: true
-        example: 8.8583
-        type: number
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      route_id: 1
-      status: standing
-      crowding_level: 3
-      latitude: 9.8965
-      longitude: 8.8583
+    cleanUrlParameters:
+      bus_id: 1
+      bus: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses:
       -
         custom: []
-        status: 201
+        status: 200
         content: |-
           {
-            "success": true,
-            "message": "Crowding report submitted",
-            "data": {
-              "contribution_id": 2
-            }
+              "success": true,
+              "message": "Bus deleted successfully",
+              "data": null
           }
         headers: []
         description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+              "success": false,
+              "message": "Bus not found",
+              "errors": null
+          }
+        headers: []
+        description: 'Not Found'
     responseFields: []
     auth: []
     controller: null

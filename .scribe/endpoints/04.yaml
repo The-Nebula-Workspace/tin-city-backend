@@ -2,6 +2,7 @@ name: Notifications
 description: |-
 
   APIs for managing push notifications
+  Base URL: `/api/v1/notifications`
 endpoints:
   -
     custom: []
@@ -14,6 +15,7 @@ endpoints:
       groupDescription: |-
 
         APIs for managing push notifications
+        Base URL: `/api/v1/notifications`
       subgroup: ''
       subgroupDescription: ''
       title: 'Send a Test Notification'
@@ -91,7 +93,7 @@ endpoints:
             }
           }
         headers: []
-        description: ''
+        description: Success
       -
         custom: []
         status: 422
@@ -104,7 +106,7 @@ endpoints:
             }
           }
         headers: []
-        description: ''
+        description: 'Validation Error'
       -
         custom: []
         status: 500
@@ -112,10 +114,10 @@ endpoints:
           {
             "success": false,
             "message": "Failed to send notification.",
-            "error": "Server error message"
+            "errors": "Server error message"
           }
         headers: []
-        description: ''
+        description: 'Server Error'
     responseFields: []
     auth: []
     controller: null

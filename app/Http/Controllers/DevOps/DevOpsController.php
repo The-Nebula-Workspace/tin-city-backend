@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DevOps;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\HttpFoundation\Response;
 
 class DevOpsController extends Controller
 {
@@ -20,8 +20,18 @@ class DevOpsController extends Controller
      *
      * @header X-DevOps-Token required The DevOps token used to authorize the request.
      *
-     * @response 200 {"message":"Cache cleared","output":"...artisan output..."}
-     * @response 401 {"message":"Unauthorized"}
+     * @response 200 scenario="Success" {
+     *   "success": true,
+     *   "message": "Cache cleared",
+     *   "data": {
+     *     "output": "..."
+     *   }
+     * }
+     * @response 401 scenario="Unauthorized" {
+     *   "success": false,
+     *   "message": "Unauthorized",
+     *   "errors": null
+     * }
      */
     public function clearCache(Request $request)
     {
@@ -29,9 +39,7 @@ class DevOpsController extends Controller
         $expectedToken = config('devops.token');
 
         if (! $expectedToken || ! hash_equals((string) $expectedToken, (string) $providedToken)) {
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], Response::HTTP_UNAUTHORIZED);
+            return $this->errorResponse('Unauthorized', 401);
         }
 
         Artisan::call('optimize:clear');
@@ -39,9 +47,11 @@ class DevOpsController extends Controller
         $output = Artisan::output();
         Log::info('optimize:clear executed via DevOps endpoint');
 
-        return response()->json([
-            'message' => 'Cache cleared',
-            'output' => $output,
-        ]);
+        return $this->successResponse(
+            [
+                'output' => $output,
+            ],
+            'Cache cleared'
+        );
     }
 }

@@ -36,7 +36,7 @@ class BadgeAchieved extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'badge' => $this->badge,
-            'message' => "Congratulations! You've earned the {$this->badge->name} badge!"
+            'message' => "Congratulations! You've earned the {$this->badge->name} badge!",
         ]);
     }
 
@@ -50,7 +50,7 @@ class BadgeAchieved extends Notification implements ShouldQueue
         return [
             'badge_id' => $this->badge->id,
             'badge_name' => $this->badge->name,
-            'message' => "Congratulations! You've earned the {$this->badge->name} badge!"
+            'message' => "Congratulations! You've earned the {$this->badge->name} badge!",
         ];
     }
 }

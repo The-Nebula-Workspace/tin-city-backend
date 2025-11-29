@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -29,7 +30,6 @@ class UserController extends Controller
      *   "success": true,
      *   "message": "Profile updated successfully",
      *   "data": {
-     *     "user": {
      *       "id": 1,
      *       "name": "John Doe",
      *       "email": "john@example.com",
@@ -42,48 +42,41 @@ class UserController extends Controller
      *       "email_verified_at": "2025-10-18T12:00:00Z",
      *       "created_at": "2025-10-18T12:00:00Z",
      *       "updated_at": "2025-11-23T10:00:00Z"
-     *     }
      *   }
      * }
      * @response 422 scenario="Validation Error" {
      *   "success": false,
-     *   "message": "The given data was invalid.",
+     *   "message": "Validation error.",
      *   "errors": {
      *     "email": ["The email has already been taken."],
      *     "dob": ["The date of birth must be a date before today."],
      *     "gender": ["The gender must be either male, female, or other."]
      *   }
      * }
-     * @response 401 scenario="Unauthenticated" {
-     *   "message": "Unauthenticated."
-     * }
      */
     public function updateProfile(UpdateProfileRequest $request): JsonResponse
     {
-        $user = $request->user();
+        try {
+            $user = $request->user();
 
-        $user->update($request->validated());
+            $user->update($request->validated());
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Profile updated successfully',
-            'data' => [
-                'user' => new UserResource($user->fresh()),
-            ],
-        ]);
+            return $this->successResponse(new UserResource($user->fresh()), 'Profile updated successfully');
+        } catch (\Exception $e) {
+            return $this->errorResponse('Failed to update profile.', 500, $e->getMessage());
+        }
     }
-
     /**
      * Get a user's profile by ID.
      *
      * @authenticated
      *
-     * @urlParam id integer required The ID of the user. Example: 1
+     * @urlParam user integer required The ID of the user. Example: 1
      *
      * @response 200 scenario="Success" {
      *   "success": true,
+     *   "message": "User retrieved successfully",
      *   "data": {
-     *     "user": {
      *       "id": 1,
      *       "name": "John Doe",
      *       "email": "john@example.com",
@@ -96,24 +89,23 @@ class UserController extends Controller
      *       "email_verified_at": "2025-10-18T12:00:00Z",
      *       "created_at": "2025-10-18T12:00:00Z",
      *       "updated_at": "2025-11-23T10:00:00Z"
-     *     }
      *   }
      * }
      * @response 404 scenario="Not Found" {
      *   "success": false,
-     *   "message": "User not found"
-     * }
-     * @response 401 scenario="Unauthenticated" {
-     *   "message": "Unauthenticated."
+     *   "message": "User not found",
+     *   "errors": []
      * }
      */
     public function show(User $user): JsonResponse
     {
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'user' => new UserResource($user),
-            ],
-        ]);
+        try {
+            return $this->successResponse(
+                new UserResource($user),
+                'User retrieved successfully'
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse('Failed to retrieve user.', 500, $e->getMessage());
+        }
     }
 }

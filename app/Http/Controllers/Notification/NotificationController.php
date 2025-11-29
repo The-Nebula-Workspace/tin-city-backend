@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Notification;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SendNotificationRequest;
 use App\Services\FcmService;
 use Illuminate\Http\JsonResponse;
@@ -10,6 +11,7 @@ use Illuminate\Http\JsonResponse;
  * @group Notifications
  *
  * APIs for managing push notifications
+ * Base URL: `/api/v1/notifications`
  */
 class NotificationController extends Controller
 {
@@ -30,24 +32,24 @@ class NotificationController extends Controller
      * @bodyParam body string required The notification message body. Example: "You received 50 bonus points!"
      * @bodyParam type string optional The type of notification. Must be one of: reward, route_update, admin_alert. Example: "reward"
      *
-     * @response 200 {
+     * @response 200 scenario="Success" {
      *   "success": true,
      *   "message": "Notification sent successfully!",
      *   "response": {
      *     "name": "projects/.../messages/12345"
      *   }
      * }
-     * @response 422 {
+     * @response 422 scenario="Validation Error" {
      *   "success": false,
      *   "message": "Validation failed",
      *   "errors": {
      *     "token": ["The token field is required."]
      *   }
      * }
-     * @response 500 {
+     * @response 500 scenario="Server Error" {
      *   "success": false,
      *   "message": "Failed to send notification.",
-     *   "error": "Server error message"
+     *   "errors": "Server error message"
      * }
      */
     public function testNotification(SendNotificationRequest $request): JsonResponse
@@ -63,20 +65,12 @@ class NotificationController extends Controller
             );
 
             if (! is_array($response) || ! array_key_exists('error', $response)) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Notification sent successfully!',
-                    'response' => $response,
-                ], 200);
+                return $this->successResponse($response, 'Notification sent successfully!');
             }
 
             return $this->buildErrorResponse($response['error']);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to send notification.',
-                'error' => $e->getMessage(),
-            ], 500);
+            return $this->errorResponse('Failed to send notification.', 500, $e->getMessage());
         }
     }
 
@@ -87,11 +81,7 @@ class NotificationController extends Controller
             ? ($error['message'] ?? 'Failed to send notification.')
             : (string) $error;
 
-        return response()->json([
-            'success' => false,
-            'message' => $message ?: 'Failed to send notification.',
-            'error' => $error,
-        ], $statusCode);
+        return $this->errorResponse($message ?: 'Failed to send notification.', $statusCode, $error);
     }
 
     private function resolveErrorStatusCode(array|string $error): int

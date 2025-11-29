@@ -1,5 +1,8 @@
-name: Admin
-description: ''
+name: 'Admin Dashboard'
+description: |-
+  Endpoints to retrieve admin dashboard metrics.
+
+  Base URL: `/api/v1/admin`
 endpoints:
   -
     custom: []
@@ -8,12 +11,15 @@ endpoints:
     uri: api/v1/admin/dashboard
     metadata:
       custom: []
-      groupName: Admin
-      groupDescription: ''
+      groupName: 'Admin Dashboard'
+      groupDescription: |-
+        Endpoints to retrieve admin dashboard metrics.
+
+        Base URL: `/api/v1/admin`
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get dashboard metrics.'
-      description: ''
+      title: 'Get high-level metrics for the admin dashboard.'
+      description: 'Returns total numbers of users, routes, and active buses in the system.'
       authenticated: true
       deprecated: false
     headers:
@@ -32,10 +38,26 @@ endpoints:
         status: 200
         content: |-
           {
-           "total_users": 10,
-           "total_routes": 5,
-           "active_buses": 3
+            "success": true,
+            "message": "Dashboard metrics retrieved successfully",
+            "data": {
+              "total_users": 1200,
+              "total_routes": 42,
+              "active_buses": 18
+            }
           }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"message": "This action is unauthorized."}'
         headers: []
         description: ''
     responseFields: []
@@ -50,13 +72,18 @@ endpoints:
     uri: api/v1/admin/contributions
     metadata:
       custom: []
-      groupName: Admin
-      groupDescription: ''
+      groupName: 'Admin Dashboard'
+      groupDescription: |-
+        Endpoints to retrieve admin dashboard metrics.
+
+        Base URL: `/api/v1/admin`
       subgroup: ''
       subgroupDescription: ''
       title: 'List all contributions.'
-      description: ''
-      authenticated: true
+      description: |-
+        Returns a collection of user contributions wrapped in the standard API envelope.
+        Results are transformed using the `ContributionResource`.
+      authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
@@ -71,13 +98,43 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "Contributions retrieved successfully",
+            "data": [
+                 {
+                   "id": 3,
+                   "user_id": 3,
+                   "route_id": 2,
+                   "type": "location",
+                   "data": {
+                       "latitude": 9.8965,
+                       "longitude": 8.8583,
+                       "speed": 45.5,
+                       "heading": 180,
+                       "accuracy": 10.5
+                   },
+                   "created_at": "2025-11-20T11:31:34.000000Z",
+                   "updated_at": "2025-11-20T11:31:34.000000Z"
+                }
+            ]
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
         status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"message": "This action is unauthorized."}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -90,12 +147,17 @@ endpoints:
     uri: api/v1/admin/routes
     metadata:
       custom: []
-      groupName: Admin
-      groupDescription: ''
+      groupName: 'Admin Dashboard'
+      groupDescription: |-
+        Endpoints to retrieve admin dashboard metrics.
+
+        Base URL: `/api/v1/admin`
       subgroup: ''
       subgroupDescription: ''
       title: 'List all routes.'
-      description: ''
+      description: |-
+        Returns a collection of transport routes wrapped in the standard API envelope.
+        Results are transformed using the `RouteResource`.
       authenticated: true
       deprecated: false
     headers:
@@ -111,13 +173,38 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "Routes retrieved successfully",
+            "data": [
+               {
+                   "id": 4,
+                   "name": "Bukuru to Rayfield",
+                   "start_point": "Bukuru",
+                   "end_point": "Rayfield",
+                   "encoded_polyline": "mep_Ihk~hEn}@wDa@cBk@qCm@uCq@yD",
+                   "distance_km": 5.2,
+                   "created_at": "2025-11-20T11:14:00.000000Z",
+                   "updated_at": "2025-11-20T11:14:00.000000Z"
+               }
+            ]
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
         status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"message": "This action is unauthorized."}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -130,12 +217,17 @@ endpoints:
     uri: api/v1/admin/users
     metadata:
       custom: []
-      groupName: Admin
-      groupDescription: ''
+      groupName: 'Admin Dashboard'
+      groupDescription: |-
+        Endpoints to retrieve admin dashboard metrics.
+
+        Base URL: `/api/v1/admin`
       subgroup: ''
       subgroupDescription: ''
       title: 'List all users.'
-      description: ''
+      description: |-
+        Returns a collection of users wrapped in the standard API envelope.
+        Results are transformed using the `UserResource`.
       authenticated: true
       deprecated: false
     headers:
@@ -151,13 +243,42 @@ endpoints:
     responses:
       -
         custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "Users retrieved successfully",
+            "data": [
+              {
+               "id": 1,
+               "name": "John Doe",
+               "email": "john@example.com",
+               "phone": "+2348034567890",
+               "dob": null,
+               "gender": null,
+               "role": "user",
+               "points": 0,
+               "avatar": null,
+               "email_verified_at": null,
+               "created_at": "2025-10-27T08:17:57.000000Z",
+               "updated_at": "2025-10-27T08:17:57.000000Z"
+              }
+            ]
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
         status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: '{"message": "This action is unauthorized."}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null

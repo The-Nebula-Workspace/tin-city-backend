@@ -1,54 +1,27 @@
-name: 'Chat Management'
-description: |-
-
-  APIs for managing bus chats.
+name: DevOps
+description: ''
 endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/v1/chat/{bus_id}'
+      - POST
+    uri: api/v1/devops/clear-cache
     metadata:
       custom: []
-      groupName: 'Chat Management'
-      groupDescription: |-
-
-        APIs for managing bus chats.
+      groupName: DevOps
+      groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get messages for a bus.'
-      description: ''
+      title: 'Clear application caches'
+      description: 'Secure DevOps endpoint to run `optimize:clear`.'
       authenticated: true
       deprecated: false
     headers:
+      X-DevOps-Token: 'required The DevOps token used to authorize the request.'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      bus_id:
-        custom: []
-        name: bus_id
-        description: 'The ID of the bus.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      bus:
-        custom: []
-        name: bus
-        description: 'The ID of the bus.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      bus_id: 1
-      bus: 1
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -60,125 +33,25 @@ endpoints:
         status: 200
         content: |-
           {
-            "data": [
-              {
-                "id": 1,
-                "bus_id": 1,
-                "user_id": 1,
-                "message": "Hello everyone!",
-                "created_at": "2025-11-28T12:00:00Z",
-                "updated_at": "2025-11-28T12:00:00Z",
-                "user": {
-                  "id": 1,
-                  "name": "John Doe",
-                  "avatar": "https://example.com/avatar.jpg"
-                }
-              }
-            ]
+            "success": true,
+            "message": "Cache cleared",
+            "data": {
+              "output": "..."
+            }
           }
         headers: []
         description: Success
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/v1/chat/{bus_id}'
-    metadata:
-      custom: []
-      groupName: 'Chat Management'
-      groupDescription: |-
-
-        APIs for managing bus chats.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Send a message to a bus chat.'
-      description: ''
-      authenticated: true
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      bus_id:
-        custom: []
-        name: bus_id
-        description: 'The ID of the bus.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      bus:
-        custom: []
-        name: bus
-        description: 'The ID of the bus.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      bus_id: 1
-      bus: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      message:
-        custom: []
-        name: message
-        description: 'The message content.'
-        required: true
-        example: 'Is the bus full?'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      message: 'Is the bus full?'
-    fileParameters: []
-    responses:
       -
         custom: []
-        status: 201
+        status: 401
         content: |-
           {
-            "data": {
-              "id": 2,
-              "bus_id": 1,
-              "user_id": 1,
-              "message": "Is the bus full?",
-              "created_at": "2025-11-28T12:05:00Z",
-              "updated_at": "2025-11-28T12:05:00Z",
-              "user": {
-                "id": 1,
-                "name": "John Doe"
-              }
-            }
+            "success": false,
+            "message": "Unauthorized",
+            "errors": null
           }
         headers: []
-        description: Created
-      -
-        custom: []
-        status: 422
-        content: |-
-          {
-            "message": "The given data was invalid.",
-            "errors": {
-              "message": ["The message field is required."]
-            }
-          }
-        headers: []
-        description: 'Validation Error'
+        description: Unauthorized
     responseFields: []
     auth: []
     controller: null

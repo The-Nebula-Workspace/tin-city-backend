@@ -30,7 +30,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated."}'
+        content: '{"success":false,"message":"Unauthenticated.","errors":null}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

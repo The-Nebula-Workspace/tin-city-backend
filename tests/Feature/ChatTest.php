@@ -8,7 +8,6 @@ use App\Models\Chat;
 use App\Models\Route;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
@@ -24,7 +23,7 @@ class ChatTest extends TestCase
             'start_point' => 'A',
             'end_point' => 'B',
             'encoded_polyline' => 'abc',
-            'distance_km' => 10
+            'distance_km' => 10,
         ]);
         $bus = Bus::create(['route_id' => $route->id, 'name' => 'Bus 1']);
 
@@ -54,7 +53,7 @@ class ChatTest extends TestCase
             'start_point' => 'A',
             'end_point' => 'B',
             'encoded_polyline' => 'abc',
-            'distance_km' => 10
+            'distance_km' => 10,
         ]);
         $bus = Bus::create(['route_id' => $route->id, 'name' => 'Bus 1']);
 
@@ -71,7 +70,7 @@ class ChatTest extends TestCase
                     'message' => 'Hello Bus!',
                     'bus_id' => $bus->id,
                     'user_id' => $user->id,
-                ]
+                ],
             ]);
 
         $this->assertDatabaseHas('chats', [
@@ -92,7 +91,7 @@ class ChatTest extends TestCase
             'start_point' => 'A',
             'end_point' => 'B',
             'encoded_polyline' => 'abc',
-            'distance_km' => 10
+            'distance_km' => 10,
         ]);
         $bus = Bus::create(['route_id' => $route->id, 'name' => 'Bus 1']);
 
@@ -111,7 +110,7 @@ class ChatTest extends TestCase
             'start_point' => 'A',
             'end_point' => 'B',
             'encoded_polyline' => 'abc',
-            'distance_km' => 10
+            'distance_km' => 10,
         ]);
         $bus = Bus::create(['route_id' => $route->id, 'name' => 'Bus 1']);
 

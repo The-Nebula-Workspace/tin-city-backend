@@ -17,12 +17,9 @@ class RouteService
         return Route::with('stops', 'contributions')->orderBy('name')->get();
     }
 
-
     /**
      * Find a specific route by its ID.
      *
-     * @param int $id
-     * @return \App\Models\Route
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
@@ -31,12 +28,8 @@ class RouteService
         return Route::with('stops', 'contributions')->findOrFail($id);
     }
 
-
     /**
      * Create a new route and optionally its stops.
-     *
-     * @param array $data
-     * @return \App\Models\Route
      */
     public function create(array $data): Route
     {
@@ -51,13 +44,8 @@ class RouteService
         });
     }
 
-
     /**
      * Update an existing route and its stops.
-     *
-     * @param \App\Models\Route $route
-     * @param array $data
-     * @return \App\Models\Route
      */
     public function update(Route $route, array $data): Route
     {
@@ -73,12 +61,8 @@ class RouteService
         });
     }
 
-
     /**
      * Delete a route.
-     *
-     * @param \App\Models\Route $route
-     * @return void
      */
     public function delete(Route $route): void
     {

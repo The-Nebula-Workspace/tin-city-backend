@@ -48,10 +48,7 @@ class RewardService
      */
     public function getUserRewards(User $user)
     {
-        return [
-            'user_id' => $user->id,
-            'total_points' => $user->points ?? 0,
-        ];
+        return $user->points ?? 0;
     }
 
     /**

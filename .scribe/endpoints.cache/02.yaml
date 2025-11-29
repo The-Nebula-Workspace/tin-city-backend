@@ -20,7 +20,7 @@ endpoints:
         Base URL: `/api/v1/badges`
       subgroup: ''
       subgroupDescription: ''
-      title: 'Display a listing of the badges.'
+      title: 'Display a listing of the available badges.'
       description: ''
       authenticated: false
       deprecated: false
@@ -40,13 +40,19 @@ endpoints:
         status: 200
         content: |-
           {
-            "data": [
-              {
-                "id": 1,
-                "name": "John Doe",
-                "description": "I'm a fan of this innovation"
-                "created_at": "2025-10-18T12:00:00Z"
-              }
+               "success": true,
+               "message": "Badges retrieved successfully",
+               "data": [
+               {
+                   "id": 4,
+                   "name": "Platinum contributor",
+                   "description": "100 contributions",
+                   "points_required": 100,
+                   "icon": null,
+                   "created_at": "2025-11-29T13:57:30.000000Z",
+                   "updated_at": "2025-11-29T13:57:30.000000Z",
+                   "user_badges": []
+               }
             ]
           }
         headers: []
@@ -70,7 +76,7 @@ endpoints:
         Base URL: `/api/v1/badges`
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Store a newly created badge in storage.'
       description: ''
       authenticated: true
       deprecated: false
@@ -87,7 +93,7 @@ endpoints:
         name: name
         description: 'The name of the badge.'
         required: true
-        example: 'John Doe'
+        example: 'Diamond Contributor'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -96,9 +102,9 @@ endpoints:
       description:
         custom: []
         name: description
-        description: 'The description of the badge'
+        description: 'the description of the badge'
         required: true
-        example: "I'm a fan"
+        example: 'Contributed to Tin City Metro 200 times.'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -107,12 +113,12 @@ endpoints:
       points_required:
         custom: []
         name: points_required
-        description: 'integer The points_required of the badge assigned Example : 100points'
+        description: 'integer required The Points_required of the badge to be assigned.'
         required: false
-        example: architecto
+        example: '100'
         type: required
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
       icon:
@@ -126,28 +132,57 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      icons:
+        custom: []
+        name: icons
+        description: 'string The icon should be assigned if the points_required condtion is met'
+        required: false
+        example: 'https://example.com/badge-icon.png'
+        type: nullable
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
-      name: 'John Doe'
-      description: "I'm a fan"
-      points_required: architecto
+      name: 'Diamond Contributor'
+      description: 'Contributed to Tin City Metro 200 times.'
+      points_required: '100'
       icon: architecto
+      icons: 'https://example.com/badge-icon.png'
     fileParameters: []
     responses:
       -
         custom: []
-        status: 201
+        status: 200
         content: |-
           {
-            "data": {
-              "id": 1,
-              "name": "John Doe",
-            "description": "I'm a fan",
-          "points_required": "100points"
-              "created_at": "2025-10-18T12:00:00Z"
-            }
+              "success": true,
+              "message": "Badge created successfully",
+              "data": {
+                  "id": 4,
+                  "name": "Platinum contributor",
+                  "description": "100 contributions",
+                  "points_required": 100,
+                  "icon": null,
+                  "created_at": "2025-11-29T13:57:30.000000Z",
+                  "updated_at": "2025-11-29T13:57:30.000000Z"
+              }
           }
         headers: []
-        description: Created
+        description: Success
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+              "success": false,
+              "message": "Validation error.",
+              "errors": {
+                  "name": ["The name field is required."]
+              }
+          }
+        headers: []
+        description: 'Validation Error'
     responseFields: []
     auth: []
     controller: null
@@ -157,7 +192,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/badges/{id}'
+    uri: 'api/v1/badges/{badge_id}'
     metadata:
       custom: []
       groupName: 'Badge Management'
@@ -175,9 +210,20 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
+      badge_id:
         custom: []
-        name: id
+        name: badge_id
+        description: 'The ID of the badge.'
+        required: true
+        example: 4
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      badge:
+        custom: []
+        name: badge
         description: 'The ID of the badge.'
         required: true
         example: 1
@@ -187,7 +233,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 1
+      badge_id: 4
+      badge: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -199,21 +246,29 @@ endpoints:
         status: 200
         content: |-
           {
-            "data": {
-              "id": 1,
-              "name": "John Doe",
-              "description": "I'm a fan",
-              "points_required": 80points,
-          "icon": "Bronze"
-              "created_at": "2025-10-18T12:00:00Z"
-            }
+              "success": true,
+              "message": "Badge retrieved successfully",
+              "data": {
+                  "id": 4,
+                  "name": "Platinum contributor",
+                  "description": "100 contributions",
+                  "points_required": 100,
+                  "icon": null,
+                  "created_at": "2025-11-29T13:57:30.000000Z",
+                  "updated_at": "2025-11-29T13:57:30.000000Z"
+              }
           }
         headers: []
         description: Success
       -
         custom: []
         status: 404
-        content: '{"error": "Badge not found"}'
+        content: |-
+          {
+              "success": false,
+              "message": "Badge not found",
+              "errors": null
+          }
         headers: []
         description: 'Not Found'
     responseFields: []
@@ -248,15 +303,15 @@ endpoints:
         name: badge_id
         description: 'The ID of the badge.'
         required: true
-        example: 16
+        example: 4
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      route:
+      badge:
         custom: []
-        name: route
+        name: badge
         description: 'The ID of the badge to delete.'
         required: true
         example: 1
@@ -266,8 +321,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      badge_id: 16
-      route: 1
+      badge_id: 4
+      badge: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -277,13 +332,22 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"message": "badge deleted successfully"}'
+        content: |-
+          {
+              "success": true,
+              "message": "Badge deleted successfully",
+          }
         headers: []
         description: Deleted
       -
         custom: []
         status: 404
-        content: '{"error": "badge not found"}'
+        content: |-
+          {
+              "success": false,
+              "message": "Badge not found",
+              "errors": null
+          }
         headers: []
         description: 'Not Found'
     responseFields: []

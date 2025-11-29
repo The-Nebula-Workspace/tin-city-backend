@@ -23,7 +23,7 @@ class GetLatestContributionsRequest extends FormRequest
     {
         return [
             'route_id' => 'required|integer|exists:routes,id',
-            'type' => 'nullable|in:location,crowding,activity',
+            'type' => 'nullable|in:location,crowding',
             'limit' => 'nullable|integer|min:1|max:100',
         ];
     }

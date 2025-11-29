@@ -1,16 +1,15 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\BadgeController;
-use App\Http\Controllers\BusController;
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\ContributionController;
-use App\Http\Controllers\DevOpsController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\RewardController;
-use App\Http\Controllers\RouteController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Badge\BadgeController;
+use App\Http\Controllers\Bus\BusController;
+use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\Contribution\ContributionController;
+use App\Http\Controllers\DevOps\DevOpsController;
+use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\Route\RouteController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +23,7 @@ Route::prefix('v1')->group(function () {
         // Public endpoints
         Route::get('export', [RouteController::class, 'export']);
         Route::get('', action: [RouteController::class, 'index']);
-        Route::get('{id}', [RouteController::class, 'show']);
+        Route::get('{route}', [RouteController::class, 'show']);
 
         // Admin-only endpoints
         Route::middleware(['auth:sanctum', 'can:is_admin'])->group(function () {
@@ -38,7 +37,7 @@ Route::prefix('v1')->group(function () {
             // Badge endpoints for Admin
             Route::get('', [BadgeController::class, 'index']);
             Route::post('', [BadgeController::class, 'store']);
-            Route::get('{id}', [BadgeController::class, 'show']);
+            Route::get('{badge}', [BadgeController::class, 'show']);
             Route::put('{badge}', [BadgeController::class, 'update']);
             Route::delete('{badge}', [BadgeController::class, 'destroy']);
         });
@@ -77,9 +76,11 @@ Route::prefix('v1')->group(function () {
         Route::get('users/{user}', [UserController::class, 'show']);
         Route::put('user/profile', [UserController::class, 'updateProfile']);
 
-        Route::get('rewards', [RewardController::class, 'index']);
-        Route::get('rewards/history', [RewardController::class, 'history']);
-        Route::post('rewards', [RewardController::class, 'awardPoints']);
+        // Route::prefix('rewards')->group(function () {
+        //     Route::get('', [RewardController::class, 'index']);
+        //     Route::get('history', [RewardController::class, 'history']);
+        //     Route::post('', [RewardController::class, 'awardPoints']);
+        // });
     });
 
     // Chat endpoints
@@ -108,5 +109,11 @@ Route::prefix('v1')->group(function () {
         Route::get('', [BusController::class, 'index']);
         Route::get('{bus}', [BusController::class, 'show']);
         Route::get('route/{route}', [BusController::class, 'getByRoute']);
+
+        Route::middleware(['auth:sanctum', 'can:is_admin'])->group(function () {
+            Route::post('', [BusController::class, 'store']);
+            Route::put('{bus}', [BusController::class, 'update']);
+            Route::delete('{bus}', [BusController::class, 'destroy']);
+        });
     });
 });

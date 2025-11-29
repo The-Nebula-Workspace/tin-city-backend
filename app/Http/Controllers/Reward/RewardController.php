@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Reward;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Rewards\AwardPointsRequest;
 use App\Services\RewardService;
 use Illuminate\Http\JsonResponse;
@@ -43,7 +44,6 @@ class RewardController extends Controller
      *   },
      *   "message": "Reward balance retrieved successfully"
      * }
-     *
      * @response 200 scenario="No rewards" {
      *   "data": null,
      *   "message": "No rewards yet"
@@ -53,13 +53,10 @@ class RewardController extends Controller
     {
         $data = $this->rewardService->getUserRewards($request->user());
 
-        return response()->json([
-            'data' => $data,
-            'message' => $data['total_points'] > 0
-
-                ? 'Reward balance retrieved successfully'
-                : 'No rewards yet',
-        ]);
+        return $this->successResponse(
+            $data,
+            'No rewards yet'
+        );
     }
 
     /**
@@ -92,7 +89,6 @@ class RewardController extends Controller
      *   ],
      *   "message": "Reward history retrieved successfully"
      * }
-     *
      * @response 200 scenario="No history" {
      *   "data": [],
      *   "message": "No reward history found"
@@ -102,12 +98,10 @@ class RewardController extends Controller
     {
         $history = $this->rewardService->getUserHistory($request->user());
 
-        return response()->json([
-            'data' => $history,
-            'message' => $history->isEmpty()
-                ? 'No reward history found'
-                : 'Reward history retrieved successfully',
-        ]);
+        return $this->successResponse(
+            $history,
+            'Reward history retrieved successfully'
+        );
     }
 
     /**
@@ -125,11 +119,9 @@ class RewardController extends Controller
      *   "message": "Points awarded successfully",
      *   "points": 3
      * }
-     *
      * @response 400 scenario="Invalid action" {
      *   "message": "Invalid action or no points awarded"
      * }
-     *
      * @response 422 scenario="Validation error" {
      *   "message": "The action field is required."
      * }
@@ -145,14 +137,11 @@ class RewardController extends Controller
         $success = $this->rewardService->addPoints($user, $action, $description, $preventDuplicate);
 
         if ($success) {
-            return response()->json([
-                'message' => 'Points awarded successfully',
-                'points' => config("rewards.actions.$action", 0)
-            ], 200);
+            return $this->successResponse([
+                'points' => config("rewards.actions.$action", 0),
+            ], 'Points awarded successfully');
         }
 
-        return response()->json([
-            'message' => 'Invalid action or no points awarded'
-        ], 400);
+        return $this->errorResponse('Invalid action or no points awarded', 400);
     }
 }

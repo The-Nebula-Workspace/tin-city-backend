@@ -31,15 +31,15 @@ endpoints:
         name: user_id
         description: 'The ID of the user.'
         required: true
-        example: 1
+        example: 4
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      id:
+      user:
         custom: []
-        name: id
+        name: user
         description: 'The ID of the user.'
         required: true
         example: 1
@@ -49,8 +49,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      user_id: 1
-      id: 1
+      user_id: 4
+      user: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -63,8 +63,8 @@ endpoints:
         content: |-
           {
             "success": true,
+            "message": "User retrieved successfully",
             "data": {
-              "user": {
                 "id": 1,
                 "name": "John Doe",
                 "email": "john@example.com",
@@ -77,27 +77,18 @@ endpoints:
                 "email_verified_at": "2025-10-18T12:00:00Z",
                 "created_at": "2025-10-18T12:00:00Z",
                 "updated_at": "2025-11-23T10:00:00Z"
-              }
             }
           }
         headers: []
         description: Success
       -
         custom: []
-        status: 401
-        content: |-
-          {
-            "message": "Unauthenticated."
-          }
-        headers: []
-        description: Unauthenticated
-      -
-        custom: []
         status: 404
         content: |-
           {
             "success": false,
-            "message": "User not found"
+            "message": "User not found",
+            "errors": []
           }
         headers: []
         description: 'Not Found'

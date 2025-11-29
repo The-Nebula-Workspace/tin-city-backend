@@ -24,8 +24,8 @@ class SendNotificationRequest extends FormRequest
         return [
             'token' => 'required|string',
             'title' => 'required|string',
-            'body'  => 'required|string',
-            'type'  => 'nullable|string|in:reward,route_update,admin_alert',
+            'body' => 'required|string',
+            'type' => 'nullable|string|in:reward,route_update,admin_alert',
         ];
     }
 }
